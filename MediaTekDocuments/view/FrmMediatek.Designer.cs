@@ -1,4 +1,4 @@
-﻿
+
 namespace MediaTekDocuments.view
 {
     partial class FrmMediatek
@@ -178,7 +178,77 @@ namespace MediaTekDocuments.view
             this.label53 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
             this.btnReceptionRechercher = new System.Windows.Forms.Button();
+            // ── Livres saisie CRUD ──
+            this.grpLivresSaisie = new System.Windows.Forms.GroupBox();
+            this.btnLivresAjouter = new System.Windows.Forms.Button();
+            this.btnLivresModifier = new System.Windows.Forms.Button();
+            this.btnLivresSuppimer = new System.Windows.Forms.Button();
+            this.txbLivresSaisieId = new System.Windows.Forms.TextBox();
+            this.txbLivresSaisieTitre = new System.Windows.Forms.TextBox();
+            this.txbLivresSaisieImage = new System.Windows.Forms.TextBox();
+            this.txbLivresSaisieIsbn = new System.Windows.Forms.TextBox();
+            this.txbLivresSaisieAuteur = new System.Windows.Forms.TextBox();
+            this.txbLivresSaisieCollection = new System.Windows.Forms.TextBox();
+            this.cbxLivresSaisieGenres = new System.Windows.Forms.ComboBox();
+            this.cbxLivresSaisiePublics = new System.Windows.Forms.ComboBox();
+            this.cbxLivresSaisieRayons = new System.Windows.Forms.ComboBox();
+            this.lblLivresSaisieId = new System.Windows.Forms.Label();
+            this.lblLivresSaisieTitre = new System.Windows.Forms.Label();
+            this.lblLivresSaisieImage = new System.Windows.Forms.Label();
+            this.lblLivresSaisieIsbn = new System.Windows.Forms.Label();
+            this.lblLivresSaisieAuteur = new System.Windows.Forms.Label();
+            this.lblLivresSaisieCollection = new System.Windows.Forms.Label();
+            this.lblLivresSaisieGenre = new System.Windows.Forms.Label();
+            this.lblLivresSaisiePublic = new System.Windows.Forms.Label();
+            this.lblLivresSaisieRayon = new System.Windows.Forms.Label();
+            // ── DVD saisie CRUD ──
+            this.grpDvdSaisie = new System.Windows.Forms.GroupBox();
+            this.btnDvdAjouter = new System.Windows.Forms.Button();
+            this.btnDvdModifier = new System.Windows.Forms.Button();
+            this.btnDvdSuppimer = new System.Windows.Forms.Button();
+            this.txbDvdSaisieId = new System.Windows.Forms.TextBox();
+            this.txbDvdSaisieTitre = new System.Windows.Forms.TextBox();
+            this.txbDvdSaisieImage = new System.Windows.Forms.TextBox();
+            this.txbDvdSaisieRealisateur = new System.Windows.Forms.TextBox();
+            this.txbDvdSaisieDuree = new System.Windows.Forms.TextBox();
+            this.txbDvdSaisieSynopsis = new System.Windows.Forms.TextBox();
+            this.cbxDvdSaisieGenres = new System.Windows.Forms.ComboBox();
+            this.cbxDvdSaisiePublics = new System.Windows.Forms.ComboBox();
+            this.cbxDvdSaisieRayons = new System.Windows.Forms.ComboBox();
+            this.lblDvdSaisieId = new System.Windows.Forms.Label();
+            this.lblDvdSaisieTitre = new System.Windows.Forms.Label();
+            this.lblDvdSaisieImage = new System.Windows.Forms.Label();
+            this.lblDvdSaisieRealisateur = new System.Windows.Forms.Label();
+            this.lblDvdSaisieDuree = new System.Windows.Forms.Label();
+            this.lblDvdSaisieSynopsis = new System.Windows.Forms.Label();
+            this.lblDvdSaisieGenre = new System.Windows.Forms.Label();
+            this.lblDvdSaisiePublic = new System.Windows.Forms.Label();
+            this.lblDvdSaisieRayon = new System.Windows.Forms.Label();
+            // ── Revues saisie CRUD ──
+            this.grpRevuesSaisie = new System.Windows.Forms.GroupBox();
+            this.btnRevuesAjouter = new System.Windows.Forms.Button();
+            this.btnRevuesModifier = new System.Windows.Forms.Button();
+            this.btnRevuesSuppimer = new System.Windows.Forms.Button();
+            this.txbRevuesSaisieId = new System.Windows.Forms.TextBox();
+            this.txbRevuesSaisieTitre = new System.Windows.Forms.TextBox();
+            this.txbRevuesSaisieImage = new System.Windows.Forms.TextBox();
+            this.txbRevuesSaisiePeriodicite = new System.Windows.Forms.TextBox();
+            this.txbRevuesSaisieDelai = new System.Windows.Forms.TextBox();
+            this.cbxRevuesSaisieGenres = new System.Windows.Forms.ComboBox();
+            this.cbxRevuesSaisiePublics = new System.Windows.Forms.ComboBox();
+            this.cbxRevuesSaisieRayons = new System.Windows.Forms.ComboBox();
+            this.lblRevuesSaisieId = new System.Windows.Forms.Label();
+            this.lblRevuesSaisieTitre = new System.Windows.Forms.Label();
+            this.lblRevuesSaisieImage = new System.Windows.Forms.Label();
+            this.lblRevuesSaisiePeriodicite = new System.Windows.Forms.Label();
+            this.lblRevuesSaisieDelai = new System.Windows.Forms.Label();
+            this.lblRevuesSaisieGenre = new System.Windows.Forms.Label();
+            this.lblRevuesSaisiePublic = new System.Windows.Forms.Label();
+            this.lblRevuesSaisieRayon = new System.Windows.Forms.Label();
             this.tabOngletsApplication.SuspendLayout();
+            this.grpLivresSaisie.SuspendLayout();
+            this.grpDvdSaisie.SuspendLayout();
+            this.grpRevuesSaisie.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbLivresImage)).BeginInit();
@@ -214,16 +284,17 @@ namespace MediaTekDocuments.view
             this.tabOngletsApplication.Location = new System.Drawing.Point(0, 0);
             this.tabOngletsApplication.Name = "tabOngletsApplication";
             this.tabOngletsApplication.SelectedIndex = 0;
-            this.tabOngletsApplication.Size = new System.Drawing.Size(883, 659);
+            this.tabOngletsApplication.Size = new System.Drawing.Size(883, 831);
             this.tabOngletsApplication.TabIndex = 0;
             // 
             // tabLivres
             // 
             this.tabLivres.Controls.Add(this.grpLivresInfos);
             this.tabLivres.Controls.Add(this.grpLivresRecherche);
+            this.tabLivres.Controls.Add(this.grpLivresSaisie);
             this.tabLivres.Location = new System.Drawing.Point(4, 22);
             this.tabLivres.Name = "tabLivres";
-            this.tabLivres.Size = new System.Drawing.Size(875, 633);
+            this.tabLivres.Size = new System.Drawing.Size(875, 805);
             this.tabLivres.TabIndex = 2;
             this.tabLivres.Text = "Livres";
             this.tabLivres.UseVisualStyleBackColor = true;
@@ -619,9 +690,10 @@ namespace MediaTekDocuments.view
             // 
             this.tabDvd.Controls.Add(this.grpDvdInfos);
             this.tabDvd.Controls.Add(this.grpDvdRecherche);
+            this.tabDvd.Controls.Add(this.grpDvdSaisie);
             this.tabDvd.Location = new System.Drawing.Point(4, 22);
             this.tabDvd.Name = "tabDvd";
-            this.tabDvd.Size = new System.Drawing.Size(875, 633);
+            this.tabDvd.Size = new System.Drawing.Size(875, 805);
             this.tabDvd.TabIndex = 3;
             this.tabDvd.Text = "DVD";
             this.tabDvd.UseVisualStyleBackColor = true;
@@ -1020,10 +1092,11 @@ namespace MediaTekDocuments.view
             // 
             this.tabRevues.Controls.Add(this.grpRevuesInfos);
             this.tabRevues.Controls.Add(this.grpRevuesRecherche);
+            this.tabRevues.Controls.Add(this.grpRevuesSaisie);
             this.tabRevues.Location = new System.Drawing.Point(4, 22);
             this.tabRevues.Name = "tabRevues";
             this.tabRevues.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRevues.Size = new System.Drawing.Size(875, 633);
+            this.tabRevues.Size = new System.Drawing.Size(875, 805);
             this.tabRevues.TabIndex = 1;
             this.tabRevues.Text = "Revues";
             this.tabRevues.UseVisualStyleBackColor = true;
@@ -1776,15 +1849,459 @@ namespace MediaTekDocuments.view
             this.btnReceptionRechercher.UseVisualStyleBackColor = true;
             this.btnReceptionRechercher.Click += new System.EventHandler(this.btnReceptionRechercher_Click);
             // 
+            // grpLivresSaisie
+            // 
+            this.grpLivresSaisie.Controls.Add(this.btnLivresAjouter);
+            this.grpLivresSaisie.Controls.Add(this.btnLivresModifier);
+            this.grpLivresSaisie.Controls.Add(this.btnLivresSuppimer);
+            this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieId);
+            this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieTitre);
+            this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieImage);
+            this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieIsbn);
+            this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieAuteur);
+            this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieCollection);
+            this.grpLivresSaisie.Controls.Add(this.cbxLivresSaisieGenres);
+            this.grpLivresSaisie.Controls.Add(this.cbxLivresSaisiePublics);
+            this.grpLivresSaisie.Controls.Add(this.cbxLivresSaisieRayons);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisieId);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisieTitre);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisieImage);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisieIsbn);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisieAuteur);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisieCollection);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisieGenre);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisiePublic);
+            this.grpLivresSaisie.Controls.Add(this.lblLivresSaisieRayon);
+            this.grpLivresSaisie.Location = new System.Drawing.Point(8, 636);
+            this.grpLivresSaisie.Name = "grpLivresSaisie";
+            this.grpLivresSaisie.Size = new System.Drawing.Size(859, 160);
+            this.grpLivresSaisie.TabIndex = 30;
+            this.grpLivresSaisie.TabStop = false;
+            this.grpLivresSaisie.Text = "Gestion (Ajouter / Modifier / Supprimer)";
+            // lblLivresSaisieId
+            this.lblLivresSaisieId.AutoSize = true;
+            this.lblLivresSaisieId.Location = new System.Drawing.Point(10, 22);
+            this.lblLivresSaisieId.Name = "lblLivresSaisieId";
+            this.lblLivresSaisieId.Text = "Id :";
+            // txbLivresSaisieId
+            this.txbLivresSaisieId.Location = new System.Drawing.Point(60, 19);
+            this.txbLivresSaisieId.Name = "txbLivresSaisieId";
+            this.txbLivresSaisieId.Size = new System.Drawing.Size(130, 20);
+            this.txbLivresSaisieId.TabIndex = 1;
+            // lblLivresSaisieTitre
+            this.lblLivresSaisieTitre.AutoSize = true;
+            this.lblLivresSaisieTitre.Location = new System.Drawing.Point(200, 22);
+            this.lblLivresSaisieTitre.Name = "lblLivresSaisieTitre";
+            this.lblLivresSaisieTitre.Text = "Titre :";
+            // txbLivresSaisieTitre
+            this.txbLivresSaisieTitre.Location = new System.Drawing.Point(250, 19);
+            this.txbLivresSaisieTitre.Name = "txbLivresSaisieTitre";
+            this.txbLivresSaisieTitre.Size = new System.Drawing.Size(200, 20);
+            this.txbLivresSaisieTitre.TabIndex = 2;
+            // lblLivresSaisieImage
+            this.lblLivresSaisieImage.AutoSize = true;
+            this.lblLivresSaisieImage.Location = new System.Drawing.Point(460, 22);
+            this.lblLivresSaisieImage.Name = "lblLivresSaisieImage";
+            this.lblLivresSaisieImage.Text = "Image (url) :";
+            // txbLivresSaisieImage
+            this.txbLivresSaisieImage.Location = new System.Drawing.Point(545, 19);
+            this.txbLivresSaisieImage.Name = "txbLivresSaisieImage";
+            this.txbLivresSaisieImage.Size = new System.Drawing.Size(300, 20);
+            this.txbLivresSaisieImage.TabIndex = 3;
+            // lblLivresSaisieIsbn
+            this.lblLivresSaisieIsbn.AutoSize = true;
+            this.lblLivresSaisieIsbn.Location = new System.Drawing.Point(10, 50);
+            this.lblLivresSaisieIsbn.Name = "lblLivresSaisieIsbn";
+            this.lblLivresSaisieIsbn.Text = "ISBN :";
+            // txbLivresSaisieIsbn
+            this.txbLivresSaisieIsbn.Location = new System.Drawing.Point(60, 47);
+            this.txbLivresSaisieIsbn.Name = "txbLivresSaisieIsbn";
+            this.txbLivresSaisieIsbn.Size = new System.Drawing.Size(130, 20);
+            this.txbLivresSaisieIsbn.TabIndex = 4;
+            // lblLivresSaisieAuteur
+            this.lblLivresSaisieAuteur.AutoSize = true;
+            this.lblLivresSaisieAuteur.Location = new System.Drawing.Point(200, 50);
+            this.lblLivresSaisieAuteur.Name = "lblLivresSaisieAuteur";
+            this.lblLivresSaisieAuteur.Text = "Auteur :";
+            // txbLivresSaisieAuteur
+            this.txbLivresSaisieAuteur.Location = new System.Drawing.Point(250, 47);
+            this.txbLivresSaisieAuteur.Name = "txbLivresSaisieAuteur";
+            this.txbLivresSaisieAuteur.Size = new System.Drawing.Size(200, 20);
+            this.txbLivresSaisieAuteur.TabIndex = 5;
+            // lblLivresSaisieCollection
+            this.lblLivresSaisieCollection.AutoSize = true;
+            this.lblLivresSaisieCollection.Location = new System.Drawing.Point(460, 50);
+            this.lblLivresSaisieCollection.Name = "lblLivresSaisieCollection";
+            this.lblLivresSaisieCollection.Text = "Collection :";
+            // txbLivresSaisieCollection
+            this.txbLivresSaisieCollection.Location = new System.Drawing.Point(545, 47);
+            this.txbLivresSaisieCollection.Name = "txbLivresSaisieCollection";
+            this.txbLivresSaisieCollection.Size = new System.Drawing.Size(300, 20);
+            this.txbLivresSaisieCollection.TabIndex = 6;
+            // lblLivresSaisieGenre
+            this.lblLivresSaisieGenre.AutoSize = true;
+            this.lblLivresSaisieGenre.Location = new System.Drawing.Point(10, 82);
+            this.lblLivresSaisieGenre.Name = "lblLivresSaisieGenre";
+            this.lblLivresSaisieGenre.Text = "Genre :";
+            // cbxLivresSaisieGenres
+            this.cbxLivresSaisieGenres.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxLivresSaisieGenres.FormattingEnabled = true;
+            this.cbxLivresSaisieGenres.Location = new System.Drawing.Point(65, 79);
+            this.cbxLivresSaisieGenres.Name = "cbxLivresSaisieGenres";
+            this.cbxLivresSaisieGenres.Size = new System.Drawing.Size(165, 21);
+            this.cbxLivresSaisieGenres.TabIndex = 7;
+            // lblLivresSaisiePublic
+            this.lblLivresSaisiePublic.AutoSize = true;
+            this.lblLivresSaisiePublic.Location = new System.Drawing.Point(245, 82);
+            this.lblLivresSaisiePublic.Name = "lblLivresSaisiePublic";
+            this.lblLivresSaisiePublic.Text = "Public :";
+            // cbxLivresSaisiePublics
+            this.cbxLivresSaisiePublics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxLivresSaisiePublics.FormattingEnabled = true;
+            this.cbxLivresSaisiePublics.Location = new System.Drawing.Point(300, 79);
+            this.cbxLivresSaisiePublics.Name = "cbxLivresSaisiePublics";
+            this.cbxLivresSaisiePublics.Size = new System.Drawing.Size(165, 21);
+            this.cbxLivresSaisiePublics.TabIndex = 8;
+            // lblLivresSaisieRayon
+            this.lblLivresSaisieRayon.AutoSize = true;
+            this.lblLivresSaisieRayon.Location = new System.Drawing.Point(480, 82);
+            this.lblLivresSaisieRayon.Name = "lblLivresSaisieRayon";
+            this.lblLivresSaisieRayon.Text = "Rayon :";
+            // cbxLivresSaisieRayons
+            this.cbxLivresSaisieRayons.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxLivresSaisieRayons.FormattingEnabled = true;
+            this.cbxLivresSaisieRayons.Location = new System.Drawing.Point(535, 79);
+            this.cbxLivresSaisieRayons.Name = "cbxLivresSaisieRayons";
+            this.cbxLivresSaisieRayons.Size = new System.Drawing.Size(165, 21);
+            this.cbxLivresSaisieRayons.TabIndex = 9;
+            // btnLivresAjouter
+            this.btnLivresAjouter.Location = new System.Drawing.Point(10, 115);
+            this.btnLivresAjouter.Name = "btnLivresAjouter";
+            this.btnLivresAjouter.Size = new System.Drawing.Size(100, 28);
+            this.btnLivresAjouter.TabIndex = 10;
+            this.btnLivresAjouter.Text = "Ajouter";
+            this.btnLivresAjouter.UseVisualStyleBackColor = true;
+            this.btnLivresAjouter.Click += new System.EventHandler(this.btnLivresAjouter_Click);
+            // btnLivresModifier
+            this.btnLivresModifier.Location = new System.Drawing.Point(120, 115);
+            this.btnLivresModifier.Name = "btnLivresModifier";
+            this.btnLivresModifier.Size = new System.Drawing.Size(100, 28);
+            this.btnLivresModifier.TabIndex = 11;
+            this.btnLivresModifier.Text = "Modifier";
+            this.btnLivresModifier.UseVisualStyleBackColor = true;
+            this.btnLivresModifier.Click += new System.EventHandler(this.btnLivresModifier_Click);
+            // btnLivresSuppimer
+            this.btnLivresSuppimer.Location = new System.Drawing.Point(230, 115);
+            this.btnLivresSuppimer.Name = "btnLivresSuppimer";
+            this.btnLivresSuppimer.Size = new System.Drawing.Size(120, 28);
+            this.btnLivresSuppimer.TabIndex = 12;
+            this.btnLivresSuppimer.Text = "Supprimer";
+            this.btnLivresSuppimer.UseVisualStyleBackColor = true;
+            this.btnLivresSuppimer.Click += new System.EventHandler(this.btnLivresSuppimer_Click);
+            // 
+            // grpDvdSaisie
+            // 
+            this.grpDvdSaisie.Controls.Add(this.btnDvdAjouter);
+            this.grpDvdSaisie.Controls.Add(this.btnDvdModifier);
+            this.grpDvdSaisie.Controls.Add(this.btnDvdSuppimer);
+            this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieId);
+            this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieTitre);
+            this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieImage);
+            this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieRealisateur);
+            this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieDuree);
+            this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieSynopsis);
+            this.grpDvdSaisie.Controls.Add(this.cbxDvdSaisieGenres);
+            this.grpDvdSaisie.Controls.Add(this.cbxDvdSaisiePublics);
+            this.grpDvdSaisie.Controls.Add(this.cbxDvdSaisieRayons);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisieId);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisieTitre);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisieImage);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisieRealisateur);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisieDuree);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisieSynopsis);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisieGenre);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisiePublic);
+            this.grpDvdSaisie.Controls.Add(this.lblDvdSaisieRayon);
+            this.grpDvdSaisie.Location = new System.Drawing.Point(8, 636);
+            this.grpDvdSaisie.Name = "grpDvdSaisie";
+            this.grpDvdSaisie.Size = new System.Drawing.Size(859, 160);
+            this.grpDvdSaisie.TabIndex = 30;
+            this.grpDvdSaisie.TabStop = false;
+            this.grpDvdSaisie.Text = "Gestion (Ajouter / Modifier / Supprimer)";
+            // lblDvdSaisieId
+            this.lblDvdSaisieId.AutoSize = true;
+            this.lblDvdSaisieId.Location = new System.Drawing.Point(10, 22);
+            this.lblDvdSaisieId.Name = "lblDvdSaisieId";
+            this.lblDvdSaisieId.Text = "Id :";
+            // txbDvdSaisieId
+            this.txbDvdSaisieId.Location = new System.Drawing.Point(60, 19);
+            this.txbDvdSaisieId.Name = "txbDvdSaisieId";
+            this.txbDvdSaisieId.Size = new System.Drawing.Size(130, 20);
+            this.txbDvdSaisieId.TabIndex = 1;
+            // lblDvdSaisieTitre
+            this.lblDvdSaisieTitre.AutoSize = true;
+            this.lblDvdSaisieTitre.Location = new System.Drawing.Point(200, 22);
+            this.lblDvdSaisieTitre.Name = "lblDvdSaisieTitre";
+            this.lblDvdSaisieTitre.Text = "Titre :";
+            // txbDvdSaisieTitre
+            this.txbDvdSaisieTitre.Location = new System.Drawing.Point(250, 19);
+            this.txbDvdSaisieTitre.Name = "txbDvdSaisieTitre";
+            this.txbDvdSaisieTitre.Size = new System.Drawing.Size(200, 20);
+            this.txbDvdSaisieTitre.TabIndex = 2;
+            // lblDvdSaisieImage
+            this.lblDvdSaisieImage.AutoSize = true;
+            this.lblDvdSaisieImage.Location = new System.Drawing.Point(460, 22);
+            this.lblDvdSaisieImage.Name = "lblDvdSaisieImage";
+            this.lblDvdSaisieImage.Text = "Image (url) :";
+            // txbDvdSaisieImage
+            this.txbDvdSaisieImage.Location = new System.Drawing.Point(545, 19);
+            this.txbDvdSaisieImage.Name = "txbDvdSaisieImage";
+            this.txbDvdSaisieImage.Size = new System.Drawing.Size(300, 20);
+            this.txbDvdSaisieImage.TabIndex = 3;
+            // lblDvdSaisieRealisateur
+            this.lblDvdSaisieRealisateur.AutoSize = true;
+            this.lblDvdSaisieRealisateur.Location = new System.Drawing.Point(10, 50);
+            this.lblDvdSaisieRealisateur.Name = "lblDvdSaisieRealisateur";
+            this.lblDvdSaisieRealisateur.Text = "Réalisateur :";
+            // txbDvdSaisieRealisateur
+            this.txbDvdSaisieRealisateur.Location = new System.Drawing.Point(90, 47);
+            this.txbDvdSaisieRealisateur.Name = "txbDvdSaisieRealisateur";
+            this.txbDvdSaisieRealisateur.Size = new System.Drawing.Size(190, 20);
+            this.txbDvdSaisieRealisateur.TabIndex = 4;
+            // lblDvdSaisieDuree
+            this.lblDvdSaisieDuree.AutoSize = true;
+            this.lblDvdSaisieDuree.Location = new System.Drawing.Point(290, 50);
+            this.lblDvdSaisieDuree.Name = "lblDvdSaisieDuree";
+            this.lblDvdSaisieDuree.Text = "Durée (min) :";
+            // txbDvdSaisieDuree
+            this.txbDvdSaisieDuree.Location = new System.Drawing.Point(375, 47);
+            this.txbDvdSaisieDuree.Name = "txbDvdSaisieDuree";
+            this.txbDvdSaisieDuree.Size = new System.Drawing.Size(60, 20);
+            this.txbDvdSaisieDuree.TabIndex = 5;
+            // lblDvdSaisieSynopsis
+            this.lblDvdSaisieSynopsis.AutoSize = true;
+            this.lblDvdSaisieSynopsis.Location = new System.Drawing.Point(445, 50);
+            this.lblDvdSaisieSynopsis.Name = "lblDvdSaisieSynopsis";
+            this.lblDvdSaisieSynopsis.Text = "Synopsis :";
+            // txbDvdSaisieSynopsis
+            this.txbDvdSaisieSynopsis.Location = new System.Drawing.Point(515, 47);
+            this.txbDvdSaisieSynopsis.Name = "txbDvdSaisieSynopsis";
+            this.txbDvdSaisieSynopsis.Size = new System.Drawing.Size(330, 20);
+            this.txbDvdSaisieSynopsis.TabIndex = 6;
+            // lblDvdSaisieGenre
+            this.lblDvdSaisieGenre.AutoSize = true;
+            this.lblDvdSaisieGenre.Location = new System.Drawing.Point(10, 82);
+            this.lblDvdSaisieGenre.Name = "lblDvdSaisieGenre";
+            this.lblDvdSaisieGenre.Text = "Genre :";
+            // cbxDvdSaisieGenres
+            this.cbxDvdSaisieGenres.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDvdSaisieGenres.FormattingEnabled = true;
+            this.cbxDvdSaisieGenres.Location = new System.Drawing.Point(65, 79);
+            this.cbxDvdSaisieGenres.Name = "cbxDvdSaisieGenres";
+            this.cbxDvdSaisieGenres.Size = new System.Drawing.Size(165, 21);
+            this.cbxDvdSaisieGenres.TabIndex = 7;
+            // lblDvdSaisiePublic
+            this.lblDvdSaisiePublic.AutoSize = true;
+            this.lblDvdSaisiePublic.Location = new System.Drawing.Point(245, 82);
+            this.lblDvdSaisiePublic.Name = "lblDvdSaisiePublic";
+            this.lblDvdSaisiePublic.Text = "Public :";
+            // cbxDvdSaisiePublics
+            this.cbxDvdSaisiePublics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDvdSaisiePublics.FormattingEnabled = true;
+            this.cbxDvdSaisiePublics.Location = new System.Drawing.Point(300, 79);
+            this.cbxDvdSaisiePublics.Name = "cbxDvdSaisiePublics";
+            this.cbxDvdSaisiePublics.Size = new System.Drawing.Size(165, 21);
+            this.cbxDvdSaisiePublics.TabIndex = 8;
+            // lblDvdSaisieRayon
+            this.lblDvdSaisieRayon.AutoSize = true;
+            this.lblDvdSaisieRayon.Location = new System.Drawing.Point(480, 82);
+            this.lblDvdSaisieRayon.Name = "lblDvdSaisieRayon";
+            this.lblDvdSaisieRayon.Text = "Rayon :";
+            // cbxDvdSaisieRayons
+            this.cbxDvdSaisieRayons.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDvdSaisieRayons.FormattingEnabled = true;
+            this.cbxDvdSaisieRayons.Location = new System.Drawing.Point(535, 79);
+            this.cbxDvdSaisieRayons.Name = "cbxDvdSaisieRayons";
+            this.cbxDvdSaisieRayons.Size = new System.Drawing.Size(165, 21);
+            this.cbxDvdSaisieRayons.TabIndex = 9;
+            // btnDvdAjouter
+            this.btnDvdAjouter.Location = new System.Drawing.Point(10, 115);
+            this.btnDvdAjouter.Name = "btnDvdAjouter";
+            this.btnDvdAjouter.Size = new System.Drawing.Size(100, 28);
+            this.btnDvdAjouter.TabIndex = 10;
+            this.btnDvdAjouter.Text = "Ajouter";
+            this.btnDvdAjouter.UseVisualStyleBackColor = true;
+            this.btnDvdAjouter.Click += new System.EventHandler(this.btnDvdAjouter_Click);
+            // btnDvdModifier
+            this.btnDvdModifier.Location = new System.Drawing.Point(120, 115);
+            this.btnDvdModifier.Name = "btnDvdModifier";
+            this.btnDvdModifier.Size = new System.Drawing.Size(100, 28);
+            this.btnDvdModifier.TabIndex = 11;
+            this.btnDvdModifier.Text = "Modifier";
+            this.btnDvdModifier.UseVisualStyleBackColor = true;
+            this.btnDvdModifier.Click += new System.EventHandler(this.btnDvdModifier_Click);
+            // btnDvdSuppimer
+            this.btnDvdSuppimer.Location = new System.Drawing.Point(230, 115);
+            this.btnDvdSuppimer.Name = "btnDvdSuppimer";
+            this.btnDvdSuppimer.Size = new System.Drawing.Size(120, 28);
+            this.btnDvdSuppimer.TabIndex = 12;
+            this.btnDvdSuppimer.Text = "Supprimer";
+            this.btnDvdSuppimer.UseVisualStyleBackColor = true;
+            this.btnDvdSuppimer.Click += new System.EventHandler(this.btnDvdSuppimer_Click);
+            // 
+            // grpRevuesSaisie
+            // 
+            this.grpRevuesSaisie.Controls.Add(this.btnRevuesAjouter);
+            this.grpRevuesSaisie.Controls.Add(this.btnRevuesModifier);
+            this.grpRevuesSaisie.Controls.Add(this.btnRevuesSuppimer);
+            this.grpRevuesSaisie.Controls.Add(this.txbRevuesSaisieId);
+            this.grpRevuesSaisie.Controls.Add(this.txbRevuesSaisieTitre);
+            this.grpRevuesSaisie.Controls.Add(this.txbRevuesSaisieImage);
+            this.grpRevuesSaisie.Controls.Add(this.txbRevuesSaisiePeriodicite);
+            this.grpRevuesSaisie.Controls.Add(this.txbRevuesSaisieDelai);
+            this.grpRevuesSaisie.Controls.Add(this.cbxRevuesSaisieGenres);
+            this.grpRevuesSaisie.Controls.Add(this.cbxRevuesSaisiePublics);
+            this.grpRevuesSaisie.Controls.Add(this.cbxRevuesSaisieRayons);
+            this.grpRevuesSaisie.Controls.Add(this.lblRevuesSaisieId);
+            this.grpRevuesSaisie.Controls.Add(this.lblRevuesSaisieTitre);
+            this.grpRevuesSaisie.Controls.Add(this.lblRevuesSaisieImage);
+            this.grpRevuesSaisie.Controls.Add(this.lblRevuesSaisiePeriodicite);
+            this.grpRevuesSaisie.Controls.Add(this.lblRevuesSaisieDelai);
+            this.grpRevuesSaisie.Controls.Add(this.lblRevuesSaisieGenre);
+            this.grpRevuesSaisie.Controls.Add(this.lblRevuesSaisiePublic);
+            this.grpRevuesSaisie.Controls.Add(this.lblRevuesSaisieRayon);
+            this.grpRevuesSaisie.Location = new System.Drawing.Point(8, 636);
+            this.grpRevuesSaisie.Name = "grpRevuesSaisie";
+            this.grpRevuesSaisie.Size = new System.Drawing.Size(859, 160);
+            this.grpRevuesSaisie.TabIndex = 30;
+            this.grpRevuesSaisie.TabStop = false;
+            this.grpRevuesSaisie.Text = "Gestion (Ajouter / Modifier / Supprimer)";
+            // lblRevuesSaisieId
+            this.lblRevuesSaisieId.AutoSize = true;
+            this.lblRevuesSaisieId.Location = new System.Drawing.Point(10, 22);
+            this.lblRevuesSaisieId.Name = "lblRevuesSaisieId";
+            this.lblRevuesSaisieId.Text = "Id :";
+            // txbRevuesSaisieId
+            this.txbRevuesSaisieId.Location = new System.Drawing.Point(60, 19);
+            this.txbRevuesSaisieId.Name = "txbRevuesSaisieId";
+            this.txbRevuesSaisieId.Size = new System.Drawing.Size(130, 20);
+            this.txbRevuesSaisieId.TabIndex = 1;
+            // lblRevuesSaisieTitre
+            this.lblRevuesSaisieTitre.AutoSize = true;
+            this.lblRevuesSaisieTitre.Location = new System.Drawing.Point(200, 22);
+            this.lblRevuesSaisieTitre.Name = "lblRevuesSaisieTitre";
+            this.lblRevuesSaisieTitre.Text = "Titre :";
+            // txbRevuesSaisieTitre
+            this.txbRevuesSaisieTitre.Location = new System.Drawing.Point(250, 19);
+            this.txbRevuesSaisieTitre.Name = "txbRevuesSaisieTitre";
+            this.txbRevuesSaisieTitre.Size = new System.Drawing.Size(200, 20);
+            this.txbRevuesSaisieTitre.TabIndex = 2;
+            // lblRevuesSaisieImage
+            this.lblRevuesSaisieImage.AutoSize = true;
+            this.lblRevuesSaisieImage.Location = new System.Drawing.Point(460, 22);
+            this.lblRevuesSaisieImage.Name = "lblRevuesSaisieImage";
+            this.lblRevuesSaisieImage.Text = "Image (url) :";
+            // txbRevuesSaisieImage
+            this.txbRevuesSaisieImage.Location = new System.Drawing.Point(545, 19);
+            this.txbRevuesSaisieImage.Name = "txbRevuesSaisieImage";
+            this.txbRevuesSaisieImage.Size = new System.Drawing.Size(300, 20);
+            this.txbRevuesSaisieImage.TabIndex = 3;
+            // lblRevuesSaisiePeriodicite
+            this.lblRevuesSaisiePeriodicite.AutoSize = true;
+            this.lblRevuesSaisiePeriodicite.Location = new System.Drawing.Point(10, 50);
+            this.lblRevuesSaisiePeriodicite.Name = "lblRevuesSaisiePeriodicite";
+            this.lblRevuesSaisiePeriodicite.Text = "Périodicité :";
+            // txbRevuesSaisiePeriodicite
+            this.txbRevuesSaisiePeriodicite.Location = new System.Drawing.Point(90, 47);
+            this.txbRevuesSaisiePeriodicite.Name = "txbRevuesSaisiePeriodicite";
+            this.txbRevuesSaisiePeriodicite.Size = new System.Drawing.Size(130, 20);
+            this.txbRevuesSaisiePeriodicite.TabIndex = 4;
+            // lblRevuesSaisieDelai
+            this.lblRevuesSaisieDelai.AutoSize = true;
+            this.lblRevuesSaisieDelai.Location = new System.Drawing.Point(235, 50);
+            this.lblRevuesSaisieDelai.Name = "lblRevuesSaisieDelai";
+            this.lblRevuesSaisieDelai.Text = "Délai mise à dispo :";
+            // txbRevuesSaisieDelai
+            this.txbRevuesSaisieDelai.Location = new System.Drawing.Point(345, 47);
+            this.txbRevuesSaisieDelai.Name = "txbRevuesSaisieDelai";
+            this.txbRevuesSaisieDelai.Size = new System.Drawing.Size(60, 20);
+            this.txbRevuesSaisieDelai.TabIndex = 5;
+            // lblRevuesSaisieGenre
+            this.lblRevuesSaisieGenre.AutoSize = true;
+            this.lblRevuesSaisieGenre.Location = new System.Drawing.Point(10, 82);
+            this.lblRevuesSaisieGenre.Name = "lblRevuesSaisieGenre";
+            this.lblRevuesSaisieGenre.Text = "Genre :";
+            // cbxRevuesSaisieGenres
+            this.cbxRevuesSaisieGenres.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxRevuesSaisieGenres.FormattingEnabled = true;
+            this.cbxRevuesSaisieGenres.Location = new System.Drawing.Point(65, 79);
+            this.cbxRevuesSaisieGenres.Name = "cbxRevuesSaisieGenres";
+            this.cbxRevuesSaisieGenres.Size = new System.Drawing.Size(165, 21);
+            this.cbxRevuesSaisieGenres.TabIndex = 6;
+            // lblRevuesSaisiePublic
+            this.lblRevuesSaisiePublic.AutoSize = true;
+            this.lblRevuesSaisiePublic.Location = new System.Drawing.Point(245, 82);
+            this.lblRevuesSaisiePublic.Name = "lblRevuesSaisiePublic";
+            this.lblRevuesSaisiePublic.Text = "Public :";
+            // cbxRevuesSaisiePublics
+            this.cbxRevuesSaisiePublics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxRevuesSaisiePublics.FormattingEnabled = true;
+            this.cbxRevuesSaisiePublics.Location = new System.Drawing.Point(300, 79);
+            this.cbxRevuesSaisiePublics.Name = "cbxRevuesSaisiePublics";
+            this.cbxRevuesSaisiePublics.Size = new System.Drawing.Size(165, 21);
+            this.cbxRevuesSaisiePublics.TabIndex = 7;
+            // lblRevuesSaisieRayon
+            this.lblRevuesSaisieRayon.AutoSize = true;
+            this.lblRevuesSaisieRayon.Location = new System.Drawing.Point(480, 82);
+            this.lblRevuesSaisieRayon.Name = "lblRevuesSaisieRayon";
+            this.lblRevuesSaisieRayon.Text = "Rayon :";
+            // cbxRevuesSaisieRayons
+            this.cbxRevuesSaisieRayons.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxRevuesSaisieRayons.FormattingEnabled = true;
+            this.cbxRevuesSaisieRayons.Location = new System.Drawing.Point(535, 79);
+            this.cbxRevuesSaisieRayons.Name = "cbxRevuesSaisieRayons";
+            this.cbxRevuesSaisieRayons.Size = new System.Drawing.Size(165, 21);
+            this.cbxRevuesSaisieRayons.TabIndex = 8;
+            // btnRevuesAjouter
+            this.btnRevuesAjouter.Location = new System.Drawing.Point(10, 115);
+            this.btnRevuesAjouter.Name = "btnRevuesAjouter";
+            this.btnRevuesAjouter.Size = new System.Drawing.Size(100, 28);
+            this.btnRevuesAjouter.TabIndex = 9;
+            this.btnRevuesAjouter.Text = "Ajouter";
+            this.btnRevuesAjouter.UseVisualStyleBackColor = true;
+            this.btnRevuesAjouter.Click += new System.EventHandler(this.btnRevuesAjouter_Click);
+            // btnRevuesModifier
+            this.btnRevuesModifier.Location = new System.Drawing.Point(120, 115);
+            this.btnRevuesModifier.Name = "btnRevuesModifier";
+            this.btnRevuesModifier.Size = new System.Drawing.Size(100, 28);
+            this.btnRevuesModifier.TabIndex = 10;
+            this.btnRevuesModifier.Text = "Modifier";
+            this.btnRevuesModifier.UseVisualStyleBackColor = true;
+            this.btnRevuesModifier.Click += new System.EventHandler(this.btnRevuesModifier_Click);
+            // btnRevuesSuppimer
+            this.btnRevuesSuppimer.Location = new System.Drawing.Point(230, 115);
+            this.btnRevuesSuppimer.Name = "btnRevuesSuppimer";
+            this.btnRevuesSuppimer.Size = new System.Drawing.Size(120, 28);
+            this.btnRevuesSuppimer.TabIndex = 11;
+            this.btnRevuesSuppimer.Text = "Supprimer";
+            this.btnRevuesSuppimer.UseVisualStyleBackColor = true;
+            this.btnRevuesSuppimer.Click += new System.EventHandler(this.btnRevuesSuppimer_Click);
+            // 
             // FrmMediatek
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(883, 659);
+            this.ClientSize = new System.Drawing.Size(883, 831);
             this.Controls.Add(this.tabOngletsApplication);
             this.Name = "FrmMediatek";
             this.Text = "Gestion des documents de la médiathèque";
             this.tabOngletsApplication.ResumeLayout(false);
+            this.grpLivresSaisie.ResumeLayout(false);
+            this.grpLivresSaisie.PerformLayout();
+            this.grpDvdSaisie.ResumeLayout(false);
+            this.grpDvdSaisie.PerformLayout();
+            this.grpRevuesSaisie.ResumeLayout(false);
+            this.grpRevuesSaisie.PerformLayout();
             this.tabLivres.ResumeLayout(false);
             this.grpLivresInfos.ResumeLayout(false);
             this.grpLivresInfos.PerformLayout();
@@ -1970,6 +2487,73 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label59;
+        // ── Livres saisie CRUD ──
+        private System.Windows.Forms.GroupBox grpLivresSaisie;
+        private System.Windows.Forms.Button btnLivresAjouter;
+        private System.Windows.Forms.Button btnLivresModifier;
+        private System.Windows.Forms.Button btnLivresSuppimer;
+        private System.Windows.Forms.TextBox txbLivresSaisieId;
+        private System.Windows.Forms.TextBox txbLivresSaisieTitre;
+        private System.Windows.Forms.TextBox txbLivresSaisieImage;
+        private System.Windows.Forms.TextBox txbLivresSaisieIsbn;
+        private System.Windows.Forms.TextBox txbLivresSaisieAuteur;
+        private System.Windows.Forms.TextBox txbLivresSaisieCollection;
+        private System.Windows.Forms.ComboBox cbxLivresSaisieGenres;
+        private System.Windows.Forms.ComboBox cbxLivresSaisiePublics;
+        private System.Windows.Forms.ComboBox cbxLivresSaisieRayons;
+        private System.Windows.Forms.Label lblLivresSaisieId;
+        private System.Windows.Forms.Label lblLivresSaisieTitre;
+        private System.Windows.Forms.Label lblLivresSaisieImage;
+        private System.Windows.Forms.Label lblLivresSaisieIsbn;
+        private System.Windows.Forms.Label lblLivresSaisieAuteur;
+        private System.Windows.Forms.Label lblLivresSaisieCollection;
+        private System.Windows.Forms.Label lblLivresSaisieGenre;
+        private System.Windows.Forms.Label lblLivresSaisiePublic;
+        private System.Windows.Forms.Label lblLivresSaisieRayon;
+        // ── DVD saisie CRUD ──
+        private System.Windows.Forms.GroupBox grpDvdSaisie;
+        private System.Windows.Forms.Button btnDvdAjouter;
+        private System.Windows.Forms.Button btnDvdModifier;
+        private System.Windows.Forms.Button btnDvdSuppimer;
+        private System.Windows.Forms.TextBox txbDvdSaisieId;
+        private System.Windows.Forms.TextBox txbDvdSaisieTitre;
+        private System.Windows.Forms.TextBox txbDvdSaisieImage;
+        private System.Windows.Forms.TextBox txbDvdSaisieRealisateur;
+        private System.Windows.Forms.TextBox txbDvdSaisieDuree;
+        private System.Windows.Forms.TextBox txbDvdSaisieSynopsis;
+        private System.Windows.Forms.ComboBox cbxDvdSaisieGenres;
+        private System.Windows.Forms.ComboBox cbxDvdSaisiePublics;
+        private System.Windows.Forms.ComboBox cbxDvdSaisieRayons;
+        private System.Windows.Forms.Label lblDvdSaisieId;
+        private System.Windows.Forms.Label lblDvdSaisieTitre;
+        private System.Windows.Forms.Label lblDvdSaisieImage;
+        private System.Windows.Forms.Label lblDvdSaisieRealisateur;
+        private System.Windows.Forms.Label lblDvdSaisieDuree;
+        private System.Windows.Forms.Label lblDvdSaisieSynopsis;
+        private System.Windows.Forms.Label lblDvdSaisieGenre;
+        private System.Windows.Forms.Label lblDvdSaisiePublic;
+        private System.Windows.Forms.Label lblDvdSaisieRayon;
+        // ── Revues saisie CRUD ──
+        private System.Windows.Forms.GroupBox grpRevuesSaisie;
+        private System.Windows.Forms.Button btnRevuesAjouter;
+        private System.Windows.Forms.Button btnRevuesModifier;
+        private System.Windows.Forms.Button btnRevuesSuppimer;
+        private System.Windows.Forms.TextBox txbRevuesSaisieId;
+        private System.Windows.Forms.TextBox txbRevuesSaisieTitre;
+        private System.Windows.Forms.TextBox txbRevuesSaisieImage;
+        private System.Windows.Forms.TextBox txbRevuesSaisiePeriodicite;
+        private System.Windows.Forms.TextBox txbRevuesSaisieDelai;
+        private System.Windows.Forms.ComboBox cbxRevuesSaisieGenres;
+        private System.Windows.Forms.ComboBox cbxRevuesSaisiePublics;
+        private System.Windows.Forms.ComboBox cbxRevuesSaisieRayons;
+        private System.Windows.Forms.Label lblRevuesSaisieId;
+        private System.Windows.Forms.Label lblRevuesSaisieTitre;
+        private System.Windows.Forms.Label lblRevuesSaisieImage;
+        private System.Windows.Forms.Label lblRevuesSaisiePeriodicite;
+        private System.Windows.Forms.Label lblRevuesSaisieDelai;
+        private System.Windows.Forms.Label lblRevuesSaisieGenre;
+        private System.Windows.Forms.Label lblRevuesSaisiePublic;
+        private System.Windows.Forms.Label lblRevuesSaisieRayon;
     }
 }
 
