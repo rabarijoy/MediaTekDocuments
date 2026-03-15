@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using MediaTekDocuments.model;
 using MediaTekDocuments.manager;
@@ -37,6 +37,12 @@ namespace MediaTekDocuments.dal
         private const string POST = "POST";
         /// <summary>
         /// méthode HTTP pour update
+        /// </summary>
+        private const string PUT = "PUT";
+        /// <summary>
+        /// méthode HTTP pour delete
+        /// </summary>
+        private const string DELETE = "DELETE";
 
         /// <summary>
         /// Méthode privée pour créer un singleton
@@ -130,7 +136,6 @@ namespace MediaTekDocuments.dal
             return lesRevues;
         }
 
-
         /// <summary>
         /// Retourne les exemplaires d'une revue
         /// </summary>
@@ -163,6 +168,191 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        // =====================================================================
+        // LIVRE : ajout, modification, suppression
+        // =====================================================================
+
+        /// <summary>
+        /// Insère un livre dans les tables document, livres_dvd et livre
+        /// </summary>
+        /// <param name="livre">le livre à insérer</param>
+        /// <returns>true si l'opération a réussi</returns>
+        public bool AjouterLivre(Livre livre)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "id",         livre.Id },
+                { "titre",      livre.Titre },
+                { "image",      livre.Image },
+                { "idRayon",    livre.IdRayon },
+                { "idPublic",   livre.IdPublic },
+                { "idGenre",    livre.IdGenre },
+                { "ISBN",       livre.Isbn },
+                { "auteur",     livre.Auteur },
+                { "collection", livre.Collection }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(POST, "livre", "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Modifie un livre dans les tables document et livre
+        /// </summary>
+        /// <param name="livre">le livre avec les nouvelles valeurs</param>
+        /// <returns>true si l'opération a réussi</returns>
+        public bool ModifierLivre(Livre livre)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "titre",      livre.Titre },
+                { "image",      livre.Image },
+                { "idRayon",    livre.IdRayon },
+                { "idPublic",   livre.IdPublic },
+                { "idGenre",    livre.IdGenre },
+                { "ISBN",       livre.Isbn },
+                { "auteur",     livre.Auteur },
+                { "collection", livre.Collection }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(PUT, "livre/" + livre.Id, "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Supprime un livre (et ses entrées dans document et livres_dvd)
+        /// Refuse si des exemplaires ou commandes existent
+        /// </summary>
+        /// <param name="id">identifiant du livre</param>
+        /// <returns>true si la suppression a réussi</returns>
+        public bool SupprimerLivre(string id)
+        {
+            string jsonFiltreId = convertToJson("id", id);
+            return TraitementAction(DELETE, "livre/" + jsonFiltreId, "");
+        }
+
+        // =====================================================================
+        // DVD : ajout, modification, suppression
+        // =====================================================================
+
+        /// <summary>
+        /// Insère un dvd dans les tables document, livres_dvd et dvd
+        /// </summary>
+        /// <param name="dvd">le dvd à insérer</param>
+        /// <returns>true si l'opération a réussi</returns>
+        public bool AjouterDvd(Dvd dvd)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "id",          dvd.Id },
+                { "titre",       dvd.Titre },
+                { "image",       dvd.Image },
+                { "idRayon",     dvd.IdRayon },
+                { "idPublic",    dvd.IdPublic },
+                { "idGenre",     dvd.IdGenre },
+                { "synopsis",    dvd.Synopsis },
+                { "realisateur", dvd.Realisateur },
+                { "duree",       dvd.Duree }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(POST, "dvd", "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Modifie un dvd dans les tables document et dvd
+        /// </summary>
+        /// <param name="dvd">le dvd avec les nouvelles valeurs</param>
+        /// <returns>true si l'opération a réussi</returns>
+        public bool ModifierDvd(Dvd dvd)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "titre",       dvd.Titre },
+                { "image",       dvd.Image },
+                { "idRayon",     dvd.IdRayon },
+                { "idPublic",    dvd.IdPublic },
+                { "idGenre",     dvd.IdGenre },
+                { "synopsis",    dvd.Synopsis },
+                { "realisateur", dvd.Realisateur },
+                { "duree",       dvd.Duree }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(PUT, "dvd/" + dvd.Id, "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Supprime un dvd (et ses entrées dans document et livres_dvd)
+        /// Refuse si des exemplaires ou commandes existent
+        /// </summary>
+        /// <param name="id">identifiant du dvd</param>
+        /// <returns>true si la suppression a réussi</returns>
+        public bool SupprimerDvd(string id)
+        {
+            string jsonFiltreId = convertToJson("id", id);
+            return TraitementAction(DELETE, "dvd/" + jsonFiltreId, "");
+        }
+
+        // =====================================================================
+        // REVUE : ajout, modification, suppression
+        // =====================================================================
+
+        /// <summary>
+        /// Insère une revue dans les tables document et revue
+        /// </summary>
+        /// <param name="revue">la revue à insérer</param>
+        /// <returns>true si l'opération a réussi</returns>
+        public bool AjouterRevue(Revue revue)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "id",              revue.Id },
+                { "titre",           revue.Titre },
+                { "image",           revue.Image },
+                { "idRayon",         revue.IdRayon },
+                { "idPublic",        revue.IdPublic },
+                { "idGenre",         revue.IdGenre },
+                { "periodicite",     revue.Periodicite },
+                { "delaiMiseADispo", revue.DelaiMiseADispo }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(POST, "revue", "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Modifie une revue dans les tables document et revue
+        /// </summary>
+        /// <param name="revue">la revue avec les nouvelles valeurs</param>
+        /// <returns>true si l'opération a réussi</returns>
+        public bool ModifierRevue(Revue revue)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "titre",           revue.Titre },
+                { "image",           revue.Image },
+                { "idRayon",         revue.IdRayon },
+                { "idPublic",        revue.IdPublic },
+                { "idGenre",         revue.IdGenre },
+                { "periodicite",     revue.Periodicite },
+                { "delaiMiseADispo", revue.DelaiMiseADispo }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(PUT, "revue/" + revue.Id, "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Supprime une revue (et son entrée dans document)
+        /// Refuse si des exemplaires ou abonnements existent
+        /// </summary>
+        /// <param name="id">identifiant de la revue</param>
+        /// <returns>true si la suppression a réussi</returns>
+        public bool SupprimerRevue(string id)
+        {
+            string jsonFiltreId = convertToJson("id", id);
+            return TraitementAction(DELETE, "revue/" + jsonFiltreId, "");
+        }
+
+        // =====================================================================
+        // Méthodes privées
+        // =====================================================================
+
         /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)
         /// </summary>
@@ -173,20 +363,16 @@ namespace MediaTekDocuments.dal
         /// <returns>liste d'objets récupérés (ou liste vide)</returns>
         private List<T> TraitementRecup<T> (String methode, String message, String parametres)
         {
-            // trans
             List<T> liste = new List<T>();
             try
             {
                 JObject retour = api.RecupDistant(methode, message, parametres);
-                // extraction du code retourné
                 String code = (String)retour["code"];
                 if (code.Equals("200"))
                 {
-                    // dans le cas du GET (select), récupération de la liste d'objets
                     if (methode.Equals(GET))
                     {
                         String resultString = JsonConvert.SerializeObject(retour["result"]);
-                        // construction de la liste d'objets à partir du retour de l'api
                         liste = JsonConvert.DeserializeObject<List<T>>(resultString, new CustomBooleanJsonConverter());
                     }
                 }
@@ -200,6 +386,32 @@ namespace MediaTekDocuments.dal
                 Environment.Exit(0);
             }
             return liste;
+        }
+
+        /// <summary>
+        /// Traitement d'une action (POST, PUT, DELETE) : vérifie le code retour "200"
+        /// </summary>
+        /// <param name="methode">verbe HTTP</param>
+        /// <param name="message">endpoint dans l'url</param>
+        /// <param name="parametres">body de la requête</param>
+        /// <returns>true si code retour est "200", false sinon</returns>
+        private bool TraitementAction(string methode, string message, string parametres)
+        {
+            try
+            {
+                JObject retour = api.RecupDistant(methode, message, parametres);
+                string code = (string)retour["code"];
+                if (!code.Equals("200"))
+                {
+                    Console.WriteLine("code erreur = " + code + " message = " + (string)retour["message"]);
+                }
+                return code.Equals("200");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erreur lors de l'accès à l'API : " + e.Message);
+                return false;
+            }
         }
 
         /// <summary>

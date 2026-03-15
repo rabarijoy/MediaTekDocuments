@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 using MediaTekDocuments.model;
 using MediaTekDocuments.controller;
@@ -20,6 +20,46 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgGenres = new BindingSource();
         private readonly BindingSource bdgPublics = new BindingSource();
         private readonly BindingSource bdgRayons = new BindingSource();
+
+        /// <summary>
+        /// Calcule le premier identifiant entier non encore attribué dans la liste fournie.
+        /// Détecte automatiquement le préfixe non-numérique et le formatage (zéros de remplissage).
+        /// Exemple : ["LIV001","LIV003"] → "LIV002"
+        /// </summary>
+        private string ProchainId(IEnumerable<string> idsExistants)
+        {
+            var ids = idsExistants.ToList();
+            // Détection du préfixe commun (ex: "LIV", "DVD", "")
+            string prefixe = "";
+            if (ids.Count > 0)
+            {
+                string premier = ids[0];
+                int fin = 0;
+                while (fin < premier.Length && !char.IsDigit(premier[fin])) fin++;
+                string candidat = premier.Substring(0, fin);
+                if (ids.All(id => id.StartsWith(candidat, StringComparison.OrdinalIgnoreCase)))
+                    prefixe = candidat;
+            }
+            // Collecte des numéros existants et détection de la largeur de formatage
+            var nums = new HashSet<int>();
+            int largeur = 0;
+            foreach (string id in ids)
+            {
+                string partie = id.Length > prefixe.Length ? id.Substring(prefixe.Length) : "";
+                if (int.TryParse(partie, out int n) && n > 0)
+                {
+                    nums.Add(n);
+                    if (partie.Length > largeur) largeur = partie.Length;
+                }
+            }
+            // Premier entier strictement positif non utilisé
+            int suivant = 1;
+            while (nums.Contains(suivant)) suivant++;
+            string numStr = largeur > 0
+                ? suivant.ToString().PadLeft(largeur, '0')
+                : suivant.ToString();
+            return prefixe + numStr;
+        }
 
         /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
@@ -51,6 +91,11 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgLivresListe = new BindingSource();
         private List<Livre> lesLivres = new List<Livre>();
 
+        // BindingSources dédiés aux ComboBox de saisie de l'onglet Livres
+        private readonly BindingSource bdgLivresSaisieGenres = new BindingSource();
+        private readonly BindingSource bdgLivresSaisiePublics = new BindingSource();
+        private readonly BindingSource bdgLivresSaisieRayons = new BindingSource();
+
         /// <summary>
         /// Ouverture de l'onglet Livres : 
         /// appel des méthodes pour remplir le datagrid des livres et des combos (genre, rayon, public)
@@ -63,6 +108,10 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+            // combos de saisie CRUD
+            RemplirComboCategorie(controller.GetAllGenres(), bdgLivresSaisieGenres, cbxLivresSaisieGenres);
+            RemplirComboCategorie(controller.GetAllPublics(), bdgLivresSaisiePublics, cbxLivresSaisiePublics);
+            RemplirComboCategorie(controller.GetAllRayons(), bdgLivresSaisieRayons, cbxLivresSaisieRayons);
             RemplirLivresListeComplete();
         }
 
@@ -248,7 +297,7 @@ namespace MediaTekDocuments.view
 
         /// <summary>
         /// Sur la sélection d'une ligne ou cellule dans le grid
-        /// affichage des informations du livre
+        /// affichage des informations du livre + remplissage des champs de saisie CRUD
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -260,6 +309,7 @@ namespace MediaTekDocuments.view
                 {
                     Livre livre = (Livre)bdgLivresListe.List[bdgLivresListe.Position];
                     AfficheLivresInfos(livre);
+                    RemplirLivresSaisie(livre);
                 }
                 catch
                 {
@@ -269,6 +319,7 @@ namespace MediaTekDocuments.view
             else
             {
                 VideLivresInfos();
+                VideLivresSaisie();
             }
         }
 
@@ -360,11 +411,215 @@ namespace MediaTekDocuments.view
             }
             RemplirLivresListe(sortedList);
         }
+
+        // ─── CRUD Livres ──────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Remplit les champs de saisie CRUD à partir du livre sélectionné
+        /// </summary>
+        /// <param name="livre">le livre sélectionné</param>
+        private void RemplirLivresSaisie(Livre livre)
+        {
+            txbLivresSaisieId.ReadOnly = true;
+            txbLivresSaisieId.Text = livre.Id;
+            btnLivresAjouter.Enabled = false;
+            btnLivresModifier.Enabled = true;
+            btnLivresSuppimer.Enabled = true;
+            txbLivresSaisieTitre.Text = livre.Titre;
+            txbLivresSaisieImage.Text = livre.Image;
+            txbLivresSaisieIsbn.Text = livre.Isbn;
+            txbLivresSaisieAuteur.Text = livre.Auteur;
+            txbLivresSaisieCollection.Text = livre.Collection;
+
+            List<Categorie> genres = bdgLivresSaisieGenres.DataSource as List<Categorie>;
+            int idxGenre = genres?.FindIndex(c => c.Id == livre.IdGenre) ?? -1;
+            cbxLivresSaisieGenres.SelectedIndex = idxGenre;
+
+            List<Categorie> publics = bdgLivresSaisiePublics.DataSource as List<Categorie>;
+            int idxPublic = publics?.FindIndex(c => c.Id == livre.IdPublic) ?? -1;
+            cbxLivresSaisiePublics.SelectedIndex = idxPublic;
+
+            List<Categorie> rayons = bdgLivresSaisieRayons.DataSource as List<Categorie>;
+            int idxRayon = rayons?.FindIndex(c => c.Id == livre.IdRayon) ?? -1;
+            cbxLivresSaisieRayons.SelectedIndex = idxRayon;
+        }
+
+        /// <summary>
+        /// Vide les champs de saisie CRUD du groupe Livres
+        /// </summary>
+        private void VideLivresSaisie()
+        {
+            txbLivresSaisieId.ReadOnly = true;
+            txbLivresSaisieId.Text = ProchainId(lesLivres.Select(l => l.Id));
+            txbLivresSaisieTitre.Text = "";
+            txbLivresSaisieImage.Text = "";
+            txbLivresSaisieIsbn.Text = "";
+            txbLivresSaisieAuteur.Text = "";
+            txbLivresSaisieCollection.Text = "";
+            cbxLivresSaisieGenres.SelectedIndex = -1;
+            cbxLivresSaisiePublics.SelectedIndex = -1;
+            cbxLivresSaisieRayons.SelectedIndex = -1;
+            btnLivresAjouter.Enabled = true;
+            btnLivresModifier.Enabled = false;
+            btnLivresSuppimer.Enabled = false;
+        }
+
+        /// <summary>
+        /// Construit un objet Livre depuis les champs de saisie
+        /// Retourne null si les ComboBox de catégorie ne sont pas sélectionnés
+        /// </summary>
+        private Livre LivreDepuisSaisie()
+        {
+            if (cbxLivresSaisieGenres.SelectedItem == null ||
+                cbxLivresSaisiePublics.SelectedItem == null ||
+                cbxLivresSaisieRayons.SelectedItem == null)
+                return null;
+
+            Categorie genre   = (Categorie)cbxLivresSaisieGenres.SelectedItem;
+            Categorie lePublic = (Categorie)cbxLivresSaisiePublics.SelectedItem;
+            Categorie rayon   = (Categorie)cbxLivresSaisieRayons.SelectedItem;
+
+            return new Livre(
+                txbLivresSaisieId.Text.Trim(),
+                txbLivresSaisieTitre.Text.Trim(),
+                txbLivresSaisieImage.Text.Trim(),
+                txbLivresSaisieIsbn.Text.Trim(),
+                txbLivresSaisieAuteur.Text.Trim(),
+                txbLivresSaisieCollection.Text.Trim(),
+                genre.Id,    genre.Libelle,
+                lePublic.Id, lePublic.Libelle,
+                rayon.Id,    rayon.Libelle
+            );
+        }
+
+        /// <summary>
+        /// Ajout d'un livre
+        /// </summary>
+        private void btnLivresAjouter_Click(object sender, EventArgs e)
+        {
+            if (txbLivresSaisieTitre.Text.Trim().Equals("") ||
+                txbLivresSaisieIsbn.Text.Trim().Equals("") ||
+                txbLivresSaisieAuteur.Text.Trim().Equals(""))
+            {
+                MessageBox.Show("Les champs Titre, ISBN et Auteur sont obligatoires.", "Saisie incomplète",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Livre livre = LivreDepuisSaisie();
+            if (livre == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", "Saisie incomplète",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (controller.AjouterLivre(livre))
+            {
+                MessageBox.Show("Livre ajouté avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lesLivres = controller.GetAllLivres();
+                RemplirLivresListeComplete();
+                VideLivresSaisie();
+            }
+            else
+            {
+                MessageBox.Show("Erreur lors de l'ajout du livre.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Modification du livre sélectionné
+        /// </summary>
+        private void btnLivresModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvLivresListe.SelectedRows.Count == 0 && dgvLivresListe.CurrentCell == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un livre à modifier.", "Aucune sélection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Livre livre = LivreDepuisSaisie();
+            if (livre == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", "Saisie incomplète",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (controller.ModifierLivre(livre))
+            {
+                MessageBox.Show("Livre modifié avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lesLivres = controller.GetAllLivres();
+                RemplirLivresListeComplete();
+                VideLivresSaisie();
+            }
+            else
+            {
+                MessageBox.Show("Erreur lors de la modification du livre.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Efface les champs de saisie et passe en mode « nouveau livre » avec Id auto-attribué
+        /// </summary>
+        private void btnLivresEffacer_Click(object sender, EventArgs e)
+        {
+            VideLivresSaisie();
+        }
+
+        /// <summary>
+        /// Suppression du livre sélectionné
+        /// </summary>
+        private void btnLivresSuppimer_Click(object sender, EventArgs e)
+        {
+            if (dgvLivresListe.SelectedRows.Count == 0 && dgvLivresListe.CurrentCell == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un livre à supprimer.", "Aucune sélection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string id = txbLivresSaisieId.Text.Trim();
+            if (id.Equals(""))
+            {
+                MessageBox.Show("Aucun livre sélectionné.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult confirm = MessageBox.Show(
+                "Confirmer la suppression de ce livre ?",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                if (controller.SupprimerLivre(id))
+                {
+                    MessageBox.Show("Livre supprimé avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lesLivres = controller.GetAllLivres();
+                    RemplirLivresListeComplete();
+                    VideLivresSaisie();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Suppression impossible : le livre possède des exemplaires ou des commandes.",
+                        "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
         #endregion
 
         #region Onglet Dvd
         private readonly BindingSource bdgDvdListe = new BindingSource();
         private List<Dvd> lesDvd = new List<Dvd>();
+
+        // BindingSources dédiés aux ComboBox de saisie de l'onglet DVD
+        private readonly BindingSource bdgDvdSaisieGenres = new BindingSource();
+        private readonly BindingSource bdgDvdSaisiePublics = new BindingSource();
+        private readonly BindingSource bdgDvdSaisieRayons = new BindingSource();
 
         /// <summary>
         /// Ouverture de l'onglet Dvds : 
@@ -378,6 +633,10 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
+            // combos de saisie CRUD
+            RemplirComboCategorie(controller.GetAllGenres(), bdgDvdSaisieGenres, cbxDvdSaisieGenres);
+            RemplirComboCategorie(controller.GetAllPublics(), bdgDvdSaisiePublics, cbxDvdSaisiePublics);
+            RemplirComboCategorie(controller.GetAllRayons(), bdgDvdSaisieRayons, cbxDvdSaisieRayons);
             RemplirDvdListeComplete();
         }
 
@@ -563,7 +822,7 @@ namespace MediaTekDocuments.view
 
         /// <summary>
         /// Sur la sélection d'une ligne ou cellule dans le grid
-        /// affichage des informations du dvd
+        /// affichage des informations du dvd + remplissage des champs de saisie CRUD
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -575,6 +834,7 @@ namespace MediaTekDocuments.view
                 {
                     Dvd dvd = (Dvd)bdgDvdListe.List[bdgDvdListe.Position];
                     AfficheDvdInfos(dvd);
+                    RemplirDvdSaisie(dvd);
                 }
                 catch
                 {
@@ -584,6 +844,7 @@ namespace MediaTekDocuments.view
             else
             {
                 VideDvdInfos();
+                VideDvdSaisie();
             }
         }
 
@@ -675,11 +936,202 @@ namespace MediaTekDocuments.view
             }
             RemplirDvdListe(sortedList);
         }
+
+        // ─── CRUD Dvd ─────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Remplit les champs de saisie CRUD à partir du dvd sélectionné
+        /// </summary>
+        private void RemplirDvdSaisie(Dvd dvd)
+        {
+            txbDvdSaisieId.ReadOnly = true;
+            txbDvdSaisieId.Text = dvd.Id;
+            btnDvdAjouter.Enabled = false;
+            btnDvdModifier.Enabled = true;
+            btnDvdSuppimer.Enabled = true;
+            txbDvdSaisieTitre.Text = dvd.Titre;
+            txbDvdSaisieImage.Text = dvd.Image;
+            txbDvdSaisieSynopsis.Text = dvd.Synopsis;
+            txbDvdSaisieRealisateur.Text = dvd.Realisateur;
+            txbDvdSaisieDuree.Text = dvd.Duree.ToString();
+
+            List<Categorie> genres = bdgDvdSaisieGenres.DataSource as List<Categorie>;
+            cbxDvdSaisieGenres.SelectedIndex = genres?.FindIndex(c => c.Id == dvd.IdGenre) ?? -1;
+
+            List<Categorie> publics = bdgDvdSaisiePublics.DataSource as List<Categorie>;
+            cbxDvdSaisiePublics.SelectedIndex = publics?.FindIndex(c => c.Id == dvd.IdPublic) ?? -1;
+
+            List<Categorie> rayons = bdgDvdSaisieRayons.DataSource as List<Categorie>;
+            cbxDvdSaisieRayons.SelectedIndex = rayons?.FindIndex(c => c.Id == dvd.IdRayon) ?? -1;
+        }
+
+        /// <summary>
+        /// Vide les champs de saisie CRUD du groupe DVD
+        /// </summary>
+        private void VideDvdSaisie()
+        {
+            txbDvdSaisieId.ReadOnly = true;
+            txbDvdSaisieId.Text = ProchainId(lesDvd.Select(d => d.Id));
+            txbDvdSaisieTitre.Text = "";
+            txbDvdSaisieImage.Text = "";
+            txbDvdSaisieSynopsis.Text = "";
+            txbDvdSaisieRealisateur.Text = "";
+            txbDvdSaisieDuree.Text = "";
+            cbxDvdSaisieGenres.SelectedIndex = -1;
+            cbxDvdSaisiePublics.SelectedIndex = -1;
+            cbxDvdSaisieRayons.SelectedIndex = -1;
+            btnDvdAjouter.Enabled = true;
+            btnDvdModifier.Enabled = false;
+            btnDvdSuppimer.Enabled = false;
+        }
+
+        /// <summary>
+        /// Construit un objet Dvd depuis les champs de saisie
+        /// </summary>
+        private Dvd DvdDepuisSaisie()
+        {
+            if (cbxDvdSaisieGenres.SelectedItem == null ||
+                cbxDvdSaisiePublics.SelectedItem == null ||
+                cbxDvdSaisieRayons.SelectedItem == null)
+                return null;
+
+            if (!int.TryParse(txbDvdSaisieDuree.Text.Trim(), out int duree))
+            {
+                MessageBox.Show("La durée doit être un nombre entier.", "Saisie incorrecte",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            Categorie genre    = (Categorie)cbxDvdSaisieGenres.SelectedItem;
+            Categorie lePublic = (Categorie)cbxDvdSaisiePublics.SelectedItem;
+            Categorie rayon    = (Categorie)cbxDvdSaisieRayons.SelectedItem;
+
+            return new Dvd(
+                txbDvdSaisieId.Text.Trim(),
+                txbDvdSaisieTitre.Text.Trim(),
+                txbDvdSaisieImage.Text.Trim(),
+                duree,
+                txbDvdSaisieRealisateur.Text.Trim(),
+                txbDvdSaisieSynopsis.Text.Trim(),
+                genre.Id,    genre.Libelle,
+                lePublic.Id, lePublic.Libelle,
+                rayon.Id,    rayon.Libelle
+            );
+        }
+
+        /// <summary>
+        /// Ajout d'un dvd
+        /// </summary>
+        private void btnDvdAjouter_Click(object sender, EventArgs e)
+        {
+            if (txbDvdSaisieTitre.Text.Trim().Equals("") ||
+                txbDvdSaisieRealisateur.Text.Trim().Equals(""))
+            {
+                MessageBox.Show("Les champs Titre et Réalisateur sont obligatoires.", "Saisie incomplète",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Dvd dvd = DvdDepuisSaisie();
+            if (dvd == null) return;
+
+            if (controller.AjouterDvd(dvd))
+            {
+                MessageBox.Show("DVD ajouté avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lesDvd = controller.GetAllDvd();
+                RemplirDvdListeComplete();
+                VideDvdSaisie();
+            }
+            else
+            {
+                MessageBox.Show("Erreur lors de l'ajout du DVD.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Modification du dvd sélectionné
+        /// </summary>
+        private void btnDvdModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvDvdListe.CurrentCell == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un DVD à modifier.", "Aucune sélection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Dvd dvd = DvdDepuisSaisie();
+            if (dvd == null) return;
+
+            if (controller.ModifierDvd(dvd))
+            {
+                MessageBox.Show("DVD modifié avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lesDvd = controller.GetAllDvd();
+                RemplirDvdListeComplete();
+                VideDvdSaisie();
+            }
+            else
+            {
+                MessageBox.Show("Erreur lors de la modification du DVD.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Efface les champs de saisie et passe en mode « nouveau DVD » avec Id auto-attribué
+        /// </summary>
+        private void btnDvdEffacer_Click(object sender, EventArgs e)
+        {
+            VideDvdSaisie();
+        }
+
+        /// <summary>
+        /// Suppression du dvd sélectionné
+        /// </summary>
+        private void btnDvdSuppimer_Click(object sender, EventArgs e)
+        {
+            if (dgvDvdListe.CurrentCell == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un DVD à supprimer.", "Aucune sélection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string id = txbDvdSaisieId.Text.Trim();
+            if (id.Equals("")) return;
+
+            DialogResult confirm = MessageBox.Show(
+                "Confirmer la suppression de ce DVD ?",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                if (controller.SupprimerDvd(id))
+                {
+                    MessageBox.Show("DVD supprimé avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lesDvd = controller.GetAllDvd();
+                    RemplirDvdListeComplete();
+                    VideDvdSaisie();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Suppression impossible : le DVD possède des exemplaires ou des commandes.",
+                        "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
         #endregion
 
         #region Onglet Revues
         private readonly BindingSource bdgRevuesListe = new BindingSource();
         private List<Revue> lesRevues = new List<Revue>();
+
+        // BindingSources dédiés aux ComboBox de saisie de l'onglet Revues
+        private readonly BindingSource bdgRevuesSaisieGenres = new BindingSource();
+        private readonly BindingSource bdgRevuesSaisiePublics = new BindingSource();
+        private readonly BindingSource bdgRevuesSaisieRayons = new BindingSource();
 
         /// <summary>
         /// Ouverture de l'onglet Revues : 
@@ -693,6 +1145,10 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+            // combos de saisie CRUD
+            RemplirComboCategorie(controller.GetAllGenres(), bdgRevuesSaisieGenres, cbxRevuesSaisieGenres);
+            RemplirComboCategorie(controller.GetAllPublics(), bdgRevuesSaisiePublics, cbxRevuesSaisiePublics);
+            RemplirComboCategorie(controller.GetAllRayons(), bdgRevuesSaisieRayons, cbxRevuesSaisieRayons);
             RemplirRevuesListeComplete();
         }
 
@@ -875,7 +1331,7 @@ namespace MediaTekDocuments.view
 
         /// <summary>
         /// Sur la sélection d'une ligne ou cellule dans le grid
-        /// affichage des informations de la revue
+        /// affichage des informations de la revue + remplissage des champs de saisie CRUD
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -887,6 +1343,7 @@ namespace MediaTekDocuments.view
                 {
                     Revue revue = (Revue)bdgRevuesListe.List[bdgRevuesListe.Position];
                     AfficheRevuesInfos(revue);
+                    RemplirRevuesSaisie(revue);
                 }
                 catch
                 {
@@ -896,6 +1353,7 @@ namespace MediaTekDocuments.view
             else
             {
                 VideRevuesInfos();
+                VideRevuesSaisie();
             }
         }
 
@@ -986,6 +1444,189 @@ namespace MediaTekDocuments.view
                     break;
             }
             RemplirRevuesListe(sortedList);
+        }
+
+        // ─── CRUD Revues ──────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Remplit les champs de saisie CRUD à partir de la revue sélectionnée
+        /// </summary>
+        private void RemplirRevuesSaisie(Revue revue)
+        {
+            txbRevuesSaisieId.ReadOnly = true;
+            txbRevuesSaisieId.Text = revue.Id;
+            btnRevuesAjouter.Enabled = false;
+            btnRevuesModifier.Enabled = true;
+            btnRevuesSuppimer.Enabled = true;
+            txbRevuesSaisieTitre.Text = revue.Titre;
+            txbRevuesSaisieImage.Text = revue.Image;
+            txbRevuesSaisiePeriodicite.Text = revue.Periodicite;
+            txbRevuesSaisieDelai.Text = revue.DelaiMiseADispo.ToString();
+
+            List<Categorie> genres = bdgRevuesSaisieGenres.DataSource as List<Categorie>;
+            cbxRevuesSaisieGenres.SelectedIndex = genres?.FindIndex(c => c.Id == revue.IdGenre) ?? -1;
+
+            List<Categorie> publics = bdgRevuesSaisiePublics.DataSource as List<Categorie>;
+            cbxRevuesSaisiePublics.SelectedIndex = publics?.FindIndex(c => c.Id == revue.IdPublic) ?? -1;
+
+            List<Categorie> rayons = bdgRevuesSaisieRayons.DataSource as List<Categorie>;
+            cbxRevuesSaisieRayons.SelectedIndex = rayons?.FindIndex(c => c.Id == revue.IdRayon) ?? -1;
+        }
+
+        /// <summary>
+        /// Vide les champs de saisie CRUD du groupe Revues
+        /// </summary>
+        private void VideRevuesSaisie()
+        {
+            txbRevuesSaisieId.ReadOnly = true;
+            txbRevuesSaisieId.Text = ProchainId(lesRevues.Select(r => r.Id));
+            txbRevuesSaisieTitre.Text = "";
+            txbRevuesSaisieImage.Text = "";
+            txbRevuesSaisiePeriodicite.Text = "";
+            txbRevuesSaisieDelai.Text = "";
+            cbxRevuesSaisieGenres.SelectedIndex = -1;
+            cbxRevuesSaisiePublics.SelectedIndex = -1;
+            cbxRevuesSaisieRayons.SelectedIndex = -1;
+            btnRevuesAjouter.Enabled = true;
+            btnRevuesModifier.Enabled = false;
+            btnRevuesSuppimer.Enabled = false;
+        }
+
+        /// <summary>
+        /// Construit un objet Revue depuis les champs de saisie
+        /// </summary>
+        private Revue RevueDepuisSaisie()
+        {
+            if (cbxRevuesSaisieGenres.SelectedItem == null ||
+                cbxRevuesSaisiePublics.SelectedItem == null ||
+                cbxRevuesSaisieRayons.SelectedItem == null)
+                return null;
+
+            if (!int.TryParse(txbRevuesSaisieDelai.Text.Trim(), out int delai))
+            {
+                MessageBox.Show("Le délai de mise à disposition doit être un nombre entier.", "Saisie incorrecte",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            Categorie genre    = (Categorie)cbxRevuesSaisieGenres.SelectedItem;
+            Categorie lePublic = (Categorie)cbxRevuesSaisiePublics.SelectedItem;
+            Categorie rayon    = (Categorie)cbxRevuesSaisieRayons.SelectedItem;
+
+            return new Revue(
+                txbRevuesSaisieId.Text.Trim(),
+                txbRevuesSaisieTitre.Text.Trim(),
+                txbRevuesSaisieImage.Text.Trim(),
+                genre.Id,    genre.Libelle,
+                lePublic.Id, lePublic.Libelle,
+                rayon.Id,    rayon.Libelle,
+                txbRevuesSaisiePeriodicite.Text.Trim(),
+                delai
+            );
+        }
+
+        /// <summary>
+        /// Ajout d'une revue
+        /// </summary>
+        private void btnRevuesAjouter_Click(object sender, EventArgs e)
+        {
+            if (txbRevuesSaisieTitre.Text.Trim().Equals("") ||
+                txbRevuesSaisiePeriodicite.Text.Trim().Equals(""))
+            {
+                MessageBox.Show("Les champs Titre et Périodicité sont obligatoires.", "Saisie incomplète",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Revue revue = RevueDepuisSaisie();
+            if (revue == null) return;
+
+            if (controller.AjouterRevue(revue))
+            {
+                MessageBox.Show("Revue ajoutée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lesRevues = controller.GetAllRevues();
+                RemplirRevuesListeComplete();
+                VideRevuesSaisie();
+            }
+            else
+            {
+                MessageBox.Show("Erreur lors de l'ajout de la revue.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Modification de la revue sélectionnée
+        /// </summary>
+        private void btnRevuesModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvRevuesListe.CurrentCell == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une revue à modifier.", "Aucune sélection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Revue revue = RevueDepuisSaisie();
+            if (revue == null) return;
+
+            if (controller.ModifierRevue(revue))
+            {
+                MessageBox.Show("Revue modifiée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lesRevues = controller.GetAllRevues();
+                RemplirRevuesListeComplete();
+                VideRevuesSaisie();
+            }
+            else
+            {
+                MessageBox.Show("Erreur lors de la modification de la revue.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Efface les champs de saisie et passe en mode « nouvelle revue » avec Id auto-attribué
+        /// </summary>
+        private void btnRevuesEffacer_Click(object sender, EventArgs e)
+        {
+            VideRevuesSaisie();
+        }
+
+        /// <summary>
+        /// Suppression de la revue sélectionnée
+        /// </summary>
+        private void btnRevuesSuppimer_Click(object sender, EventArgs e)
+        {
+            if (dgvRevuesListe.CurrentCell == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une revue à supprimer.", "Aucune sélection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string id = txbRevuesSaisieId.Text.Trim();
+            if (id.Equals("")) return;
+
+            DialogResult confirm = MessageBox.Show(
+                "Confirmer la suppression de cette revue ?",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                if (controller.SupprimerRevue(id))
+                {
+                    MessageBox.Show("Revue supprimée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lesRevues = controller.GetAllRevues();
+                    RemplirRevuesListeComplete();
+                    VideRevuesSaisie();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Suppression impossible : la revue possède des exemplaires ou des abonnements.",
+                        "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
         #endregion
 
