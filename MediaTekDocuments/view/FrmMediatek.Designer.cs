@@ -183,6 +183,7 @@ namespace MediaTekDocuments.view
             this.btnLivresAjouter = new System.Windows.Forms.Button();
             this.btnLivresModifier = new System.Windows.Forms.Button();
             this.btnLivresSuppimer = new System.Windows.Forms.Button();
+            this.btnLivresEffacer = new System.Windows.Forms.Button();
             this.txbLivresSaisieId = new System.Windows.Forms.TextBox();
             this.txbLivresSaisieTitre = new System.Windows.Forms.TextBox();
             this.txbLivresSaisieImage = new System.Windows.Forms.TextBox();
@@ -206,6 +207,7 @@ namespace MediaTekDocuments.view
             this.btnDvdAjouter = new System.Windows.Forms.Button();
             this.btnDvdModifier = new System.Windows.Forms.Button();
             this.btnDvdSuppimer = new System.Windows.Forms.Button();
+            this.btnDvdEffacer = new System.Windows.Forms.Button();
             this.txbDvdSaisieId = new System.Windows.Forms.TextBox();
             this.txbDvdSaisieTitre = new System.Windows.Forms.TextBox();
             this.txbDvdSaisieImage = new System.Windows.Forms.TextBox();
@@ -229,6 +231,7 @@ namespace MediaTekDocuments.view
             this.btnRevuesAjouter = new System.Windows.Forms.Button();
             this.btnRevuesModifier = new System.Windows.Forms.Button();
             this.btnRevuesSuppimer = new System.Windows.Forms.Button();
+            this.btnRevuesEffacer = new System.Windows.Forms.Button();
             this.txbRevuesSaisieId = new System.Windows.Forms.TextBox();
             this.txbRevuesSaisieTitre = new System.Windows.Forms.TextBox();
             this.txbRevuesSaisieImage = new System.Windows.Forms.TextBox();
@@ -1854,6 +1857,7 @@ namespace MediaTekDocuments.view
             this.grpLivresSaisie.Controls.Add(this.btnLivresAjouter);
             this.grpLivresSaisie.Controls.Add(this.btnLivresModifier);
             this.grpLivresSaisie.Controls.Add(this.btnLivresSuppimer);
+            this.grpLivresSaisie.Controls.Add(this.btnLivresEffacer);
             this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieId);
             this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieTitre);
             this.grpLivresSaisie.Controls.Add(this.txbLivresSaisieImage);
@@ -1877,7 +1881,7 @@ namespace MediaTekDocuments.view
             this.grpLivresSaisie.Size = new System.Drawing.Size(859, 160);
             this.grpLivresSaisie.TabIndex = 30;
             this.grpLivresSaisie.TabStop = false;
-            this.grpLivresSaisie.Text = "Gestion (Ajouter / Modifier / Supprimer)";
+            this.grpLivresSaisie.Text = "Gestion";
             // lblLivresSaisieId
             this.lblLivresSaisieId.AutoSize = true;
             this.lblLivresSaisieId.Location = new System.Drawing.Point(10, 22);
@@ -1998,12 +2002,21 @@ namespace MediaTekDocuments.view
             this.btnLivresSuppimer.Text = "Supprimer";
             this.btnLivresSuppimer.UseVisualStyleBackColor = true;
             this.btnLivresSuppimer.Click += new System.EventHandler(this.btnLivresSuppimer_Click);
+            // btnLivresEffacer
+            this.btnLivresEffacer.Location = new System.Drawing.Point(362, 115);
+            this.btnLivresEffacer.Name = "btnLivresEffacer";
+            this.btnLivresEffacer.Size = new System.Drawing.Size(100, 28);
+            this.btnLivresEffacer.TabIndex = 13;
+            this.btnLivresEffacer.Text = "✕ Effacer";
+            this.btnLivresEffacer.UseVisualStyleBackColor = true;
+            this.btnLivresEffacer.Click += new System.EventHandler(this.btnLivresEffacer_Click);
             // 
             // grpDvdSaisie
             // 
             this.grpDvdSaisie.Controls.Add(this.btnDvdAjouter);
             this.grpDvdSaisie.Controls.Add(this.btnDvdModifier);
             this.grpDvdSaisie.Controls.Add(this.btnDvdSuppimer);
+            this.grpDvdSaisie.Controls.Add(this.btnDvdEffacer);
             this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieId);
             this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieTitre);
             this.grpDvdSaisie.Controls.Add(this.txbDvdSaisieImage);
@@ -2148,12 +2161,21 @@ namespace MediaTekDocuments.view
             this.btnDvdSuppimer.Text = "Supprimer";
             this.btnDvdSuppimer.UseVisualStyleBackColor = true;
             this.btnDvdSuppimer.Click += new System.EventHandler(this.btnDvdSuppimer_Click);
+            // btnDvdEffacer
+            this.btnDvdEffacer.Location = new System.Drawing.Point(362, 115);
+            this.btnDvdEffacer.Name = "btnDvdEffacer";
+            this.btnDvdEffacer.Size = new System.Drawing.Size(100, 28);
+            this.btnDvdEffacer.TabIndex = 13;
+            this.btnDvdEffacer.Text = "✕ Effacer";
+            this.btnDvdEffacer.UseVisualStyleBackColor = true;
+            this.btnDvdEffacer.Click += new System.EventHandler(this.btnDvdEffacer_Click);
             // 
             // grpRevuesSaisie
             // 
             this.grpRevuesSaisie.Controls.Add(this.btnRevuesAjouter);
             this.grpRevuesSaisie.Controls.Add(this.btnRevuesModifier);
             this.grpRevuesSaisie.Controls.Add(this.btnRevuesSuppimer);
+            this.grpRevuesSaisie.Controls.Add(this.btnRevuesEffacer);
             this.grpRevuesSaisie.Controls.Add(this.txbRevuesSaisieId);
             this.grpRevuesSaisie.Controls.Add(this.txbRevuesSaisieTitre);
             this.grpRevuesSaisie.Controls.Add(this.txbRevuesSaisieImage);
@@ -2286,6 +2308,14 @@ namespace MediaTekDocuments.view
             this.btnRevuesSuppimer.Text = "Supprimer";
             this.btnRevuesSuppimer.UseVisualStyleBackColor = true;
             this.btnRevuesSuppimer.Click += new System.EventHandler(this.btnRevuesSuppimer_Click);
+            // btnRevuesEffacer
+            this.btnRevuesEffacer.Location = new System.Drawing.Point(362, 115);
+            this.btnRevuesEffacer.Name = "btnRevuesEffacer";
+            this.btnRevuesEffacer.Size = new System.Drawing.Size(100, 28);
+            this.btnRevuesEffacer.TabIndex = 12;
+            this.btnRevuesEffacer.Text = "✕ Effacer";
+            this.btnRevuesEffacer.UseVisualStyleBackColor = true;
+            this.btnRevuesEffacer.Click += new System.EventHandler(this.btnRevuesEffacer_Click);
             // 
             // FrmMediatek
             // 
@@ -2492,6 +2522,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Button btnLivresAjouter;
         private System.Windows.Forms.Button btnLivresModifier;
         private System.Windows.Forms.Button btnLivresSuppimer;
+        private System.Windows.Forms.Button btnLivresEffacer;
         private System.Windows.Forms.TextBox txbLivresSaisieId;
         private System.Windows.Forms.TextBox txbLivresSaisieTitre;
         private System.Windows.Forms.TextBox txbLivresSaisieImage;
@@ -2515,6 +2546,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Button btnDvdAjouter;
         private System.Windows.Forms.Button btnDvdModifier;
         private System.Windows.Forms.Button btnDvdSuppimer;
+        private System.Windows.Forms.Button btnDvdEffacer;
         private System.Windows.Forms.TextBox txbDvdSaisieId;
         private System.Windows.Forms.TextBox txbDvdSaisieTitre;
         private System.Windows.Forms.TextBox txbDvdSaisieImage;
@@ -2538,6 +2570,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Button btnRevuesAjouter;
         private System.Windows.Forms.Button btnRevuesModifier;
         private System.Windows.Forms.Button btnRevuesSuppimer;
+        private System.Windows.Forms.Button btnRevuesEffacer;
         private System.Windows.Forms.TextBox txbRevuesSaisieId;
         private System.Windows.Forms.TextBox txbRevuesSaisieTitre;
         private System.Windows.Forms.TextBox txbRevuesSaisieImage;

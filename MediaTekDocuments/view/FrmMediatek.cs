@@ -22,6 +22,46 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgRayons = new BindingSource();
 
         /// <summary>
+        /// Calcule le premier identifiant entier non encore attribué dans la liste fournie.
+        /// Détecte automatiquement le préfixe non-numérique et le formatage (zéros de remplissage).
+        /// Exemple : ["LIV001","LIV003"] → "LIV002"
+        /// </summary>
+        private string ProchainId(IEnumerable<string> idsExistants)
+        {
+            var ids = idsExistants.ToList();
+            // Détection du préfixe commun (ex: "LIV", "DVD", "")
+            string prefixe = "";
+            if (ids.Count > 0)
+            {
+                string premier = ids[0];
+                int fin = 0;
+                while (fin < premier.Length && !char.IsDigit(premier[fin])) fin++;
+                string candidat = premier.Substring(0, fin);
+                if (ids.All(id => id.StartsWith(candidat, StringComparison.OrdinalIgnoreCase)))
+                    prefixe = candidat;
+            }
+            // Collecte des numéros existants et détection de la largeur de formatage
+            var nums = new HashSet<int>();
+            int largeur = 0;
+            foreach (string id in ids)
+            {
+                string partie = id.Length > prefixe.Length ? id.Substring(prefixe.Length) : "";
+                if (int.TryParse(partie, out int n) && n > 0)
+                {
+                    nums.Add(n);
+                    if (partie.Length > largeur) largeur = partie.Length;
+                }
+            }
+            // Premier entier strictement positif non utilisé
+            int suivant = 1;
+            while (nums.Contains(suivant)) suivant++;
+            string numStr = largeur > 0
+                ? suivant.ToString().PadLeft(largeur, '0')
+                : suivant.ToString();
+            return prefixe + numStr;
+        }
+
+        /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
         /// </summary>
         internal FrmMediatek()
@@ -279,6 +319,7 @@ namespace MediaTekDocuments.view
             else
             {
                 VideLivresInfos();
+                VideLivresSaisie();
             }
         }
 
@@ -381,6 +422,9 @@ namespace MediaTekDocuments.view
         {
             txbLivresSaisieId.ReadOnly = true;
             txbLivresSaisieId.Text = livre.Id;
+            btnLivresAjouter.Enabled = false;
+            btnLivresModifier.Enabled = true;
+            btnLivresSuppimer.Enabled = true;
             txbLivresSaisieTitre.Text = livre.Titre;
             txbLivresSaisieImage.Text = livre.Image;
             txbLivresSaisieIsbn.Text = livre.Isbn;
@@ -405,8 +449,8 @@ namespace MediaTekDocuments.view
         /// </summary>
         private void VideLivresSaisie()
         {
-            txbLivresSaisieId.ReadOnly = false;
-            txbLivresSaisieId.Text = "";
+            txbLivresSaisieId.ReadOnly = true;
+            txbLivresSaisieId.Text = ProchainId(lesLivres.Select(l => l.Id));
             txbLivresSaisieTitre.Text = "";
             txbLivresSaisieImage.Text = "";
             txbLivresSaisieIsbn.Text = "";
@@ -415,6 +459,9 @@ namespace MediaTekDocuments.view
             cbxLivresSaisieGenres.SelectedIndex = -1;
             cbxLivresSaisiePublics.SelectedIndex = -1;
             cbxLivresSaisieRayons.SelectedIndex = -1;
+            btnLivresAjouter.Enabled = true;
+            btnLivresModifier.Enabled = false;
+            btnLivresSuppimer.Enabled = false;
         }
 
         /// <summary>
@@ -450,12 +497,11 @@ namespace MediaTekDocuments.view
         /// </summary>
         private void btnLivresAjouter_Click(object sender, EventArgs e)
         {
-            if (txbLivresSaisieId.Text.Trim().Equals("") ||
-                txbLivresSaisieTitre.Text.Trim().Equals("") ||
+            if (txbLivresSaisieTitre.Text.Trim().Equals("") ||
                 txbLivresSaisieIsbn.Text.Trim().Equals("") ||
                 txbLivresSaisieAuteur.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Les champs Id, Titre, ISBN et Auteur sont obligatoires.", "Saisie incomplète",
+                MessageBox.Show("Les champs Titre, ISBN et Auteur sont obligatoires.", "Saisie incomplète",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -512,6 +558,14 @@ namespace MediaTekDocuments.view
             {
                 MessageBox.Show("Erreur lors de la modification du livre.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Efface les champs de saisie et passe en mode « nouveau livre » avec Id auto-attribué
+        /// </summary>
+        private void btnLivresEffacer_Click(object sender, EventArgs e)
+        {
+            VideLivresSaisie();
         }
 
         /// <summary>
@@ -790,6 +844,7 @@ namespace MediaTekDocuments.view
             else
             {
                 VideDvdInfos();
+                VideDvdSaisie();
             }
         }
 
@@ -891,6 +946,9 @@ namespace MediaTekDocuments.view
         {
             txbDvdSaisieId.ReadOnly = true;
             txbDvdSaisieId.Text = dvd.Id;
+            btnDvdAjouter.Enabled = false;
+            btnDvdModifier.Enabled = true;
+            btnDvdSuppimer.Enabled = true;
             txbDvdSaisieTitre.Text = dvd.Titre;
             txbDvdSaisieImage.Text = dvd.Image;
             txbDvdSaisieSynopsis.Text = dvd.Synopsis;
@@ -912,8 +970,8 @@ namespace MediaTekDocuments.view
         /// </summary>
         private void VideDvdSaisie()
         {
-            txbDvdSaisieId.ReadOnly = false;
-            txbDvdSaisieId.Text = "";
+            txbDvdSaisieId.ReadOnly = true;
+            txbDvdSaisieId.Text = ProchainId(lesDvd.Select(d => d.Id));
             txbDvdSaisieTitre.Text = "";
             txbDvdSaisieImage.Text = "";
             txbDvdSaisieSynopsis.Text = "";
@@ -922,6 +980,9 @@ namespace MediaTekDocuments.view
             cbxDvdSaisieGenres.SelectedIndex = -1;
             cbxDvdSaisiePublics.SelectedIndex = -1;
             cbxDvdSaisieRayons.SelectedIndex = -1;
+            btnDvdAjouter.Enabled = true;
+            btnDvdModifier.Enabled = false;
+            btnDvdSuppimer.Enabled = false;
         }
 
         /// <summary>
@@ -963,11 +1024,10 @@ namespace MediaTekDocuments.view
         /// </summary>
         private void btnDvdAjouter_Click(object sender, EventArgs e)
         {
-            if (txbDvdSaisieId.Text.Trim().Equals("") ||
-                txbDvdSaisieTitre.Text.Trim().Equals("") ||
+            if (txbDvdSaisieTitre.Text.Trim().Equals("") ||
                 txbDvdSaisieRealisateur.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Les champs Id, Titre et Réalisateur sont obligatoires.", "Saisie incomplète",
+                MessageBox.Show("Les champs Titre et Réalisateur sont obligatoires.", "Saisie incomplète",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1014,6 +1074,14 @@ namespace MediaTekDocuments.view
             {
                 MessageBox.Show("Erreur lors de la modification du DVD.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Efface les champs de saisie et passe en mode « nouveau DVD » avec Id auto-attribué
+        /// </summary>
+        private void btnDvdEffacer_Click(object sender, EventArgs e)
+        {
+            VideDvdSaisie();
         }
 
         /// <summary>
@@ -1285,6 +1353,7 @@ namespace MediaTekDocuments.view
             else
             {
                 VideRevuesInfos();
+                VideRevuesSaisie();
             }
         }
 
@@ -1386,6 +1455,9 @@ namespace MediaTekDocuments.view
         {
             txbRevuesSaisieId.ReadOnly = true;
             txbRevuesSaisieId.Text = revue.Id;
+            btnRevuesAjouter.Enabled = false;
+            btnRevuesModifier.Enabled = true;
+            btnRevuesSuppimer.Enabled = true;
             txbRevuesSaisieTitre.Text = revue.Titre;
             txbRevuesSaisieImage.Text = revue.Image;
             txbRevuesSaisiePeriodicite.Text = revue.Periodicite;
@@ -1406,8 +1478,8 @@ namespace MediaTekDocuments.view
         /// </summary>
         private void VideRevuesSaisie()
         {
-            txbRevuesSaisieId.ReadOnly = false;
-            txbRevuesSaisieId.Text = "";
+            txbRevuesSaisieId.ReadOnly = true;
+            txbRevuesSaisieId.Text = ProchainId(lesRevues.Select(r => r.Id));
             txbRevuesSaisieTitre.Text = "";
             txbRevuesSaisieImage.Text = "";
             txbRevuesSaisiePeriodicite.Text = "";
@@ -1415,6 +1487,9 @@ namespace MediaTekDocuments.view
             cbxRevuesSaisieGenres.SelectedIndex = -1;
             cbxRevuesSaisiePublics.SelectedIndex = -1;
             cbxRevuesSaisieRayons.SelectedIndex = -1;
+            btnRevuesAjouter.Enabled = true;
+            btnRevuesModifier.Enabled = false;
+            btnRevuesSuppimer.Enabled = false;
         }
 
         /// <summary>
@@ -1455,11 +1530,10 @@ namespace MediaTekDocuments.view
         /// </summary>
         private void btnRevuesAjouter_Click(object sender, EventArgs e)
         {
-            if (txbRevuesSaisieId.Text.Trim().Equals("") ||
-                txbRevuesSaisieTitre.Text.Trim().Equals("") ||
+            if (txbRevuesSaisieTitre.Text.Trim().Equals("") ||
                 txbRevuesSaisiePeriodicite.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Les champs Id, Titre et Périodicité sont obligatoires.", "Saisie incomplète",
+                MessageBox.Show("Les champs Titre et Périodicité sont obligatoires.", "Saisie incomplète",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1506,6 +1580,14 @@ namespace MediaTekDocuments.view
             {
                 MessageBox.Show("Erreur lors de la modification de la revue.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Efface les champs de saisie et passe en mode « nouvelle revue » avec Id auto-attribué
+        /// </summary>
+        private void btnRevuesEffacer_Click(object sender, EventArgs e)
+        {
+            VideRevuesSaisie();
         }
 
         /// <summary>
