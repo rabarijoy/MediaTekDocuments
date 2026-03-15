@@ -286,6 +286,14 @@ namespace MediaTekDocuments.view
             this.grpLivresSaisie.SuspendLayout();
             this.grpDvdSaisie.SuspendLayout();
             this.grpRevuesSaisie.SuspendLayout();
+            this.tabCommandesLivres.SuspendLayout();
+            this.grpCommandesLivresSaisie.SuspendLayout();
+            this.grpCommandesLivresModifier.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesLivresListe)).BeginInit();
+            this.tabCommandesDvd.SuspendLayout();
+            this.grpCommandesDvdSaisie.SuspendLayout();
+            this.grpCommandesDvdModifier.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesDvdListe)).BeginInit();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbLivresImage)).BeginInit();
@@ -308,14 +316,6 @@ namespace MediaTekDocuments.view
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionExemplaireRevueImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReceptionExemplairesListe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionRevueImage)).BeginInit();
-            this.tabCommandesLivres.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesLivresListe)).BeginInit();
-            this.grpCommandesLivresSaisie.SuspendLayout();
-            this.grpCommandesLivresModifier.SuspendLayout();
-            this.tabCommandesDvd.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesDvdListe)).BeginInit();
-            this.grpCommandesDvdSaisie.SuspendLayout();
-            this.grpCommandesDvdModifier.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabOngletsApplication
@@ -2360,9 +2360,7 @@ namespace MediaTekDocuments.view
             this.btnRevuesEffacer.Text = "✕ Effacer";
             this.btnRevuesEffacer.UseVisualStyleBackColor = true;
             this.btnRevuesEffacer.Click += new System.EventHandler(this.btnRevuesEffacer_Click);
-            // 
             // tabCommandesLivres
-            // 
             this.tabCommandesLivres.Controls.Add(this.txbCommandesLivresNumero);
             this.tabCommandesLivres.Controls.Add(this.btnCommandesLivresRechercher);
             this.tabCommandesLivres.Controls.Add(this.lblCommandesLivresTitre);
@@ -2375,54 +2373,32 @@ namespace MediaTekDocuments.view
             this.tabCommandesLivres.Location = new System.Drawing.Point(4, 22);
             this.tabCommandesLivres.Name = "tabCommandesLivres";
             this.tabCommandesLivres.Size = new System.Drawing.Size(875, 805);
-            this.tabCommandesLivres.TabIndex = 4;
             this.tabCommandesLivres.Text = "Commandes livres";
             this.tabCommandesLivres.UseVisualStyleBackColor = true;
             this.tabCommandesLivres.Enter += new System.EventHandler(this.tabCommandesLivres_Enter);
-            // 
             // txbCommandesLivresNumero
-            // 
             this.txbCommandesLivresNumero.Location = new System.Drawing.Point(10, 15);
             this.txbCommandesLivresNumero.Name = "txbCommandesLivresNumero";
             this.txbCommandesLivresNumero.Size = new System.Drawing.Size(150, 20);
-            this.txbCommandesLivresNumero.TabIndex = 0;
-            // 
             // btnCommandesLivresRechercher
-            // 
             this.btnCommandesLivresRechercher.Location = new System.Drawing.Point(170, 13);
             this.btnCommandesLivresRechercher.Name = "btnCommandesLivresRechercher";
             this.btnCommandesLivresRechercher.Size = new System.Drawing.Size(100, 23);
-            this.btnCommandesLivresRechercher.TabIndex = 1;
             this.btnCommandesLivresRechercher.Text = "Rechercher";
-            this.btnCommandesLivresRechercher.UseVisualStyleBackColor = true;
             this.btnCommandesLivresRechercher.Click += new System.EventHandler(this.btnCommandesLivresRechercher_Click);
-            // 
             // lblCommandesLivresTitre
-            // 
             this.lblCommandesLivresTitre.AutoSize = true;
             this.lblCommandesLivresTitre.Location = new System.Drawing.Point(290, 18);
             this.lblCommandesLivresTitre.Name = "lblCommandesLivresTitre";
-            this.lblCommandesLivresTitre.Size = new System.Drawing.Size(32, 13);
-            this.lblCommandesLivresTitre.Text = "Titre";
-            // 
             // lblCommandesLivresAuteur
-            // 
             this.lblCommandesLivresAuteur.AutoSize = true;
             this.lblCommandesLivresAuteur.Location = new System.Drawing.Point(290, 36);
             this.lblCommandesLivresAuteur.Name = "lblCommandesLivresAuteur";
-            this.lblCommandesLivresAuteur.Size = new System.Drawing.Size(41, 13);
-            this.lblCommandesLivresAuteur.Text = "Auteur";
-            // 
             // lblCommandesLivresIsbn
-            // 
             this.lblCommandesLivresIsbn.AutoSize = true;
             this.lblCommandesLivresIsbn.Location = new System.Drawing.Point(290, 54);
             this.lblCommandesLivresIsbn.Name = "lblCommandesLivresIsbn";
-            this.lblCommandesLivresIsbn.Size = new System.Drawing.Size(31, 13);
-            this.lblCommandesLivresIsbn.Text = "ISBN";
-            // 
             // dgvCommandesLivresListe
-            // 
             this.dgvCommandesLivresListe.AllowUserToAddRows = false;
             this.dgvCommandesLivresListe.AllowUserToDeleteRows = false;
             this.dgvCommandesLivresListe.AllowUserToResizeColumns = false;
@@ -2435,12 +2411,9 @@ namespace MediaTekDocuments.view
             this.dgvCommandesLivresListe.RowHeadersVisible = false;
             this.dgvCommandesLivresListe.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCommandesLivresListe.Size = new System.Drawing.Size(855, 220);
-            this.dgvCommandesLivresListe.TabIndex = 2;
             this.dgvCommandesLivresListe.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCommandesLivresListe_ColumnHeaderMouseClick);
             this.dgvCommandesLivresListe.SelectionChanged += new System.EventHandler(this.dgvCommandesLivresListe_SelectionChanged);
-            // 
             // grpCommandesLivresSaisie
-            // 
             this.grpCommandesLivresSaisie.Controls.Add(this.dtpCommandesLivresDate);
             this.grpCommandesLivresSaisie.Controls.Add(this.txbCommandesLivresMontant);
             this.grpCommandesLivresSaisie.Controls.Add(this.txbCommandesLivresNbExemplaires);
@@ -2448,82 +2421,52 @@ namespace MediaTekDocuments.view
             this.grpCommandesLivresSaisie.Location = new System.Drawing.Point(10, 310);
             this.grpCommandesLivresSaisie.Name = "grpCommandesLivresSaisie";
             this.grpCommandesLivresSaisie.Size = new System.Drawing.Size(500, 80);
-            this.grpCommandesLivresSaisie.TabIndex = 3;
             this.grpCommandesLivresSaisie.Text = "Nouvelle commande";
-            // 
             // dtpCommandesLivresDate
-            // 
-            this.dtpCommandesLivresDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpCommandesLivresDate.Location = new System.Drawing.Point(10, 30);
             this.dtpCommandesLivresDate.Name = "dtpCommandesLivresDate";
+            this.dtpCommandesLivresDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpCommandesLivresDate.Size = new System.Drawing.Size(120, 20);
-            this.dtpCommandesLivresDate.TabIndex = 0;
-            // 
             // txbCommandesLivresMontant
-            // 
             this.txbCommandesLivresMontant.Location = new System.Drawing.Point(145, 30);
             this.txbCommandesLivresMontant.Name = "txbCommandesLivresMontant";
             this.txbCommandesLivresMontant.Size = new System.Drawing.Size(80, 20);
-            this.txbCommandesLivresMontant.TabIndex = 1;
-            // 
             // txbCommandesLivresNbExemplaires
-            // 
             this.txbCommandesLivresNbExemplaires.Location = new System.Drawing.Point(240, 30);
             this.txbCommandesLivresNbExemplaires.Name = "txbCommandesLivresNbExemplaires";
             this.txbCommandesLivresNbExemplaires.Size = new System.Drawing.Size(60, 20);
-            this.txbCommandesLivresNbExemplaires.TabIndex = 2;
-            // 
             // btnCommandesLivresAjouterCommande
-            // 
             this.btnCommandesLivresAjouterCommande.Location = new System.Drawing.Point(315, 28);
             this.btnCommandesLivresAjouterCommande.Name = "btnCommandesLivresAjouterCommande";
             this.btnCommandesLivresAjouterCommande.Size = new System.Drawing.Size(120, 25);
-            this.btnCommandesLivresAjouterCommande.TabIndex = 3;
             this.btnCommandesLivresAjouterCommande.Text = "Ajouter commande";
-            this.btnCommandesLivresAjouterCommande.UseVisualStyleBackColor = true;
             this.btnCommandesLivresAjouterCommande.Click += new System.EventHandler(this.btnCommandesLivresAjouterCommande_Click);
-            // 
             // grpCommandesLivresModifier
-            // 
             this.grpCommandesLivresModifier.Controls.Add(this.cbxCommandesLivresSuivi);
             this.grpCommandesLivresModifier.Controls.Add(this.btnCommandesLivresModifierSuivi);
             this.grpCommandesLivresModifier.Location = new System.Drawing.Point(10, 400);
             this.grpCommandesLivresModifier.Name = "grpCommandesLivresModifier";
             this.grpCommandesLivresModifier.Size = new System.Drawing.Size(500, 70);
-            this.grpCommandesLivresModifier.TabIndex = 4;
             this.grpCommandesLivresModifier.Text = "Modifier étape de suivi";
-            // 
             // cbxCommandesLivresSuivi
-            // 
             this.cbxCommandesLivresSuivi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCommandesLivresSuivi.FormattingEnabled = true;
             this.cbxCommandesLivresSuivi.Location = new System.Drawing.Point(10, 30);
             this.cbxCommandesLivresSuivi.Name = "cbxCommandesLivresSuivi";
             this.cbxCommandesLivresSuivi.Size = new System.Drawing.Size(250, 21);
-            this.cbxCommandesLivresSuivi.TabIndex = 0;
-            // 
             // btnCommandesLivresModifierSuivi
-            // 
             this.btnCommandesLivresModifierSuivi.Location = new System.Drawing.Point(275, 28);
             this.btnCommandesLivresModifierSuivi.Name = "btnCommandesLivresModifierSuivi";
             this.btnCommandesLivresModifierSuivi.Size = new System.Drawing.Size(120, 25);
-            this.btnCommandesLivresModifierSuivi.TabIndex = 1;
             this.btnCommandesLivresModifierSuivi.Text = "Modifier suivi";
-            this.btnCommandesLivresModifierSuivi.UseVisualStyleBackColor = true;
             this.btnCommandesLivresModifierSuivi.Click += new System.EventHandler(this.btnCommandesLivresModifierSuivi_Click);
-            // 
             // btnCommandesLivresSupprimerCommande
-            // 
             this.btnCommandesLivresSupprimerCommande.Location = new System.Drawing.Point(10, 480);
             this.btnCommandesLivresSupprimerCommande.Name = "btnCommandesLivresSupprimerCommande";
             this.btnCommandesLivresSupprimerCommande.Size = new System.Drawing.Size(150, 28);
-            this.btnCommandesLivresSupprimerCommande.TabIndex = 5;
             this.btnCommandesLivresSupprimerCommande.Text = "Supprimer commande";
-            this.btnCommandesLivresSupprimerCommande.UseVisualStyleBackColor = true;
             this.btnCommandesLivresSupprimerCommande.Click += new System.EventHandler(this.btnCommandesLivresSupprimerCommande_Click);
-            // 
             // tabCommandesDvd
-            // 
             this.tabCommandesDvd.Controls.Add(this.txbCommandesDvdNumero);
             this.tabCommandesDvd.Controls.Add(this.btnCommandesDvdRechercher);
             this.tabCommandesDvd.Controls.Add(this.lblCommandesDvdTitre);
@@ -2536,54 +2479,32 @@ namespace MediaTekDocuments.view
             this.tabCommandesDvd.Location = new System.Drawing.Point(4, 22);
             this.tabCommandesDvd.Name = "tabCommandesDvd";
             this.tabCommandesDvd.Size = new System.Drawing.Size(875, 805);
-            this.tabCommandesDvd.TabIndex = 5;
             this.tabCommandesDvd.Text = "Commandes DVD";
             this.tabCommandesDvd.UseVisualStyleBackColor = true;
             this.tabCommandesDvd.Enter += new System.EventHandler(this.tabCommandesDvd_Enter);
-            // 
             // txbCommandesDvdNumero
-            // 
             this.txbCommandesDvdNumero.Location = new System.Drawing.Point(10, 15);
             this.txbCommandesDvdNumero.Name = "txbCommandesDvdNumero";
             this.txbCommandesDvdNumero.Size = new System.Drawing.Size(150, 20);
-            this.txbCommandesDvdNumero.TabIndex = 0;
-            // 
             // btnCommandesDvdRechercher
-            // 
             this.btnCommandesDvdRechercher.Location = new System.Drawing.Point(170, 13);
             this.btnCommandesDvdRechercher.Name = "btnCommandesDvdRechercher";
             this.btnCommandesDvdRechercher.Size = new System.Drawing.Size(100, 23);
-            this.btnCommandesDvdRechercher.TabIndex = 1;
             this.btnCommandesDvdRechercher.Text = "Rechercher";
-            this.btnCommandesDvdRechercher.UseVisualStyleBackColor = true;
             this.btnCommandesDvdRechercher.Click += new System.EventHandler(this.btnCommandesDvdRechercher_Click);
-            // 
             // lblCommandesDvdTitre
-            // 
             this.lblCommandesDvdTitre.AutoSize = true;
             this.lblCommandesDvdTitre.Location = new System.Drawing.Point(290, 18);
             this.lblCommandesDvdTitre.Name = "lblCommandesDvdTitre";
-            this.lblCommandesDvdTitre.Size = new System.Drawing.Size(32, 13);
-            this.lblCommandesDvdTitre.Text = "Titre";
-            // 
             // lblCommandesDvdRealisateur
-            // 
             this.lblCommandesDvdRealisateur.AutoSize = true;
             this.lblCommandesDvdRealisateur.Location = new System.Drawing.Point(290, 36);
             this.lblCommandesDvdRealisateur.Name = "lblCommandesDvdRealisateur";
-            this.lblCommandesDvdRealisateur.Size = new System.Drawing.Size(60, 13);
-            this.lblCommandesDvdRealisateur.Text = "Réalisateur";
-            // 
             // lblCommandesDvdDuree
-            // 
             this.lblCommandesDvdDuree.AutoSize = true;
             this.lblCommandesDvdDuree.Location = new System.Drawing.Point(290, 54);
             this.lblCommandesDvdDuree.Name = "lblCommandesDvdDuree";
-            this.lblCommandesDvdDuree.Size = new System.Drawing.Size(36, 13);
-            this.lblCommandesDvdDuree.Text = "Durée";
-            // 
             // dgvCommandesDvdListe
-            // 
             this.dgvCommandesDvdListe.AllowUserToAddRows = false;
             this.dgvCommandesDvdListe.AllowUserToDeleteRows = false;
             this.dgvCommandesDvdListe.AllowUserToResizeColumns = false;
@@ -2596,12 +2517,9 @@ namespace MediaTekDocuments.view
             this.dgvCommandesDvdListe.RowHeadersVisible = false;
             this.dgvCommandesDvdListe.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCommandesDvdListe.Size = new System.Drawing.Size(855, 220);
-            this.dgvCommandesDvdListe.TabIndex = 2;
             this.dgvCommandesDvdListe.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCommandesDvdListe_ColumnHeaderMouseClick);
             this.dgvCommandesDvdListe.SelectionChanged += new System.EventHandler(this.dgvCommandesDvdListe_SelectionChanged);
-            // 
             // grpCommandesDvdSaisie
-            // 
             this.grpCommandesDvdSaisie.Controls.Add(this.dtpCommandesDvdDate);
             this.grpCommandesDvdSaisie.Controls.Add(this.txbCommandesDvdMontant);
             this.grpCommandesDvdSaisie.Controls.Add(this.txbCommandesDvdNbExemplaires);
@@ -2609,78 +2527,50 @@ namespace MediaTekDocuments.view
             this.grpCommandesDvdSaisie.Location = new System.Drawing.Point(10, 310);
             this.grpCommandesDvdSaisie.Name = "grpCommandesDvdSaisie";
             this.grpCommandesDvdSaisie.Size = new System.Drawing.Size(500, 80);
-            this.grpCommandesDvdSaisie.TabIndex = 3;
             this.grpCommandesDvdSaisie.Text = "Nouvelle commande";
-            // 
             // dtpCommandesDvdDate
-            // 
-            this.dtpCommandesDvdDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpCommandesDvdDate.Location = new System.Drawing.Point(10, 30);
             this.dtpCommandesDvdDate.Name = "dtpCommandesDvdDate";
+            this.dtpCommandesDvdDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpCommandesDvdDate.Size = new System.Drawing.Size(120, 20);
-            this.dtpCommandesDvdDate.TabIndex = 0;
-            // 
             // txbCommandesDvdMontant
-            // 
             this.txbCommandesDvdMontant.Location = new System.Drawing.Point(145, 30);
             this.txbCommandesDvdMontant.Name = "txbCommandesDvdMontant";
             this.txbCommandesDvdMontant.Size = new System.Drawing.Size(80, 20);
-            this.txbCommandesDvdMontant.TabIndex = 1;
-            // 
             // txbCommandesDvdNbExemplaires
-            // 
             this.txbCommandesDvdNbExemplaires.Location = new System.Drawing.Point(240, 30);
             this.txbCommandesDvdNbExemplaires.Name = "txbCommandesDvdNbExemplaires";
             this.txbCommandesDvdNbExemplaires.Size = new System.Drawing.Size(60, 20);
-            this.txbCommandesDvdNbExemplaires.TabIndex = 2;
-            // 
             // btnCommandesDvdAjouterCommande
-            // 
             this.btnCommandesDvdAjouterCommande.Location = new System.Drawing.Point(315, 28);
             this.btnCommandesDvdAjouterCommande.Name = "btnCommandesDvdAjouterCommande";
             this.btnCommandesDvdAjouterCommande.Size = new System.Drawing.Size(120, 25);
-            this.btnCommandesDvdAjouterCommande.TabIndex = 3;
             this.btnCommandesDvdAjouterCommande.Text = "Ajouter commande";
-            this.btnCommandesDvdAjouterCommande.UseVisualStyleBackColor = true;
             this.btnCommandesDvdAjouterCommande.Click += new System.EventHandler(this.btnCommandesDvdAjouterCommande_Click);
-            // 
             // grpCommandesDvdModifier
-            // 
             this.grpCommandesDvdModifier.Controls.Add(this.cbxCommandesDvdSuivi);
             this.grpCommandesDvdModifier.Controls.Add(this.btnCommandesDvdModifierSuivi);
             this.grpCommandesDvdModifier.Location = new System.Drawing.Point(10, 400);
             this.grpCommandesDvdModifier.Name = "grpCommandesDvdModifier";
             this.grpCommandesDvdModifier.Size = new System.Drawing.Size(500, 70);
-            this.grpCommandesDvdModifier.TabIndex = 4;
             this.grpCommandesDvdModifier.Text = "Modifier étape de suivi";
-            // 
             // cbxCommandesDvdSuivi
-            // 
             this.cbxCommandesDvdSuivi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCommandesDvdSuivi.FormattingEnabled = true;
             this.cbxCommandesDvdSuivi.Location = new System.Drawing.Point(10, 30);
             this.cbxCommandesDvdSuivi.Name = "cbxCommandesDvdSuivi";
             this.cbxCommandesDvdSuivi.Size = new System.Drawing.Size(250, 21);
-            this.cbxCommandesDvdSuivi.TabIndex = 0;
-            // 
             // btnCommandesDvdModifierSuivi
-            // 
             this.btnCommandesDvdModifierSuivi.Location = new System.Drawing.Point(275, 28);
             this.btnCommandesDvdModifierSuivi.Name = "btnCommandesDvdModifierSuivi";
             this.btnCommandesDvdModifierSuivi.Size = new System.Drawing.Size(120, 25);
-            this.btnCommandesDvdModifierSuivi.TabIndex = 1;
             this.btnCommandesDvdModifierSuivi.Text = "Modifier suivi";
-            this.btnCommandesDvdModifierSuivi.UseVisualStyleBackColor = true;
             this.btnCommandesDvdModifierSuivi.Click += new System.EventHandler(this.btnCommandesDvdModifierSuivi_Click);
-            // 
             // btnCommandesDvdSupprimerCommande
-            // 
             this.btnCommandesDvdSupprimerCommande.Location = new System.Drawing.Point(10, 480);
             this.btnCommandesDvdSupprimerCommande.Name = "btnCommandesDvdSupprimerCommande";
             this.btnCommandesDvdSupprimerCommande.Size = new System.Drawing.Size(150, 28);
-            this.btnCommandesDvdSupprimerCommande.TabIndex = 5;
             this.btnCommandesDvdSupprimerCommande.Text = "Supprimer commande";
-            this.btnCommandesDvdSupprimerCommande.UseVisualStyleBackColor = true;
             this.btnCommandesDvdSupprimerCommande.Click += new System.EventHandler(this.btnCommandesDvdSupprimerCommande_Click);
             // 
             // FrmMediatek
@@ -2691,16 +2581,6 @@ namespace MediaTekDocuments.view
             this.Controls.Add(this.tabOngletsApplication);
             this.Name = "FrmMediatek";
             this.Text = "Gestion des documents de la médiathèque";
-            this.tabCommandesLivres.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesLivresListe)).EndInit();
-            this.grpCommandesLivresSaisie.ResumeLayout(false);
-            this.grpCommandesLivresSaisie.PerformLayout();
-            this.grpCommandesLivresModifier.ResumeLayout(false);
-            this.tabCommandesDvd.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesDvdListe)).EndInit();
-            this.grpCommandesDvdSaisie.ResumeLayout(false);
-            this.grpCommandesDvdSaisie.PerformLayout();
-            this.grpCommandesDvdModifier.ResumeLayout(false);
             this.tabOngletsApplication.ResumeLayout(false);
             this.grpLivresSaisie.ResumeLayout(false);
             this.grpLivresSaisie.PerformLayout();
@@ -2738,6 +2618,18 @@ namespace MediaTekDocuments.view
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionExemplaireRevueImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReceptionExemplairesListe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionRevueImage)).EndInit();
+            this.tabCommandesLivres.ResumeLayout(false);
+            this.grpCommandesLivresSaisie.ResumeLayout(false);
+            this.grpCommandesLivresSaisie.PerformLayout();
+            this.grpCommandesLivresModifier.ResumeLayout(false);
+            this.grpCommandesLivresModifier.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesLivresListe)).EndInit();
+            this.tabCommandesDvd.ResumeLayout(false);
+            this.grpCommandesDvdSaisie.ResumeLayout(false);
+            this.grpCommandesDvdSaisie.PerformLayout();
+            this.grpCommandesDvdModifier.ResumeLayout(false);
+            this.grpCommandesDvdModifier.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesDvdListe)).EndInit();
             this.ResumeLayout(false);
 
         }
