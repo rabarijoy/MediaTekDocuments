@@ -2026,7 +2026,14 @@ namespace MediaTekDocuments.view
         /// </summary>
         private string GenererIdCommande()
         {
-            return "C" + new Random().Next(1000, 9999).ToString();
+            var rng = new Random(Guid.NewGuid().GetHashCode());
+            var tousIds = lesCommandesLivres.Select(c => c.Id)
+                          .Concat(lesCommandesDvd.Select(c => c.Id))
+                          .ToHashSet();
+            string id;
+            do { id = "C" + rng.Next(1000, 10000); }
+            while (tousIds.Contains(id));
+            return id;
         }
 
         /// <summary>
@@ -2040,7 +2047,9 @@ namespace MediaTekDocuments.view
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (!double.TryParse(txbCommandesLivresMontant.Text.Trim(), out double montant) || montant <= 0)
+            string montantStrLivres = txbCommandesLivresMontant.Text.Trim().Replace(',', '.');
+            if (!double.TryParse(montantStrLivres, System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out double montant) || montant <= 0)
             {
                 MessageBox.Show("Le montant doit être un nombre supérieur à 0.", "Saisie incorrecte",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -2317,7 +2326,9 @@ namespace MediaTekDocuments.view
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (!double.TryParse(txbCommandesDvdMontant.Text.Trim(), out double montant) || montant <= 0)
+            string montantStrDvd = txbCommandesDvdMontant.Text.Trim().Replace(',', '.');
+            if (!double.TryParse(montantStrDvd, System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out double montant) || montant <= 0)
             {
                 MessageBox.Show("Le montant doit être un nombre supérieur à 0.", "Saisie incorrecte",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);

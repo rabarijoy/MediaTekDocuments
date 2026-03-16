@@ -282,6 +282,16 @@ namespace MediaTekDocuments.view
             this.cbxCommandesDvdSuivi = new System.Windows.Forms.ComboBox();
             this.btnCommandesDvdModifierSuivi = new System.Windows.Forms.Button();
             this.btnCommandesDvdSupprimerCommande = new System.Windows.Forms.Button();
+            // ── Labels champs Commandes Livres ──
+            this.lblCommandesLivresDate = new System.Windows.Forms.Label();
+            this.lblCommandesLivresMontant = new System.Windows.Forms.Label();
+            this.lblCommandesLivresNbExemplaires = new System.Windows.Forms.Label();
+            this.lblCommandesLivresSuivi = new System.Windows.Forms.Label();
+            // ── Labels champs Commandes DVD ──
+            this.lblCommandesDvdDate = new System.Windows.Forms.Label();
+            this.lblCommandesDvdMontant = new System.Windows.Forms.Label();
+            this.lblCommandesDvdNbExemplaires = new System.Windows.Forms.Label();
+            this.lblCommandesDvdSuivi = new System.Windows.Forms.Label();
             this.tabOngletsApplication.SuspendLayout();
             this.grpLivresSaisie.SuspendLayout();
             this.grpDvdSaisie.SuspendLayout();
@@ -2418,10 +2428,28 @@ namespace MediaTekDocuments.view
             this.grpCommandesLivresSaisie.Controls.Add(this.txbCommandesLivresMontant);
             this.grpCommandesLivresSaisie.Controls.Add(this.txbCommandesLivresNbExemplaires);
             this.grpCommandesLivresSaisie.Controls.Add(this.btnCommandesLivresAjouterCommande);
+            this.grpCommandesLivresSaisie.Controls.Add(this.lblCommandesLivresDate);
+            this.grpCommandesLivresSaisie.Controls.Add(this.lblCommandesLivresMontant);
+            this.grpCommandesLivresSaisie.Controls.Add(this.lblCommandesLivresNbExemplaires);
             this.grpCommandesLivresSaisie.Location = new System.Drawing.Point(10, 310);
             this.grpCommandesLivresSaisie.Name = "grpCommandesLivresSaisie";
             this.grpCommandesLivresSaisie.Size = new System.Drawing.Size(500, 80);
             this.grpCommandesLivresSaisie.Text = "Nouvelle commande";
+            // lblCommandesLivresDate
+            this.lblCommandesLivresDate.AutoSize = true;
+            this.lblCommandesLivresDate.Location = new System.Drawing.Point(10, 12);
+            this.lblCommandesLivresDate.Name = "lblCommandesLivresDate";
+            this.lblCommandesLivresDate.Text = "Date :";
+            // lblCommandesLivresMontant
+            this.lblCommandesLivresMontant.AutoSize = true;
+            this.lblCommandesLivresMontant.Location = new System.Drawing.Point(145, 12);
+            this.lblCommandesLivresMontant.Name = "lblCommandesLivresMontant";
+            this.lblCommandesLivresMontant.Text = "Montant (€) :";
+            // lblCommandesLivresNbExemplaires
+            this.lblCommandesLivresNbExemplaires.AutoSize = true;
+            this.lblCommandesLivresNbExemplaires.Location = new System.Drawing.Point(240, 12);
+            this.lblCommandesLivresNbExemplaires.Name = "lblCommandesLivresNbExemplaires";
+            this.lblCommandesLivresNbExemplaires.Text = "Nb exempl. :";
             // dtpCommandesLivresDate
             this.dtpCommandesLivresDate.Location = new System.Drawing.Point(10, 30);
             this.dtpCommandesLivresDate.Name = "dtpCommandesLivresDate";
@@ -2444,10 +2472,16 @@ namespace MediaTekDocuments.view
             // grpCommandesLivresModifier
             this.grpCommandesLivresModifier.Controls.Add(this.cbxCommandesLivresSuivi);
             this.grpCommandesLivresModifier.Controls.Add(this.btnCommandesLivresModifierSuivi);
+            this.grpCommandesLivresModifier.Controls.Add(this.lblCommandesLivresSuivi);
             this.grpCommandesLivresModifier.Location = new System.Drawing.Point(10, 400);
             this.grpCommandesLivresModifier.Name = "grpCommandesLivresModifier";
             this.grpCommandesLivresModifier.Size = new System.Drawing.Size(500, 70);
             this.grpCommandesLivresModifier.Text = "Modifier étape de suivi";
+            // lblCommandesLivresSuivi
+            this.lblCommandesLivresSuivi.AutoSize = true;
+            this.lblCommandesLivresSuivi.Location = new System.Drawing.Point(10, 12);
+            this.lblCommandesLivresSuivi.Name = "lblCommandesLivresSuivi";
+            this.lblCommandesLivresSuivi.Text = "Étape de suivi :";
             // cbxCommandesLivresSuivi
             this.cbxCommandesLivresSuivi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCommandesLivresSuivi.FormattingEnabled = true;
@@ -2524,10 +2558,28 @@ namespace MediaTekDocuments.view
             this.grpCommandesDvdSaisie.Controls.Add(this.txbCommandesDvdMontant);
             this.grpCommandesDvdSaisie.Controls.Add(this.txbCommandesDvdNbExemplaires);
             this.grpCommandesDvdSaisie.Controls.Add(this.btnCommandesDvdAjouterCommande);
+            this.grpCommandesDvdSaisie.Controls.Add(this.lblCommandesDvdDate);
+            this.grpCommandesDvdSaisie.Controls.Add(this.lblCommandesDvdMontant);
+            this.grpCommandesDvdSaisie.Controls.Add(this.lblCommandesDvdNbExemplaires);
             this.grpCommandesDvdSaisie.Location = new System.Drawing.Point(10, 310);
             this.grpCommandesDvdSaisie.Name = "grpCommandesDvdSaisie";
             this.grpCommandesDvdSaisie.Size = new System.Drawing.Size(500, 80);
             this.grpCommandesDvdSaisie.Text = "Nouvelle commande";
+            // lblCommandesDvdDate
+            this.lblCommandesDvdDate.AutoSize = true;
+            this.lblCommandesDvdDate.Location = new System.Drawing.Point(10, 12);
+            this.lblCommandesDvdDate.Name = "lblCommandesDvdDate";
+            this.lblCommandesDvdDate.Text = "Date :";
+            // lblCommandesDvdMontant
+            this.lblCommandesDvdMontant.AutoSize = true;
+            this.lblCommandesDvdMontant.Location = new System.Drawing.Point(145, 12);
+            this.lblCommandesDvdMontant.Name = "lblCommandesDvdMontant";
+            this.lblCommandesDvdMontant.Text = "Montant (€) :";
+            // lblCommandesDvdNbExemplaires
+            this.lblCommandesDvdNbExemplaires.AutoSize = true;
+            this.lblCommandesDvdNbExemplaires.Location = new System.Drawing.Point(240, 12);
+            this.lblCommandesDvdNbExemplaires.Name = "lblCommandesDvdNbExemplaires";
+            this.lblCommandesDvdNbExemplaires.Text = "Nb exempl. :";
             // dtpCommandesDvdDate
             this.dtpCommandesDvdDate.Location = new System.Drawing.Point(10, 30);
             this.dtpCommandesDvdDate.Name = "dtpCommandesDvdDate";
@@ -2550,10 +2602,16 @@ namespace MediaTekDocuments.view
             // grpCommandesDvdModifier
             this.grpCommandesDvdModifier.Controls.Add(this.cbxCommandesDvdSuivi);
             this.grpCommandesDvdModifier.Controls.Add(this.btnCommandesDvdModifierSuivi);
+            this.grpCommandesDvdModifier.Controls.Add(this.lblCommandesDvdSuivi);
             this.grpCommandesDvdModifier.Location = new System.Drawing.Point(10, 400);
             this.grpCommandesDvdModifier.Name = "grpCommandesDvdModifier";
             this.grpCommandesDvdModifier.Size = new System.Drawing.Size(500, 70);
             this.grpCommandesDvdModifier.Text = "Modifier étape de suivi";
+            // lblCommandesDvdSuivi
+            this.lblCommandesDvdSuivi.AutoSize = true;
+            this.lblCommandesDvdSuivi.Location = new System.Drawing.Point(10, 12);
+            this.lblCommandesDvdSuivi.Name = "lblCommandesDvdSuivi";
+            this.lblCommandesDvdSuivi.Text = "Étape de suivi :";
             // cbxCommandesDvdSuivi
             this.cbxCommandesDvdSuivi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCommandesDvdSuivi.FormattingEnabled = true;
@@ -2889,6 +2947,16 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.ComboBox cbxCommandesDvdSuivi;
         private System.Windows.Forms.Button btnCommandesDvdModifierSuivi;
         private System.Windows.Forms.Button btnCommandesDvdSupprimerCommande;
+        // ── Labels champs Commandes Livres ──
+        private System.Windows.Forms.Label lblCommandesLivresDate;
+        private System.Windows.Forms.Label lblCommandesLivresMontant;
+        private System.Windows.Forms.Label lblCommandesLivresNbExemplaires;
+        private System.Windows.Forms.Label lblCommandesLivresSuivi;
+        // ── Labels champs Commandes DVD ──
+        private System.Windows.Forms.Label lblCommandesDvdDate;
+        private System.Windows.Forms.Label lblCommandesDvdMontant;
+        private System.Windows.Forms.Label lblCommandesDvdNbExemplaires;
+        private System.Windows.Forms.Label lblCommandesDvdSuivi;
     }
 }
 
