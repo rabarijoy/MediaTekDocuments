@@ -386,7 +386,8 @@ namespace MediaTekDocuments.dal
                 { "dateCommande", commande.DateCommande.ToString("yyyy-MM-dd") },
                 { "montant",      commande.Montant },
                 { "nbExemplaire", commande.NbExemplaire },
-                { "idLivreDvd",   commande.IdLivreDvd }
+                { "idLivreDvd",   commande.IdLivreDvd },
+                { "idSuivi",      commande.IdSuivi }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
             return TraitementAction(POST, "commandedocument", "champs=" + jsonChamps);
