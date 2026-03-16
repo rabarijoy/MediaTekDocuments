@@ -15,6 +15,8 @@ namespace MediaTekDocuments.model
         public string LibelleEtape { get; set; }
         public string IdLivreDvd { get; set; }
 
+        public CommandeDocument() { }
+
         public CommandeDocument(string id, DateTime dateCommande, double montant, int nbExemplaire,
             string idSuivi, string libelleEtape, string idLivreDvd)
         {
