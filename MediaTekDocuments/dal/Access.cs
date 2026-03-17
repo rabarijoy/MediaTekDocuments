@@ -350,6 +350,78 @@ namespace MediaTekDocuments.dal
         }
 
         // =====================================================================
+        // COMMANDE DOCUMENT : récupération, ajout, modification, suppression
+        // =====================================================================
+
+        /// <summary>
+        /// Retourne les commandes d'un livre ou DVD triées par date décroissante
+        /// </summary>
+        /// <param name="idLivreDvd">identifiant du livre ou DVD</param>
+        /// <returns>Liste d'objets CommandeDocument</returns>
+        public List<CommandeDocument> GetCommandesLivreDvd(string idLivreDvd)
+        {
+            string jsonFiltre = convertToJson("idLivreDvd", idLivreDvd);
+            return TraitementRecup<CommandeDocument>(GET, "commandedocument/" + jsonFiltre, null);
+        }
+
+        /// <summary>
+        /// Retourne toutes les étapes de suivi
+        /// </summary>
+        /// <returns>Liste d'objets Suivi</returns>
+        public List<Suivi> GetAllSuivi()
+        {
+            return TraitementRecup<Suivi>(GET, "suivi", null);
+        }
+
+        /// <summary>
+        /// Insère une commande de document (tables commande + commandedocument, étape initiale 00001)
+        /// </summary>
+        /// <param name="commande">la commande à insérer</param>
+        /// <returns>true si l'insertion a réussi</returns>
+        public bool AjouterCommandeDocument(CommandeDocument commande)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "idCommande",   commande.Id },
+                { "dateCommande", commande.DateCommande.ToString("yyyy-MM-dd") },
+                { "montant",      commande.Montant },
+                { "nbExemplaire", commande.NbExemplaire },
+                { "idLivreDvd",   commande.IdLivreDvd },
+                { "idSuivi",      commande.IdSuivi }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(POST, "commandedocument", "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Modifie l'étape de suivi d'une commande de document
+        /// </summary>
+        /// <param name="id">identifiant de la commande</param>
+        /// <param name="idSuivi">nouvel identifiant d'étape</param>
+        /// <returns>true si la modification a réussi</returns>
+        public bool ModifierEtapeSuivi(string id, string idSuivi)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "idSuivi", idSuivi }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(PUT, "commandedocument/" + id, "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Supprime une commande de document (tables commandedocument + commande)
+        /// Refuse côté API si la commande est livrée ou réglée
+        /// </summary>
+        /// <param name="id">identifiant de la commande</param>
+        /// <returns>true si la suppression a réussi</returns>
+        public bool SupprimerCommandeDocument(string id)
+        {
+            string jsonFiltreId = convertToJson("id", id);
+            return TraitementAction(DELETE, "commandedocument/" + jsonFiltreId, "");
+        }
+
+        // =====================================================================
         // Méthodes privées
         // =====================================================================
 
