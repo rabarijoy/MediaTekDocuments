@@ -2471,7 +2471,6 @@ namespace MediaTekDocuments.view
 
         private readonly BindingSource bdgCommandesRevuesListe = new BindingSource();
         private List<Abonnement> lesAbonnements = new List<Abonnement>();
-        private List<Revue> lesRevues = new List<Revue>();
         private Revue revueCommandeEnCours = null;
 
         /// <summary>
