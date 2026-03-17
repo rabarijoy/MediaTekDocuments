@@ -422,6 +422,61 @@ namespace MediaTekDocuments.dal
         }
 
         // =====================================================================
+        // ABONNEMENT : récupération, ajout, suppression
+        // =====================================================================
+
+        /// <summary>
+        /// Retourne les abonnements d'une revue triés par date décroissante
+        /// </summary>
+        /// <param name="idRevue">identifiant de la revue</param>
+        /// <returns>Liste d'objets Abonnement</returns>
+        public List<Abonnement> GetAbonnementsRevue(string idRevue)
+        {
+            string jsonFiltre = convertToJson("idRevue", idRevue);
+            return TraitementRecup<Abonnement>(GET, "abonnement/" + jsonFiltre, null);
+        }
+
+        /// <summary>
+        /// Retourne les abonnements expirant dans les 30 prochains jours
+        /// </summary>
+        /// <returns>Liste d'objets AlerteAbonnement</returns>
+        public List<AlerteAbonnement> GetAbonnementsExpirantBientot()
+        {
+            return TraitementRecup<AlerteAbonnement>(GET, "abonnementexpiration", null);
+        }
+
+        /// <summary>
+        /// Insère un abonnement (tables commande + abonnement)
+        /// </summary>
+        /// <param name="abonnement">l'abonnement à insérer</param>
+        /// <returns>true si l'insertion a réussi</returns>
+        public bool AjouterAbonnement(Abonnement abonnement)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "id",                 abonnement.Id },
+                { "dateCommande",       abonnement.DateCommande.ToString("yyyy-MM-dd") },
+                { "montant",            abonnement.Montant },
+                { "dateFinAbonnement",  abonnement.DateFinAbonnement.ToString("yyyy-MM-dd") },
+                { "idRevue",            abonnement.IdRevue }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(POST, "abonnement", "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Supprime un abonnement (tables abonnement + commande)
+        /// Refuse côté API si des exemplaires ont été reçus pendant la période
+        /// </summary>
+        /// <param name="id">identifiant de l'abonnement</param>
+        /// <returns>true si la suppression a réussi</returns>
+        public bool SupprimerAbonnement(string id)
+        {
+            string jsonFiltreId = convertToJson("id", id);
+            return TraitementAction(DELETE, "abonnement/" + jsonFiltreId, "");
+        }
+
+        // =====================================================================
         // Méthodes privées
         // =====================================================================
 

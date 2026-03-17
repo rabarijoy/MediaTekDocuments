@@ -282,6 +282,22 @@ namespace MediaTekDocuments.view
             this.cbxCommandesDvdSuivi = new System.Windows.Forms.ComboBox();
             this.btnCommandesDvdModifierSuivi = new System.Windows.Forms.Button();
             this.btnCommandesDvdSupprimerCommande = new System.Windows.Forms.Button();
+            // ── Commandes Revues ──
+            this.tabCommandesRevues = new System.Windows.Forms.TabPage();
+            this.txbCommandesRevuesNumero = new System.Windows.Forms.TextBox();
+            this.btnCommandesRevuesRechercher = new System.Windows.Forms.Button();
+            this.lblCommandesRevuesTitre = new System.Windows.Forms.Label();
+            this.lblCommandesRevuesPeriodicite = new System.Windows.Forms.Label();
+            this.dgvCommandesRevuesListe = new System.Windows.Forms.DataGridView();
+            this.grpCommandesRevuesSaisie = new System.Windows.Forms.GroupBox();
+            this.dtpCommandesRevuesDate = new System.Windows.Forms.DateTimePicker();
+            this.txbCommandesRevuesMontant = new System.Windows.Forms.TextBox();
+            this.dtpCommandesRevuesDateFin = new System.Windows.Forms.DateTimePicker();
+            this.btnCommandesRevuesAjouter = new System.Windows.Forms.Button();
+            this.btnCommandesRevuesSupprimerAbonnement = new System.Windows.Forms.Button();
+            this.lblCommandesRevuesDate = new System.Windows.Forms.Label();
+            this.lblCommandesRevuesMontant = new System.Windows.Forms.Label();
+            this.lblCommandesRevuesDateFin = new System.Windows.Forms.Label();
             // ── Labels champs Commandes Livres ──
             this.lblCommandesLivresDate = new System.Windows.Forms.Label();
             this.lblCommandesLivresMontant = new System.Windows.Forms.Label();
@@ -336,6 +352,7 @@ namespace MediaTekDocuments.view
             this.tabOngletsApplication.Controls.Add(this.tabReceptionRevue);
             this.tabOngletsApplication.Controls.Add(this.tabCommandesLivres);
             this.tabOngletsApplication.Controls.Add(this.tabCommandesDvd);
+            this.tabOngletsApplication.Controls.Add(this.tabCommandesRevues);
             this.tabOngletsApplication.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabOngletsApplication.ItemSize = new System.Drawing.Size(49, 18);
             this.tabOngletsApplication.Location = new System.Drawing.Point(0, 0);
@@ -2630,6 +2647,102 @@ namespace MediaTekDocuments.view
             this.btnCommandesDvdSupprimerCommande.Size = new System.Drawing.Size(150, 28);
             this.btnCommandesDvdSupprimerCommande.Text = "Supprimer commande";
             this.btnCommandesDvdSupprimerCommande.Click += new System.EventHandler(this.btnCommandesDvdSupprimerCommande_Click);
+            // tabCommandesRevues
+            this.tabCommandesRevues.Controls.Add(this.txbCommandesRevuesNumero);
+            this.tabCommandesRevues.Controls.Add(this.btnCommandesRevuesRechercher);
+            this.tabCommandesRevues.Controls.Add(this.lblCommandesRevuesTitre);
+            this.tabCommandesRevues.Controls.Add(this.lblCommandesRevuesPeriodicite);
+            this.tabCommandesRevues.Controls.Add(this.dgvCommandesRevuesListe);
+            this.tabCommandesRevues.Controls.Add(this.grpCommandesRevuesSaisie);
+            this.tabCommandesRevues.Controls.Add(this.btnCommandesRevuesSupprimerAbonnement);
+            this.tabCommandesRevues.Location = new System.Drawing.Point(4, 22);
+            this.tabCommandesRevues.Name = "tabCommandesRevues";
+            this.tabCommandesRevues.Size = new System.Drawing.Size(875, 805);
+            this.tabCommandesRevues.Text = "Commandes revues";
+            this.tabCommandesRevues.UseVisualStyleBackColor = true;
+            this.tabCommandesRevues.Enter += new System.EventHandler(this.tabCommandesRevues_Enter);
+            // txbCommandesRevuesNumero
+            this.txbCommandesRevuesNumero.Location = new System.Drawing.Point(10, 15);
+            this.txbCommandesRevuesNumero.Name = "txbCommandesRevuesNumero";
+            this.txbCommandesRevuesNumero.Size = new System.Drawing.Size(150, 20);
+            // btnCommandesRevuesRechercher
+            this.btnCommandesRevuesRechercher.Location = new System.Drawing.Point(170, 13);
+            this.btnCommandesRevuesRechercher.Name = "btnCommandesRevuesRechercher";
+            this.btnCommandesRevuesRechercher.Size = new System.Drawing.Size(100, 23);
+            this.btnCommandesRevuesRechercher.Text = "Rechercher";
+            this.btnCommandesRevuesRechercher.Click += new System.EventHandler(this.btnCommandesRevuesRechercher_Click);
+            // lblCommandesRevuesTitre
+            this.lblCommandesRevuesTitre.AutoSize = true;
+            this.lblCommandesRevuesTitre.Location = new System.Drawing.Point(290, 18);
+            this.lblCommandesRevuesTitre.Name = "lblCommandesRevuesTitre";
+            // lblCommandesRevuesPeriodicite
+            this.lblCommandesRevuesPeriodicite.AutoSize = true;
+            this.lblCommandesRevuesPeriodicite.Location = new System.Drawing.Point(290, 36);
+            this.lblCommandesRevuesPeriodicite.Name = "lblCommandesRevuesPeriodicite";
+            // dgvCommandesRevuesListe
+            this.dgvCommandesRevuesListe.AllowUserToAddRows = false;
+            this.dgvCommandesRevuesListe.AllowUserToDeleteRows = false;
+            this.dgvCommandesRevuesListe.AllowUserToResizeColumns = false;
+            this.dgvCommandesRevuesListe.AllowUserToResizeRows = false;
+            this.dgvCommandesRevuesListe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCommandesRevuesListe.Location = new System.Drawing.Point(10, 60);
+            this.dgvCommandesRevuesListe.MultiSelect = false;
+            this.dgvCommandesRevuesListe.Name = "dgvCommandesRevuesListe";
+            this.dgvCommandesRevuesListe.ReadOnly = true;
+            this.dgvCommandesRevuesListe.RowHeadersVisible = false;
+            this.dgvCommandesRevuesListe.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCommandesRevuesListe.Size = new System.Drawing.Size(855, 220);
+            this.dgvCommandesRevuesListe.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCommandesRevuesListe_ColumnHeaderMouseClick);
+            // grpCommandesRevuesSaisie
+            this.grpCommandesRevuesSaisie.Controls.Add(this.lblCommandesRevuesDate);
+            this.grpCommandesRevuesSaisie.Controls.Add(this.dtpCommandesRevuesDate);
+            this.grpCommandesRevuesSaisie.Controls.Add(this.lblCommandesRevuesMontant);
+            this.grpCommandesRevuesSaisie.Controls.Add(this.txbCommandesRevuesMontant);
+            this.grpCommandesRevuesSaisie.Controls.Add(this.lblCommandesRevuesDateFin);
+            this.grpCommandesRevuesSaisie.Controls.Add(this.dtpCommandesRevuesDateFin);
+            this.grpCommandesRevuesSaisie.Controls.Add(this.btnCommandesRevuesAjouter);
+            this.grpCommandesRevuesSaisie.Location = new System.Drawing.Point(10, 295);
+            this.grpCommandesRevuesSaisie.Name = "grpCommandesRevuesSaisie";
+            this.grpCommandesRevuesSaisie.Size = new System.Drawing.Size(560, 100);
+            this.grpCommandesRevuesSaisie.Text = "Nouvel abonnement";
+            // lblCommandesRevuesDate
+            this.lblCommandesRevuesDate.AutoSize = true;
+            this.lblCommandesRevuesDate.Location = new System.Drawing.Point(10, 20);
+            this.lblCommandesRevuesDate.Text = "Date commande";
+            // dtpCommandesRevuesDate
+            this.dtpCommandesRevuesDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpCommandesRevuesDate.Location = new System.Drawing.Point(10, 38);
+            this.dtpCommandesRevuesDate.Name = "dtpCommandesRevuesDate";
+            this.dtpCommandesRevuesDate.Size = new System.Drawing.Size(120, 20);
+            // lblCommandesRevuesMontant
+            this.lblCommandesRevuesMontant.AutoSize = true;
+            this.lblCommandesRevuesMontant.Location = new System.Drawing.Point(145, 20);
+            this.lblCommandesRevuesMontant.Text = "Montant (€)";
+            // txbCommandesRevuesMontant
+            this.txbCommandesRevuesMontant.Location = new System.Drawing.Point(145, 38);
+            this.txbCommandesRevuesMontant.Name = "txbCommandesRevuesMontant";
+            this.txbCommandesRevuesMontant.Size = new System.Drawing.Size(80, 20);
+            // lblCommandesRevuesDateFin
+            this.lblCommandesRevuesDateFin.AutoSize = true;
+            this.lblCommandesRevuesDateFin.Location = new System.Drawing.Point(240, 20);
+            this.lblCommandesRevuesDateFin.Text = "Fin abonnement";
+            // dtpCommandesRevuesDateFin
+            this.dtpCommandesRevuesDateFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpCommandesRevuesDateFin.Location = new System.Drawing.Point(240, 38);
+            this.dtpCommandesRevuesDateFin.Name = "dtpCommandesRevuesDateFin";
+            this.dtpCommandesRevuesDateFin.Size = new System.Drawing.Size(120, 20);
+            // btnCommandesRevuesAjouter
+            this.btnCommandesRevuesAjouter.Location = new System.Drawing.Point(375, 36);
+            this.btnCommandesRevuesAjouter.Name = "btnCommandesRevuesAjouter";
+            this.btnCommandesRevuesAjouter.Size = new System.Drawing.Size(140, 25);
+            this.btnCommandesRevuesAjouter.Text = "Ajouter abonnement";
+            this.btnCommandesRevuesAjouter.Click += new System.EventHandler(this.btnCommandesRevuesAjouter_Click);
+            // btnCommandesRevuesSupprimerAbonnement
+            this.btnCommandesRevuesSupprimerAbonnement.Location = new System.Drawing.Point(10, 410);
+            this.btnCommandesRevuesSupprimerAbonnement.Name = "btnCommandesRevuesSupprimerAbonnement";
+            this.btnCommandesRevuesSupprimerAbonnement.Size = new System.Drawing.Size(160, 28);
+            this.btnCommandesRevuesSupprimerAbonnement.Text = "Supprimer abonnement";
+            this.btnCommandesRevuesSupprimerAbonnement.Click += new System.EventHandler(this.btnCommandesRevuesSupprimerAbonnement_Click);
             // 
             // FrmMediatek
             // 
@@ -2688,6 +2801,10 @@ namespace MediaTekDocuments.view
             this.grpCommandesDvdModifier.ResumeLayout(false);
             this.grpCommandesDvdModifier.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesDvdListe)).EndInit();
+            this.tabCommandesRevues.ResumeLayout(false);
+            this.grpCommandesRevuesSaisie.ResumeLayout(false);
+            this.grpCommandesRevuesSaisie.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesRevuesListe)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2957,6 +3074,22 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Label lblCommandesDvdMontant;
         private System.Windows.Forms.Label lblCommandesDvdNbExemplaires;
         private System.Windows.Forms.Label lblCommandesDvdSuivi;
+        // ── Commandes Revues ──
+        private System.Windows.Forms.TabPage tabCommandesRevues;
+        private System.Windows.Forms.TextBox txbCommandesRevuesNumero;
+        private System.Windows.Forms.Button btnCommandesRevuesRechercher;
+        private System.Windows.Forms.Label lblCommandesRevuesTitre;
+        private System.Windows.Forms.Label lblCommandesRevuesPeriodicite;
+        private System.Windows.Forms.DataGridView dgvCommandesRevuesListe;
+        private System.Windows.Forms.GroupBox grpCommandesRevuesSaisie;
+        private System.Windows.Forms.DateTimePicker dtpCommandesRevuesDate;
+        private System.Windows.Forms.TextBox txbCommandesRevuesMontant;
+        private System.Windows.Forms.DateTimePicker dtpCommandesRevuesDateFin;
+        private System.Windows.Forms.Button btnCommandesRevuesAjouter;
+        private System.Windows.Forms.Button btnCommandesRevuesSupprimerAbonnement;
+        private System.Windows.Forms.Label lblCommandesRevuesDate;
+        private System.Windows.Forms.Label lblCommandesRevuesMontant;
+        private System.Windows.Forms.Label lblCommandesRevuesDateFin;
     }
 }
 
