@@ -422,6 +422,65 @@ namespace MediaTekDocuments.dal
         }
 
         // =====================================================================
+        // EXEMPLAIRE : récupération enrichie, modification de l'état, suppression
+        // =====================================================================
+
+        /// <summary>
+        /// Retourne les exemplaires d'un document (livre, DVD ou revue) avec le libellé de l'état
+        /// </summary>
+        /// <param name="idDocument">identifiant du document parent</param>
+        /// <returns>Liste d'objets Exemplaire (avec LibelleEtat renseigné)</returns>
+        public List<Exemplaire> GetExemplairesDocument(string idDocument)
+        {
+            string jsonFiltre = convertToJson("id", idDocument);
+            return TraitementRecup<Exemplaire>(GET, "exemplaire/" + jsonFiltre, null);
+        }
+
+        /// <summary>
+        /// Retourne tous les états disponibles
+        /// </summary>
+        /// <returns>Liste d'objets Etat</returns>
+        public List<Etat> GetAllEtats()
+        {
+            return TraitementRecup<Etat>(GET, "etat", null);
+        }
+
+        /// <summary>
+        /// Modifie l'état d'un exemplaire identifié par idDocument + numero
+        /// </summary>
+        /// <param name="idDocument">identifiant du document parent</param>
+        /// <param name="numero">numéro de l'exemplaire</param>
+        /// <param name="idEtat">nouvel état</param>
+        /// <returns>true si la modification a réussi</returns>
+        public bool ModifierEtatExemplaire(string idDocument, int numero, string idEtat)
+        {
+            Dictionary<string, object> champs = new Dictionary<string, object>
+            {
+                { "numero", numero },
+                { "idEtat", idEtat }
+            };
+            string jsonChamps = JsonConvert.SerializeObject(champs);
+            return TraitementAction(PUT, "exemplaire/" + idDocument, "champs=" + jsonChamps);
+        }
+
+        /// <summary>
+        /// Supprime un exemplaire identifié par idDocument + numero
+        /// </summary>
+        /// <param name="idDocument">identifiant du document parent</param>
+        /// <param name="numero">numéro de l'exemplaire</param>
+        /// <returns>true si la suppression a réussi</returns>
+        public bool SupprimerExemplaire(string idDocument, int numero)
+        {
+            Dictionary<string, object> filtre = new Dictionary<string, object>
+            {
+                { "id",     idDocument },
+                { "numero", numero }
+            };
+            string jsonFiltre = JsonConvert.SerializeObject(filtre);
+            return TraitementAction(DELETE, "exemplaire/" + jsonFiltre, "");
+        }
+
+        // =====================================================================
         // ABONNEMENT : récupération, ajout, suppression
         // =====================================================================
 
