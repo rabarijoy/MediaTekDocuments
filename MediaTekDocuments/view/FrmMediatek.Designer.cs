@@ -282,6 +282,20 @@ namespace MediaTekDocuments.view
             this.cbxCommandesDvdSuivi = new System.Windows.Forms.ComboBox();
             this.btnCommandesDvdModifierSuivi = new System.Windows.Forms.Button();
             this.btnCommandesDvdSupprimerCommande = new System.Windows.Forms.Button();
+            // ── Exemplaires Livres ──
+            this.dgvLivresExemplaires = new System.Windows.Forms.DataGridView();
+            this.cbxLivresEtats = new System.Windows.Forms.ComboBox();
+            this.btnLivresModifierEtat = new System.Windows.Forms.Button();
+            this.btnLivresSupprimerExemplaire = new System.Windows.Forms.Button();
+            // ── Exemplaires DVD ──
+            this.dgvDvdExemplaires = new System.Windows.Forms.DataGridView();
+            this.cbxDvdEtats = new System.Windows.Forms.ComboBox();
+            this.btnDvdModifierEtat = new System.Windows.Forms.Button();
+            this.btnDvdSupprimerExemplaire = new System.Windows.Forms.Button();
+            // ── Parutions : modifier/supprimer exemplaire ──
+            this.cbxParutionsEtats = new System.Windows.Forms.ComboBox();
+            this.btnParutionsModifierEtat = new System.Windows.Forms.Button();
+            this.btnParutionsSupprimerExemplaire = new System.Windows.Forms.Button();
             // ── Commandes Revues ──
             this.tabCommandesRevues = new System.Windows.Forms.TabPage();
             this.txbCommandesRevuesNumero = new System.Windows.Forms.TextBox();
@@ -366,6 +380,11 @@ namespace MediaTekDocuments.view
             this.tabLivres.Controls.Add(this.grpLivresInfos);
             this.tabLivres.Controls.Add(this.grpLivresRecherche);
             this.tabLivres.Controls.Add(this.grpLivresSaisie);
+            this.tabLivres.Controls.Add(this.dgvLivresExemplaires);
+            this.tabLivres.Controls.Add(this.cbxLivresEtats);
+            this.tabLivres.Controls.Add(this.btnLivresModifierEtat);
+            this.tabLivres.Controls.Add(this.btnLivresSupprimerExemplaire);
+            this.tabLivres.AutoScroll = true;
             this.tabLivres.Location = new System.Drawing.Point(4, 22);
             this.tabLivres.Name = "tabLivres";
             this.tabLivres.Size = new System.Drawing.Size(875, 805);
@@ -765,6 +784,11 @@ namespace MediaTekDocuments.view
             this.tabDvd.Controls.Add(this.grpDvdInfos);
             this.tabDvd.Controls.Add(this.grpDvdRecherche);
             this.tabDvd.Controls.Add(this.grpDvdSaisie);
+            this.tabDvd.Controls.Add(this.dgvDvdExemplaires);
+            this.tabDvd.Controls.Add(this.cbxDvdEtats);
+            this.tabDvd.Controls.Add(this.btnDvdModifierEtat);
+            this.tabDvd.Controls.Add(this.btnDvdSupprimerExemplaire);
+            this.tabDvd.AutoScroll = true;
             this.tabDvd.Location = new System.Drawing.Point(4, 22);
             this.tabDvd.Name = "tabDvd";
             this.tabDvd.Size = new System.Drawing.Size(875, 805);
@@ -1546,6 +1570,10 @@ namespace MediaTekDocuments.view
             // 
             this.tabReceptionRevue.Controls.Add(this.grpReceptionExemplaire);
             this.tabReceptionRevue.Controls.Add(this.grpReceptionRevue);
+            this.tabReceptionRevue.Controls.Add(this.cbxParutionsEtats);
+            this.tabReceptionRevue.Controls.Add(this.btnParutionsModifierEtat);
+            this.tabReceptionRevue.Controls.Add(this.btnParutionsSupprimerExemplaire);
+            this.tabReceptionRevue.AutoScroll = true;
             this.tabReceptionRevue.Location = new System.Drawing.Point(4, 22);
             this.tabReceptionRevue.Name = "tabReceptionRevue";
             this.tabReceptionRevue.Size = new System.Drawing.Size(875, 633);
@@ -2647,6 +2675,90 @@ namespace MediaTekDocuments.view
             this.btnCommandesDvdSupprimerCommande.Size = new System.Drawing.Size(150, 28);
             this.btnCommandesDvdSupprimerCommande.Text = "Supprimer commande";
             this.btnCommandesDvdSupprimerCommande.Click += new System.EventHandler(this.btnCommandesDvdSupprimerCommande_Click);
+            // ── Configuration Exemplaires Livres ──
+            // dgvLivresExemplaires
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLivresExemplaires)).BeginInit();
+            this.dgvLivresExemplaires.AllowUserToAddRows = false;
+            this.dgvLivresExemplaires.AllowUserToDeleteRows = false;
+            this.dgvLivresExemplaires.AllowUserToResizeRows = false;
+            this.dgvLivresExemplaires.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLivresExemplaires.Location = new System.Drawing.Point(8, 806);
+            this.dgvLivresExemplaires.MultiSelect = false;
+            this.dgvLivresExemplaires.Name = "dgvLivresExemplaires";
+            this.dgvLivresExemplaires.ReadOnly = true;
+            this.dgvLivresExemplaires.RowHeadersVisible = false;
+            this.dgvLivresExemplaires.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvLivresExemplaires.Size = new System.Drawing.Size(600, 160);
+            this.dgvLivresExemplaires.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvLivresExemplaires_ColumnHeaderMouseClick);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLivresExemplaires)).EndInit();
+            // cbxLivresEtats
+            this.cbxLivresEtats.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxLivresEtats.Location = new System.Drawing.Point(620, 806);
+            this.cbxLivresEtats.Name = "cbxLivresEtats";
+            this.cbxLivresEtats.Size = new System.Drawing.Size(130, 21);
+            // btnLivresModifierEtat
+            this.btnLivresModifierEtat.Location = new System.Drawing.Point(620, 836);
+            this.btnLivresModifierEtat.Name = "btnLivresModifierEtat";
+            this.btnLivresModifierEtat.Size = new System.Drawing.Size(130, 26);
+            this.btnLivresModifierEtat.Text = "Modifier état";
+            this.btnLivresModifierEtat.Click += new System.EventHandler(this.btnLivresModifierEtat_Click);
+            // btnLivresSupprimerExemplaire
+            this.btnLivresSupprimerExemplaire.Location = new System.Drawing.Point(620, 871);
+            this.btnLivresSupprimerExemplaire.Name = "btnLivresSupprimerExemplaire";
+            this.btnLivresSupprimerExemplaire.Size = new System.Drawing.Size(130, 26);
+            this.btnLivresSupprimerExemplaire.Text = "Supprimer";
+            this.btnLivresSupprimerExemplaire.Click += new System.EventHandler(this.btnLivresSupprimerExemplaire_Click);
+            // ── Configuration Exemplaires DVD ──
+            // dgvDvdExemplaires
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDvdExemplaires)).BeginInit();
+            this.dgvDvdExemplaires.AllowUserToAddRows = false;
+            this.dgvDvdExemplaires.AllowUserToDeleteRows = false;
+            this.dgvDvdExemplaires.AllowUserToResizeRows = false;
+            this.dgvDvdExemplaires.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDvdExemplaires.Location = new System.Drawing.Point(8, 806);
+            this.dgvDvdExemplaires.MultiSelect = false;
+            this.dgvDvdExemplaires.Name = "dgvDvdExemplaires";
+            this.dgvDvdExemplaires.ReadOnly = true;
+            this.dgvDvdExemplaires.RowHeadersVisible = false;
+            this.dgvDvdExemplaires.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDvdExemplaires.Size = new System.Drawing.Size(600, 160);
+            this.dgvDvdExemplaires.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvDvdExemplaires_ColumnHeaderMouseClick);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDvdExemplaires)).EndInit();
+            // cbxDvdEtats
+            this.cbxDvdEtats.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDvdEtats.Location = new System.Drawing.Point(620, 806);
+            this.cbxDvdEtats.Name = "cbxDvdEtats";
+            this.cbxDvdEtats.Size = new System.Drawing.Size(130, 21);
+            // btnDvdModifierEtat
+            this.btnDvdModifierEtat.Location = new System.Drawing.Point(620, 836);
+            this.btnDvdModifierEtat.Name = "btnDvdModifierEtat";
+            this.btnDvdModifierEtat.Size = new System.Drawing.Size(130, 26);
+            this.btnDvdModifierEtat.Text = "Modifier état";
+            this.btnDvdModifierEtat.Click += new System.EventHandler(this.btnDvdModifierEtat_Click);
+            // btnDvdSupprimerExemplaire
+            this.btnDvdSupprimerExemplaire.Location = new System.Drawing.Point(620, 871);
+            this.btnDvdSupprimerExemplaire.Name = "btnDvdSupprimerExemplaire";
+            this.btnDvdSupprimerExemplaire.Size = new System.Drawing.Size(130, 26);
+            this.btnDvdSupprimerExemplaire.Text = "Supprimer";
+            this.btnDvdSupprimerExemplaire.Click += new System.EventHandler(this.btnDvdSupprimerExemplaire_Click);
+            // ── Configuration Parutions : modifier/supprimer exemplaire ──
+            // cbxParutionsEtats
+            this.cbxParutionsEtats.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxParutionsEtats.Location = new System.Drawing.Point(8, 636);
+            this.cbxParutionsEtats.Name = "cbxParutionsEtats";
+            this.cbxParutionsEtats.Size = new System.Drawing.Size(130, 21);
+            // btnParutionsModifierEtat
+            this.btnParutionsModifierEtat.Location = new System.Drawing.Point(150, 634);
+            this.btnParutionsModifierEtat.Name = "btnParutionsModifierEtat";
+            this.btnParutionsModifierEtat.Size = new System.Drawing.Size(130, 26);
+            this.btnParutionsModifierEtat.Text = "Modifier état";
+            this.btnParutionsModifierEtat.Click += new System.EventHandler(this.btnParutionsModifierEtat_Click);
+            // btnParutionsSupprimerExemplaire
+            this.btnParutionsSupprimerExemplaire.Location = new System.Drawing.Point(295, 634);
+            this.btnParutionsSupprimerExemplaire.Name = "btnParutionsSupprimerExemplaire";
+            this.btnParutionsSupprimerExemplaire.Size = new System.Drawing.Size(130, 26);
+            this.btnParutionsSupprimerExemplaire.Text = "Supprimer";
+            this.btnParutionsSupprimerExemplaire.Click += new System.EventHandler(this.btnParutionsSupprimerExemplaire_Click);
             // tabCommandesRevues
             this.tabCommandesRevues.Controls.Add(this.txbCommandesRevuesNumero);
             this.tabCommandesRevues.Controls.Add(this.btnCommandesRevuesRechercher);
@@ -3074,6 +3186,20 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Label lblCommandesDvdMontant;
         private System.Windows.Forms.Label lblCommandesDvdNbExemplaires;
         private System.Windows.Forms.Label lblCommandesDvdSuivi;
+        // ── Exemplaires Livres ──
+        private System.Windows.Forms.DataGridView dgvLivresExemplaires;
+        private System.Windows.Forms.ComboBox cbxLivresEtats;
+        private System.Windows.Forms.Button btnLivresModifierEtat;
+        private System.Windows.Forms.Button btnLivresSupprimerExemplaire;
+        // ── Exemplaires DVD ──
+        private System.Windows.Forms.DataGridView dgvDvdExemplaires;
+        private System.Windows.Forms.ComboBox cbxDvdEtats;
+        private System.Windows.Forms.Button btnDvdModifierEtat;
+        private System.Windows.Forms.Button btnDvdSupprimerExemplaire;
+        // ── Parutions : modifier/supprimer exemplaire ──
+        private System.Windows.Forms.ComboBox cbxParutionsEtats;
+        private System.Windows.Forms.Button btnParutionsModifierEtat;
+        private System.Windows.Forms.Button btnParutionsSupprimerExemplaire;
         // ── Commandes Revues ──
         private System.Windows.Forms.TabPage tabCommandesRevues;
         private System.Windows.Forms.TextBox txbCommandesRevuesNumero;

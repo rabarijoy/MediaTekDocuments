@@ -243,6 +243,42 @@ namespace MediaTekDocuments.controller
         }
 
         // =====================================================================
+        // EXEMPLAIRE
+        // =====================================================================
+
+        /// <summary>
+        /// Retourne les exemplaires d'un document (livre, DVD ou revue) avec libellé état
+        /// </summary>
+        public List<Exemplaire> GetExemplairesDocument(string idDocument)
+        {
+            return access.GetExemplairesDocument(idDocument);
+        }
+
+        /// <summary>
+        /// Retourne tous les états disponibles
+        /// </summary>
+        public List<Etat> GetAllEtats()
+        {
+            return access.GetAllEtats();
+        }
+
+        /// <summary>
+        /// Modifie l'état d'un exemplaire
+        /// </summary>
+        public bool ModifierEtatExemplaire(string idDocument, int numero, string idEtat)
+        {
+            return access.ModifierEtatExemplaire(idDocument, numero, idEtat);
+        }
+
+        /// <summary>
+        /// Supprime un exemplaire
+        /// </summary>
+        public bool SupprimerExemplaire(string idDocument, int numero)
+        {
+            return access.SupprimerExemplaire(idDocument, numero);
+        }
+
+        // =====================================================================
         // ABONNEMENT
         // =====================================================================
 
