@@ -2332,7 +2332,10 @@ namespace MediaTekDocuments.view
                     int idx = lesSuivi.FindIndex(s => s.Id == commande.IdSuivi);
                     cbxCommandesLivresSuivi.SelectedIndex = idx;
                 }
-                catch { }
+                catch (Exception)
+                {
+                    // Ignoré : la sélection peut être invalide lors du rechargement du DGV
+                }
             }
         }
 
@@ -2459,15 +2462,12 @@ namespace MediaTekDocuments.view
             Suivi nouvelleEtape = (Suivi)cbxCommandesLivresSuivi.SelectedItem;
 
             // Règle 1 : livrée ou réglée → ne peut aller qu'à réglée (et uniquement depuis livrée)
-            if (commande.IdSuivi == SUIVI_LIVRE || commande.IdSuivi == SUIVI_REGLE)
+            if ((commande.IdSuivi == SUIVI_LIVRE || commande.IdSuivi == SUIVI_REGLE) && nouvelleEtape.Id != SUIVI_REGLE)
             {
-                if (nouvelleEtape.Id != SUIVI_REGLE)
-                {
-                    MessageBox.Show(
-                        "Impossible : une commande livrée ou réglée ne peut pas revenir à une étape précédente.",
-                        MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                MessageBox.Show(
+                    "Impossible : une commande livrée ou réglée ne peut pas revenir à une étape précédente.",
+                    MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             // Règle 2 : ne peut être réglée que si elle est actuellement livrée
             if (nouvelleEtape.Id == SUIVI_REGLE && commande.IdSuivi != SUIVI_LIVRE)
@@ -2626,7 +2626,10 @@ namespace MediaTekDocuments.view
                     int idx = lesSuivi.FindIndex(s => s.Id == commande.IdSuivi);
                     cbxCommandesDvdSuivi.SelectedIndex = idx;
                 }
-                catch { }
+                catch (Exception)
+                {
+                    // Ignoré : la sélection peut être invalide lors du rechargement du DGV
+                }
             }
         }
 
@@ -2735,15 +2738,12 @@ namespace MediaTekDocuments.view
             CommandeDocument commande = (CommandeDocument)bdgCommandesDvdListe.List[bdgCommandesDvdListe.Position];
             Suivi nouvelleEtape = (Suivi)cbxCommandesDvdSuivi.SelectedItem;
 
-            if (commande.IdSuivi == SUIVI_LIVRE || commande.IdSuivi == SUIVI_REGLE)
+            if ((commande.IdSuivi == SUIVI_LIVRE || commande.IdSuivi == SUIVI_REGLE) && nouvelleEtape.Id != SUIVI_REGLE)
             {
-                if (nouvelleEtape.Id != SUIVI_REGLE)
-                {
-                    MessageBox.Show(
-                        "Impossible : une commande livrée ou réglée ne peut pas revenir à une étape précédente.",
-                        MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                MessageBox.Show(
+                    "Impossible : une commande livrée ou réglée ne peut pas revenir à une étape précédente.",
+                    MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             if (nouvelleEtape.Id == SUIVI_REGLE && commande.IdSuivi != SUIVI_LIVRE)
             {
