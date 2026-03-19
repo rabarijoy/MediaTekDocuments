@@ -536,6 +536,28 @@ namespace MediaTekDocuments.dal
         }
 
         // =====================================================================
+        // UTILISATEUR : connexion
+        // =====================================================================
+
+        /// <summary>
+        /// Vérifie les identifiants et retourne l'utilisateur connecté, ou null si incorrects
+        /// </summary>
+        /// <param name="login">identifiant de connexion</param>
+        /// <param name="pwd">mot de passe en clair</param>
+        /// <returns>Objet Utilisateur si authentification réussie, null sinon</returns>
+        public Utilisateur GetUtilisateur(string login, string pwd)
+        {
+            Dictionary<string, object> filtre = new Dictionary<string, object>
+            {
+                { "login", login },
+                { "pwd",   pwd   }
+            };
+            string jsonFiltre = JsonConvert.SerializeObject(filtre);
+            List<Utilisateur> liste = TraitementRecup<Utilisateur>(GET, "utilisateur/" + jsonFiltre, null);
+            return liste != null && liste.Count > 0 ? liste[0] : null;
+        }
+
+        // =====================================================================
         // Méthodes privées
         // =====================================================================
 
