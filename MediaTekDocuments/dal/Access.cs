@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using MediaTekDocuments.model;
 using MediaTekDocuments.manager;
 using Newtonsoft.Json;
@@ -66,6 +67,7 @@ namespace MediaTekDocuments.dal
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                EcrireLog("Erreur d'initialisation de l'API : " + e.Message);
                 Environment.Exit(0);
             }
         }
@@ -171,6 +173,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                EcrireLog("Erreur lors de la création d'un exemplaire : " + ex.Message);
             }
             return false;
         }
@@ -593,11 +596,16 @@ namespace MediaTekDocuments.dal
                 }
                 else
                 {
-                    Console.WriteLine("code erreur = " + code + " message = " + (String)retour["message"]);
+                    string msgErreur = "code erreur = " + code + " message = " + (String)retour["message"];
+                    Console.WriteLine(msgErreur);
+                    EcrireLog(msgErreur);
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de l'accès à l'API : "+e.Message);
+                string msgErreur = "Erreur lors de l'accès à l'API : " + e.Message;
+                Console.WriteLine(msgErreur);
+                EcrireLog(msgErreur);
                 Environment.Exit(0);
             }
             return liste;
@@ -618,15 +626,47 @@ namespace MediaTekDocuments.dal
                 string code = (string)retour["code"];
                 if (!code.Equals("200"))
                 {
-                    Console.WriteLine("code erreur = " + code + " message = " + (string)retour["message"]);
+                    string msgErreur = "code erreur = " + code + " message = " + (string)retour["message"];
+                    Console.WriteLine(msgErreur);
+                    EcrireLog(msgErreur);
                 }
                 return code.Equals("200");
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de l'accès à l'API : " + e.Message);
+                string msgErreur = "Erreur lors de l'accès à l'API : " + e.Message;
+                Console.WriteLine(msgErreur);
+                EcrireLog(msgErreur);
                 return false;
             }
+        }
+
+        private static readonly object _logLock = new object();
+
+        /// <summary>
+        /// Écrit un message dans le fichier log journalier (AppData\MediaTekDocuments\logs\access_yyyy-MM-dd.log).
+        /// Thread-safe ; silencieux en cas d'échec d'écriture pour ne pas bloquer l'application.
+        /// </summary>
+        private static void EcrireLog(string message)
+        {
+            try
+            {
+                string cheminLog = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "MediaTekDocuments",
+                    "logs",
+                    "access_" + DateTime.Now.ToString(DATE_FORMAT) + ".log"
+                );
+                Directory.CreateDirectory(Path.GetDirectoryName(cheminLog));
+                lock (_logLock)
+                {
+                    using (StreamWriter sw = File.AppendText(cheminLog))
+                    {
+                        sw.WriteLine("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + message);
+                    }
+                }
+            }
+            catch { /* Ne pas bloquer l'application si l'écriture échoue */ }
         }
 
         /// <summary>
