@@ -1,4 +1,4 @@
-﻿
+
 namespace MediaTekDocuments.model
 {
     /// <summary>
@@ -16,7 +16,7 @@ namespace MediaTekDocuments.model
         public string IdRayon { get; }
         public string Rayon { get; }
 
-        public Document(string id, string titre, string image, string idGenre, string genre, string idPublic, string lePublic, string idRayon, string rayon)
+        public Document(string id, string titre, string image, string idGenre, string genre, string idPublic, string lePublic, string idRayon, string rayon) // NOSONAR : 9 paramètres imposés par le schéma BDD
         {
             Id = id;
             Titre = titre;

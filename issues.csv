@@ -1,0 +1,37 @@
+Sévérité,Type,Fichier,Ligne,Message
+CRITICAL,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,29,Refactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.
+MAJOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2441,Merge this if statement with the enclosing one.
+MAJOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2312,Either remove or fill this block of code.
+MAJOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2606,Either remove or fill this block of code.
+MAJOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2717,Merge this if statement with the enclosing one.
+MAJOR,CODE_SMELL,MediaTekDocuments.Tests/UtilitairesAbonnementTests.cs,16,"Provide the ""DateTimeKind"" when creating this object."
+MAJOR,CODE_SMELL,MediaTekDocuments.Tests/UtilitairesAbonnementTests.cs,24,"Provide the ""DateTimeKind"" when creating this object."
+MAJOR,CODE_SMELL,MediaTekDocuments.Tests/UtilitairesAbonnementTests.cs,32,"Provide the ""DateTimeKind"" when creating this object."
+MAJOR,CODE_SMELL,MediaTekDocuments.Tests/UtilitairesAbonnementTests.cs,10,"Provide the ""DateTimeKind"" when creating this object."
+MAJOR,CODE_SMELL,MediaTekDocuments.Tests/UtilitairesAbonnementTests.cs,11,"Provide the ""DateTimeKind"" when creating this object."
+MAJOR,CODE_SMELL,MediaTekDocuments/model/Document.cs,19,"Constructor has 9 parameters, which is greater than the 7 authorized."
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,117,Make 'RemplirComboCategorie' a static method.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,29,Make 'ProchainId' a static method.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2312,Handle the exception or explain in a comment why it can be ignored.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2606,Handle the exception or explain in a comment why it can be ignored.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,201,Define a constant instead of using this literal 'numéro introuvable' 4 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,548,Define a constant instead of using this literal 'Saisie incomplète' 5 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,563,Define a constant instead of using this literal 'Succès' 17 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,570,Define a constant instead of using this literal 'Erreur' 25 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,581,Define a constant instead of using this literal 'Aucune sélection' 13 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,677,Define a constant instead of using this literal 'Sélection manquante' 6 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,707,Define a constant instead of using this literal 'Confirmation' 9 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,715,Define a constant instead of using this literal 'Erreur lors de la suppression.' 6 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,1163,Define a constant instead of using this literal 'Saisie incorrecte' 8 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2277,Define a constant instead of using this literal 'Recherche' 6 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2424,Define a constant instead of using this literal 'Veuillez sélectionner une commande.' 4 times.
+MINOR,CODE_SMELL,MediaTekDocuments/view/FrmMediatek.cs,2445,Define a constant instead of using this literal 'Règle métier' 7 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,145,Define a constant instead of using this literal 'exemplaire/' 4 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,159,Define a constant instead of using this literal 'champs=' 11 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,183,Define a constant instead of using this literal 'titre' 6 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,184,Define a constant instead of using this literal 'image' 6 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,185,Define a constant instead of using this literal 'idRayon' 6 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,186,Define a constant instead of using this literal 'idPublic' 6 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,187,Define a constant instead of using this literal 'idGenre' 6 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,384,Define a constant instead of using this literal 'yyyy-MM-dd' 4 times.
+MINOR,CODE_SMELL,MediaTekDocuments/dal/Access.cs,629,Make 'convertToJson' a static method.

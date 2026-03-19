@@ -40,6 +40,15 @@ namespace MediaTekDocuments.dal
         /// </summary>
         private const string DELETE = "DELETE";
 
+        private const string EXEMPLAIRE_ENDPOINT = "exemplaire/";
+        private const string CHAMPS_PARAM        = "champs=";
+        private const string DATE_FORMAT         = "yyyy-MM-dd";
+        private const string CHAMP_TITRE         = "titre";
+        private const string CHAMP_IMAGE         = "image";
+        private const string CHAMP_ID_RAYON      = "idRayon";
+        private const string CHAMP_ID_PUBLIC     = "idPublic";
+        private const string CHAMP_ID_GENRE      = "idGenre";
+
         /// <summary>
         /// Méthode privée pour créer un singleton
         /// initialise l'accès à l'API en lisant les paramètres depuis App.config
@@ -142,7 +151,7 @@ namespace MediaTekDocuments.dal
         public List<Exemplaire> GetExemplairesRevue(string idDocument)
         {
             String jsonIdDocument = convertToJson("id", idDocument);
-            List<Exemplaire> lesExemplaires = TraitementRecup<Exemplaire>(GET, "exemplaire/" + jsonIdDocument, null);
+            List<Exemplaire> lesExemplaires = TraitementRecup<Exemplaire>(GET, EXEMPLAIRE_ENDPOINT + jsonIdDocument, null);
             return lesExemplaires;
         }
 
@@ -156,7 +165,7 @@ namespace MediaTekDocuments.dal
             String jsonExemplaire = JsonConvert.SerializeObject(exemplaire, new CustomDateTimeConverter());
             try
             {
-                List<Exemplaire> liste = TraitementRecup<Exemplaire>(POST, "exemplaire", "champs=" + jsonExemplaire);
+                List<Exemplaire> liste = TraitementRecup<Exemplaire>(POST, "exemplaire", CHAMPS_PARAM + jsonExemplaire);
                 return (liste != null);
             }
             catch (Exception ex)
@@ -180,17 +189,17 @@ namespace MediaTekDocuments.dal
             Dictionary<string, object> champs = new Dictionary<string, object>
             {
                 { "id",         livre.Id },
-                { "titre",      livre.Titre },
-                { "image",      livre.Image },
-                { "idRayon",    livre.IdRayon },
-                { "idPublic",   livre.IdPublic },
-                { "idGenre",    livre.IdGenre },
+                { CHAMP_TITRE,  livre.Titre },
+                { CHAMP_IMAGE,  livre.Image },
+                { CHAMP_ID_RAYON,  livre.IdRayon },
+                { CHAMP_ID_PUBLIC, livre.IdPublic },
+                { CHAMP_ID_GENRE,  livre.IdGenre },
                 { "ISBN",       livre.Isbn },
                 { "auteur",     livre.Auteur },
                 { "collection", livre.Collection }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(POST, "livre", "champs=" + jsonChamps);
+            return TraitementAction(POST, "livre", CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -202,17 +211,17 @@ namespace MediaTekDocuments.dal
         {
             Dictionary<string, object> champs = new Dictionary<string, object>
             {
-                { "titre",      livre.Titre },
-                { "image",      livre.Image },
-                { "idRayon",    livre.IdRayon },
-                { "idPublic",   livre.IdPublic },
-                { "idGenre",    livre.IdGenre },
+                { CHAMP_TITRE,  livre.Titre },
+                { CHAMP_IMAGE,  livre.Image },
+                { CHAMP_ID_RAYON,  livre.IdRayon },
+                { CHAMP_ID_PUBLIC, livre.IdPublic },
+                { CHAMP_ID_GENRE,  livre.IdGenre },
                 { "ISBN",       livre.Isbn },
                 { "auteur",     livre.Auteur },
                 { "collection", livre.Collection }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(PUT, "livre/" + livre.Id, "champs=" + jsonChamps);
+            return TraitementAction(PUT, "livre/" + livre.Id, CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -240,18 +249,18 @@ namespace MediaTekDocuments.dal
         {
             Dictionary<string, object> champs = new Dictionary<string, object>
             {
-                { "id",          dvd.Id },
-                { "titre",       dvd.Titre },
-                { "image",       dvd.Image },
-                { "idRayon",     dvd.IdRayon },
-                { "idPublic",    dvd.IdPublic },
-                { "idGenre",     dvd.IdGenre },
-                { "synopsis",    dvd.Synopsis },
-                { "realisateur", dvd.Realisateur },
-                { "duree",       dvd.Duree }
+                { "id",            dvd.Id },
+                { CHAMP_TITRE,     dvd.Titre },
+                { CHAMP_IMAGE,     dvd.Image },
+                { CHAMP_ID_RAYON,  dvd.IdRayon },
+                { CHAMP_ID_PUBLIC, dvd.IdPublic },
+                { CHAMP_ID_GENRE,  dvd.IdGenre },
+                { "synopsis",      dvd.Synopsis },
+                { "realisateur",   dvd.Realisateur },
+                { "duree",         dvd.Duree }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(POST, "dvd", "champs=" + jsonChamps);
+            return TraitementAction(POST, "dvd", CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -263,17 +272,17 @@ namespace MediaTekDocuments.dal
         {
             Dictionary<string, object> champs = new Dictionary<string, object>
             {
-                { "titre",       dvd.Titre },
-                { "image",       dvd.Image },
-                { "idRayon",     dvd.IdRayon },
-                { "idPublic",    dvd.IdPublic },
-                { "idGenre",     dvd.IdGenre },
-                { "synopsis",    dvd.Synopsis },
-                { "realisateur", dvd.Realisateur },
-                { "duree",       dvd.Duree }
+                { CHAMP_TITRE,     dvd.Titre },
+                { CHAMP_IMAGE,     dvd.Image },
+                { CHAMP_ID_RAYON,  dvd.IdRayon },
+                { CHAMP_ID_PUBLIC, dvd.IdPublic },
+                { CHAMP_ID_GENRE,  dvd.IdGenre },
+                { "synopsis",      dvd.Synopsis },
+                { "realisateur",   dvd.Realisateur },
+                { "duree",         dvd.Duree }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(PUT, "dvd/" + dvd.Id, "champs=" + jsonChamps);
+            return TraitementAction(PUT, "dvd/" + dvd.Id, CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -302,16 +311,16 @@ namespace MediaTekDocuments.dal
             Dictionary<string, object> champs = new Dictionary<string, object>
             {
                 { "id",              revue.Id },
-                { "titre",           revue.Titre },
-                { "image",           revue.Image },
-                { "idRayon",         revue.IdRayon },
-                { "idPublic",        revue.IdPublic },
-                { "idGenre",         revue.IdGenre },
+                { CHAMP_TITRE,       revue.Titre },
+                { CHAMP_IMAGE,       revue.Image },
+                { CHAMP_ID_RAYON,    revue.IdRayon },
+                { CHAMP_ID_PUBLIC,   revue.IdPublic },
+                { CHAMP_ID_GENRE,    revue.IdGenre },
                 { "periodicite",     revue.Periodicite },
                 { "delaiMiseADispo", revue.DelaiMiseADispo }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(POST, "revue", "champs=" + jsonChamps);
+            return TraitementAction(POST, "revue", CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -323,16 +332,16 @@ namespace MediaTekDocuments.dal
         {
             Dictionary<string, object> champs = new Dictionary<string, object>
             {
-                { "titre",           revue.Titre },
-                { "image",           revue.Image },
-                { "idRayon",         revue.IdRayon },
-                { "idPublic",        revue.IdPublic },
-                { "idGenre",         revue.IdGenre },
+                { CHAMP_TITRE,       revue.Titre },
+                { CHAMP_IMAGE,       revue.Image },
+                { CHAMP_ID_RAYON,    revue.IdRayon },
+                { CHAMP_ID_PUBLIC,   revue.IdPublic },
+                { CHAMP_ID_GENRE,    revue.IdGenre },
                 { "periodicite",     revue.Periodicite },
                 { "delaiMiseADispo", revue.DelaiMiseADispo }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(PUT, "revue/" + revue.Id, "champs=" + jsonChamps);
+            return TraitementAction(PUT, "revue/" + revue.Id, CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -381,14 +390,14 @@ namespace MediaTekDocuments.dal
             Dictionary<string, object> champs = new Dictionary<string, object>
             {
                 { "idCommande",   commande.Id },
-                { "dateCommande", commande.DateCommande.ToString("yyyy-MM-dd") },
+                { "dateCommande", commande.DateCommande.ToString(DATE_FORMAT) },
                 { "montant",      commande.Montant },
                 { "nbExemplaire", commande.NbExemplaire },
                 { "idLivreDvd",   commande.IdLivreDvd },
                 { "idSuivi",      commande.IdSuivi }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(POST, "commandedocument", "champs=" + jsonChamps);
+            return TraitementAction(POST, "commandedocument", CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -404,7 +413,7 @@ namespace MediaTekDocuments.dal
                 { "idSuivi", idSuivi }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(PUT, "commandedocument/" + id, "champs=" + jsonChamps);
+            return TraitementAction(PUT, "commandedocument/" + id, CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -431,7 +440,7 @@ namespace MediaTekDocuments.dal
         public List<Exemplaire> GetExemplairesDocument(string idDocument)
         {
             string jsonFiltre = convertToJson("id", idDocument);
-            return TraitementRecup<Exemplaire>(GET, "exemplaire/" + jsonFiltre, null);
+            return TraitementRecup<Exemplaire>(GET, EXEMPLAIRE_ENDPOINT + jsonFiltre, null);
         }
 
         /// <summary>
@@ -458,7 +467,7 @@ namespace MediaTekDocuments.dal
                 { "idEtat", idEtat }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(PUT, "exemplaire/" + idDocument, "champs=" + jsonChamps);
+            return TraitementAction(PUT, EXEMPLAIRE_ENDPOINT + idDocument, CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -475,7 +484,7 @@ namespace MediaTekDocuments.dal
                 { "numero", numero }
             };
             string jsonFiltre = JsonConvert.SerializeObject(filtre);
-            return TraitementAction(DELETE, "exemplaire/" + jsonFiltre, "");
+            return TraitementAction(DELETE, EXEMPLAIRE_ENDPOINT + jsonFiltre, "");
         }
 
         // =====================================================================
@@ -512,13 +521,13 @@ namespace MediaTekDocuments.dal
             Dictionary<string, object> champs = new Dictionary<string, object>
             {
                 { "id",                 abonnement.Id },
-                { "dateCommande",       abonnement.DateCommande.ToString("yyyy-MM-dd") },
+                { "dateCommande",       abonnement.DateCommande.ToString(DATE_FORMAT) },
                 { "montant",            abonnement.Montant },
-                { "dateFinAbonnement",  abonnement.DateFinAbonnement.ToString("yyyy-MM-dd") },
+                { "dateFinAbonnement",  abonnement.DateFinAbonnement.ToString(DATE_FORMAT) },
                 { "idRevue",            abonnement.IdRevue }
             };
             string jsonChamps = JsonConvert.SerializeObject(champs);
-            return TraitementAction(POST, "abonnement", "champs=" + jsonChamps);
+            return TraitementAction(POST, "abonnement", CHAMPS_PARAM + jsonChamps);
         }
 
         /// <summary>
@@ -626,7 +635,7 @@ namespace MediaTekDocuments.dal
         /// <param name="nom"></param>
         /// <param name="valeur"></param>
         /// <returns>couple au format json</returns>
-        private String convertToJson(Object nom, Object valeur)
+        private static String convertToJson(Object nom, Object valeur)
         {
             Dictionary<Object, Object> dictionary = new Dictionary<Object, Object>();
             dictionary.Add(nom, valeur);
@@ -640,7 +649,7 @@ namespace MediaTekDocuments.dal
         {
             public CustomDateTimeConverter()
             {
-                base.DateTimeFormat = "yyyy-MM-dd";
+                base.DateTimeFormat = DATE_FORMAT;
             }
         }
 
