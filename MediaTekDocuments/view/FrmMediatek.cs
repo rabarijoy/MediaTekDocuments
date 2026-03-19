@@ -26,23 +26,37 @@ namespace MediaTekDocuments.view
         /// Détecte automatiquement le préfixe non-numérique et le formatage (zéros de remplissage).
         /// Exemple : ["LIV001","LIV003"] → "LIV002"
         /// </summary>
-        private string ProchainId(IEnumerable<string> idsExistants)
+        private static string ProchainId(IEnumerable<string> idsExistants)
         {
             var ids = idsExistants.ToList();
-            // Détection du préfixe commun (ex: "LIV", "DVD", "")
-            string prefixe = "";
-            if (ids.Count > 0)
-            {
-                string premier = ids[0];
-                int fin = 0;
-                while (fin < premier.Length && !char.IsDigit(premier[fin])) fin++;
-                string candidat = premier.Substring(0, fin);
-                if (ids.All(id => id.StartsWith(candidat, StringComparison.OrdinalIgnoreCase)))
-                    prefixe = candidat;
-            }
-            // Collecte des numéros existants et détection de la largeur de formatage
+            string prefixe = DetecterPrefixe(ids);
+            HashSet<int> nums = CollecterNumeros(ids, prefixe, out int largeur);
+            int suivant = 1;
+            while (nums.Contains(suivant)) suivant++;
+            string numStr = largeur > 0
+                ? suivant.ToString().PadLeft(largeur, '0')
+                : suivant.ToString();
+            return prefixe + numStr;
+        }
+
+        /// <summary>Détecte le préfixe commun non-numérique de la liste d'ids.</summary>
+        private static string DetecterPrefixe(List<string> ids)
+        {
+            if (ids.Count == 0) return "";
+            string premier = ids[0];
+            int fin = 0;
+            while (fin < premier.Length && !char.IsDigit(premier[fin])) fin++;
+            string candidat = premier.Substring(0, fin);
+            return ids.All(id => id.StartsWith(candidat, StringComparison.OrdinalIgnoreCase))
+                ? candidat
+                : "";
+        }
+
+        /// <summary>Collecte les numéros entiers des ids après le préfixe et détecte la largeur de formatage.</summary>
+        private static HashSet<int> CollecterNumeros(List<string> ids, string prefixe, out int largeur)
+        {
             var nums = new HashSet<int>();
-            int largeur = 0;
+            largeur = 0;
             foreach (string id in ids)
             {
                 string partie = id.Length > prefixe.Length ? id.Substring(prefixe.Length) : "";
@@ -52,13 +66,7 @@ namespace MediaTekDocuments.view
                     if (partie.Length > largeur) largeur = partie.Length;
                 }
             }
-            // Premier entier strictement positif non utilisé
-            int suivant = 1;
-            while (nums.Contains(suivant)) suivant++;
-            string numStr = largeur > 0
-                ? suivant.ToString().PadLeft(largeur, '0')
-                : suivant.ToString();
-            return prefixe + numStr;
+            return nums;
         }
 
         private readonly Utilisateur _utilisateur;
