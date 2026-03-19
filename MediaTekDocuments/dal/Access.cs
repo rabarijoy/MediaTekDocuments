@@ -16,10 +16,6 @@ namespace MediaTekDocuments.dal
     public class Access
     {
         /// <summary>
-        /// adresse de l'API
-        /// </summary>
-        private static readonly string uriApi = "http://localhost/rest_mediatekdocuments/";
-        /// <summary>
         /// instance unique de la classe
         /// </summary>
         private static Access instance = null;
@@ -46,15 +42,17 @@ namespace MediaTekDocuments.dal
 
         /// <summary>
         /// Méthode privée pour créer un singleton
-        /// initialise l'accès à l'API
+        /// initialise l'accès à l'API en lisant les paramètres depuis App.config
         /// </summary>
         private Access()
         {
-            String authenticationString;
             try
             {
-                authenticationString = "admin:adminpwd";
-                api = ApiRest.GetInstance(uriApi, authenticationString);
+                string uriApi  = ConfigurationManager.AppSettings["ApiBaseUrl"];
+                string user    = ConfigurationManager.AppSettings["ApiUser"];
+                string pwd     = ConfigurationManager.AppSettings["ApiPassword"];
+                string authStr = user + ":" + pwd;
+                api = ApiRest.GetInstance(uriApi, authStr);
             }
             catch (Exception e)
             {
