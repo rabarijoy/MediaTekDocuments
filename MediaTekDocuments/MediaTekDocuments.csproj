@@ -86,11 +86,18 @@
     <Compile Include="model\Abonnement.cs" />
     <Compile Include="model\AlerteAbonnement.cs" />
     <Compile Include="model\UtilitairesAbonnement.cs" />
+    <Compile Include="model\Utilisateur.cs" />
     <Compile Include="view\FrmAlerteAbonnements.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="view\FrmAlerteAbonnements.Designer.cs">
       <DependentUpon>FrmAlerteAbonnements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="view\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

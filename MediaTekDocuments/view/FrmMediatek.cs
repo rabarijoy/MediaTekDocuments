@@ -61,13 +61,51 @@ namespace MediaTekDocuments.view
             return prefixe + numStr;
         }
 
+        private readonly Utilisateur _utilisateur;
+
         /// <summary>
-        /// Constructeur : création du contrôleur lié à ce formulaire
+        /// Constructeur principal : reçoit l'utilisateur authentifié et applique ses droits d'accès
         /// </summary>
-        internal FrmMediatek()
+        internal FrmMediatek(Utilisateur utilisateur)
         {
             InitializeComponent();
             this.controller = new FrmMediatekController();
+            this._utilisateur = utilisateur;
+            AppliquerDroitsAcces();
+        }
+
+        /// <summary>
+        /// Applique les restrictions d'interface selon le service de l'utilisateur connecté.
+        /// - 00001 / 00004 (Administratif / Administrateur) : accès complet, aucune restriction.
+        /// - 00002 (Prêts) : lecture seule — masque les zones de saisie et les onglets de commandes.
+        /// - 00003 (Culture) : ne doit jamais atteindre ce formulaire (géré dans FrmLogin).
+        /// </summary>
+        private void AppliquerDroitsAcces()
+        {
+            if (_utilisateur == null || _utilisateur.IdService == "00001" || _utilisateur.IdService == "00004")
+                return;
+
+            if (_utilisateur.IdService == "00002")
+            {
+                // Masquer les zones de gestion (ajout / modification / suppression) des 3 onglets catalogue
+                grpLivresSaisie.Visible = false;
+                grpDvdSaisie.Visible = false;
+                grpRevuesSaisie.Visible = false;
+
+                // Masquer les contrôles d'exemplaires (modification état / suppression)
+                cbxLivresEtats.Visible = false;
+                btnLivresModifierEtat.Visible = false;
+                btnLivresSupprimerExemplaire.Visible = false;
+                cbxDvdEtats.Visible = false;
+                btnDvdModifierEtat.Visible = false;
+                btnDvdSupprimerExemplaire.Visible = false;
+
+                // Masquer les onglets commandes et parutions
+                tabOngletsApplication.TabPages.Remove(tabCommandesLivres);
+                tabOngletsApplication.TabPages.Remove(tabCommandesDvd);
+                tabOngletsApplication.TabPages.Remove(tabCommandesRevues);
+                tabOngletsApplication.TabPages.Remove(tabReceptionRevue);
+            }
         }
 
         /// <summary>

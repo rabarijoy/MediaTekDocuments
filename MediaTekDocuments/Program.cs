@@ -18,16 +18,33 @@ namespace MediaTekDocuments
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            List<AlerteAbonnement> alertes = Access.GetInstance().GetAbonnementsExpirantBientot();
-            if (alertes != null && alertes.Count > 0)
+            // Affichage du formulaire de connexion
+            using (FrmLogin frmLogin = new FrmLogin())
             {
-                using (FrmAlerteAbonnements frmAlerte = new FrmAlerteAbonnements(alertes))
+                if (frmLogin.ShowDialog() != DialogResult.OK || frmLogin.UtilisateurConnecte == null)
                 {
-                    frmAlerte.ShowDialog();
+                    Application.Exit();
+                    return;
                 }
-            }
 
-            Application.Run(new FrmMediatek());
+                Utilisateur utilisateur = frmLogin.UtilisateurConnecte;
+
+                // L'alerte d'abonnement n'est visible que pour les services avec accès complet
+                bool droitsComplets = utilisateur.IdService == "00001" || utilisateur.IdService == "00004";
+                if (droitsComplets)
+                {
+                    List<AlerteAbonnement> alertes = Access.GetInstance().GetAbonnementsExpirantBientot();
+                    if (alertes != null && alertes.Count > 0)
+                    {
+                        using (FrmAlerteAbonnements frmAlerte = new FrmAlerteAbonnements(alertes))
+                        {
+                            frmAlerte.ShowDialog();
+                        }
+                    }
+                }
+
+                Application.Run(new FrmMediatek(utilisateur));
+            }
         }
     }
 }
