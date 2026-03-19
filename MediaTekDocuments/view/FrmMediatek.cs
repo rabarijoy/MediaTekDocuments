@@ -15,6 +15,21 @@ namespace MediaTekDocuments.view
     /// </summary>
     public partial class FrmMediatek : Form
     {
+        #region Constantes de l'interface
+        private const string MSG_NUMERO_INTROUVABLE  = "numéro introuvable";
+        private const string MSG_SAISIE_INCOMPLETE   = "Saisie incomplète";
+        private const string MSG_SUCCES              = "Succès";
+        private const string MSG_ERREUR              = "Erreur";
+        private const string MSG_AUCUNE_SELECTION    = "Aucune sélection";
+        private const string MSG_SELECTION_MANQUANTE = "Sélection manquante";
+        private const string MSG_CONFIRMATION        = "Confirmation";
+        private const string MSG_ERREUR_SUPPRESSION  = "Erreur lors de la suppression.";
+        private const string MSG_SAISIE_INCORRECTE   = "Saisie incorrecte";
+        private const string MSG_RECHERCHE           = "Recherche";
+        private const string MSG_SELECTION_COMMANDE  = "Veuillez sélectionner une commande.";
+        private const string MSG_REGLE_METIER        = "Règle métier";
+        #endregion
+
         #region Commun
         private readonly FrmMediatekController controller;
         private readonly BindingSource bdgGenres = new BindingSource();
@@ -122,7 +137,7 @@ namespace MediaTekDocuments.view
         /// <param name="lesCategories">liste des objets de type Genre ou Public ou Rayon</param>
         /// <param name="bdg">bindingsource contenant les informations</param>
         /// <param name="cbx">combobox à remplir</param>
-        public void RemplirComboCategorie(List<Categorie> lesCategories, BindingSource bdg, ComboBox cbx)
+        public static void RemplirComboCategorie(List<Categorie> lesCategories, BindingSource bdg, ComboBox cbx)
         {
             bdg.DataSource = lesCategories;
             cbx.DataSource = bdg;
@@ -206,7 +221,7 @@ namespace MediaTekDocuments.view
                 }
                 else
                 {
-                    MessageBox.Show("numéro introuvable");
+                    MessageBox.Show(MSG_NUMERO_INTROUVABLE);
                     RemplirLivresListeComplete();
                 }
             }
@@ -553,7 +568,7 @@ namespace MediaTekDocuments.view
                 txbLivresSaisieIsbn.Text.Trim().Equals("") ||
                 txbLivresSaisieAuteur.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Les champs Titre, ISBN et Auteur sont obligatoires.", "Saisie incomplète",
+                MessageBox.Show("Les champs Titre, ISBN et Auteur sont obligatoires.", MSG_SAISIE_INCOMPLETE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -561,21 +576,21 @@ namespace MediaTekDocuments.view
             Livre livre = LivreDepuisSaisie();
             if (livre == null)
             {
-                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", "Saisie incomplète",
+                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", MSG_SAISIE_INCOMPLETE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (controller.AjouterLivre(livre))
             {
-                MessageBox.Show("Livre ajouté avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Livre ajouté avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesLivres = controller.GetAllLivres();
                 RemplirLivresListeComplete();
                 VideLivresSaisie();
             }
             else
             {
-                MessageBox.Show("Erreur lors de l'ajout du livre.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erreur lors de l'ajout du livre.", MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -586,7 +601,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvLivresListe.SelectedRows.Count == 0 && dgvLivresListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner un livre à modifier.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner un livre à modifier.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -594,21 +609,21 @@ namespace MediaTekDocuments.view
             Livre livre = LivreDepuisSaisie();
             if (livre == null)
             {
-                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", "Saisie incomplète",
+                MessageBox.Show("Veuillez sélectionner un genre, un public et un rayon.", MSG_SAISIE_INCOMPLETE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (controller.ModifierLivre(livre))
             {
-                MessageBox.Show("Livre modifié avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Livre modifié avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesLivres = controller.GetAllLivres();
                 RemplirLivresListeComplete();
                 VideLivresSaisie();
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification du livre.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erreur lors de la modification du livre.", MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -682,7 +697,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvLivresExemplaires.CurrentCell == null || cbxLivresEtats.SelectedItem == null)
             {
-                MessageBox.Show("Veuillez sélectionner un exemplaire et un état.", "Sélection manquante",
+                MessageBox.Show("Veuillez sélectionner un exemplaire et un état.", MSG_SELECTION_MANQUANTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -694,7 +709,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification de l'état.", "Erreur",
+                MessageBox.Show("Erreur lors de la modification de l'état.", MSG_ERREUR,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -706,13 +721,13 @@ namespace MediaTekDocuments.view
         {
             if (dgvLivresExemplaires.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner un exemplaire.", "Sélection manquante",
+                MessageBox.Show("Veuillez sélectionner un exemplaire.", MSG_SELECTION_MANQUANTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             Exemplaire ex = (Exemplaire)bdgLivresExemplaires.List[bdgLivresExemplaires.Position];
             if (MessageBox.Show("Confirmer la suppression de l'exemplaire n°" + ex.Numero + " ?",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                MSG_CONFIRMATION, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (controller.SupprimerExemplaire(ex.Id, ex.Numero))
                 {
@@ -720,7 +735,7 @@ namespace MediaTekDocuments.view
                 }
                 else
                 {
-                    MessageBox.Show("Erreur lors de la suppression.", "Erreur",
+                    MessageBox.Show(MSG_ERREUR_SUPPRESSION, MSG_ERREUR,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -741,7 +756,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvLivresListe.SelectedRows.Count == 0 && dgvLivresListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner un livre à supprimer.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner un livre à supprimer.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -749,13 +764,13 @@ namespace MediaTekDocuments.view
             string id = txbLivresSaisieId.Text.Trim();
             if (id.Equals(""))
             {
-                MessageBox.Show("Aucun livre sélectionné.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Aucun livre sélectionné.", MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DialogResult confirm = MessageBox.Show(
                 "Confirmer la suppression de ce livre ?",
-                "Confirmation",
+                MSG_CONFIRMATION,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
@@ -763,7 +778,7 @@ namespace MediaTekDocuments.view
             {
                 if (controller.SupprimerLivre(id))
                 {
-                    MessageBox.Show("Livre supprimé avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Livre supprimé avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     lesLivres = controller.GetAllLivres();
                     RemplirLivresListeComplete();
                     VideLivresSaisie();
@@ -772,7 +787,7 @@ namespace MediaTekDocuments.view
                 {
                     MessageBox.Show(
                         "Suppression impossible : le livre possède des exemplaires ou des commandes.",
-                        "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -850,7 +865,7 @@ namespace MediaTekDocuments.view
                 }
                 else
                 {
-                    MessageBox.Show("numéro introuvable");
+                    MessageBox.Show(MSG_NUMERO_INTROUVABLE);
                     RemplirDvdListeComplete();
                 }
             }
@@ -1168,7 +1183,7 @@ namespace MediaTekDocuments.view
 
             if (!int.TryParse(txbDvdSaisieDuree.Text.Trim(), out int duree))
             {
-                MessageBox.Show("La durée doit être un nombre entier.", "Saisie incorrecte",
+                MessageBox.Show("La durée doit être un nombre entier.", MSG_SAISIE_INCORRECTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
             }
@@ -1198,7 +1213,7 @@ namespace MediaTekDocuments.view
             if (txbDvdSaisieTitre.Text.Trim().Equals("") ||
                 txbDvdSaisieRealisateur.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Les champs Titre et Réalisateur sont obligatoires.", "Saisie incomplète",
+                MessageBox.Show("Les champs Titre et Réalisateur sont obligatoires.", MSG_SAISIE_INCOMPLETE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1208,14 +1223,14 @@ namespace MediaTekDocuments.view
 
             if (controller.AjouterDvd(dvd))
             {
-                MessageBox.Show("DVD ajouté avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("DVD ajouté avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesDvd = controller.GetAllDvd();
                 RemplirDvdListeComplete();
                 VideDvdSaisie();
             }
             else
             {
-                MessageBox.Show("Erreur lors de l'ajout du DVD.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erreur lors de l'ajout du DVD.", MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1226,7 +1241,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvDvdListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner un DVD à modifier.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner un DVD à modifier.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1236,14 +1251,14 @@ namespace MediaTekDocuments.view
 
             if (controller.ModifierDvd(dvd))
             {
-                MessageBox.Show("DVD modifié avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("DVD modifié avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesDvd = controller.GetAllDvd();
                 RemplirDvdListeComplete();
                 VideDvdSaisie();
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification du DVD.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erreur lors de la modification du DVD.", MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1262,7 +1277,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvDvdListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner un DVD à supprimer.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner un DVD à supprimer.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1272,7 +1287,7 @@ namespace MediaTekDocuments.view
 
             DialogResult confirm = MessageBox.Show(
                 "Confirmer la suppression de ce DVD ?",
-                "Confirmation",
+                MSG_CONFIRMATION,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
@@ -1280,7 +1295,7 @@ namespace MediaTekDocuments.view
             {
                 if (controller.SupprimerDvd(id))
                 {
-                    MessageBox.Show("DVD supprimé avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("DVD supprimé avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     lesDvd = controller.GetAllDvd();
                     RemplirDvdListeComplete();
                     VideDvdSaisie();
@@ -1289,7 +1304,7 @@ namespace MediaTekDocuments.view
                 {
                     MessageBox.Show(
                         "Suppression impossible : le DVD possède des exemplaires ou des commandes.",
-                        "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1352,7 +1367,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvDvdExemplaires.CurrentCell == null || cbxDvdEtats.SelectedItem == null)
             {
-                MessageBox.Show("Veuillez sélectionner un exemplaire et un état.", "Sélection manquante",
+                MessageBox.Show("Veuillez sélectionner un exemplaire et un état.", MSG_SELECTION_MANQUANTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1364,7 +1379,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification de l'état.", "Erreur",
+                MessageBox.Show("Erreur lors de la modification de l'état.", MSG_ERREUR,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -1376,13 +1391,13 @@ namespace MediaTekDocuments.view
         {
             if (dgvDvdExemplaires.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner un exemplaire.", "Sélection manquante",
+                MessageBox.Show("Veuillez sélectionner un exemplaire.", MSG_SELECTION_MANQUANTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             Exemplaire ex = (Exemplaire)bdgDvdExemplaires.List[bdgDvdExemplaires.Position];
             if (MessageBox.Show("Confirmer la suppression de l'exemplaire n°" + ex.Numero + " ?",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                MSG_CONFIRMATION, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (controller.SupprimerExemplaire(ex.Id, ex.Numero))
                 {
@@ -1390,7 +1405,7 @@ namespace MediaTekDocuments.view
                 }
                 else
                 {
-                    MessageBox.Show("Erreur lors de la suppression.", "Erreur",
+                    MessageBox.Show(MSG_ERREUR_SUPPRESSION, MSG_ERREUR,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -1464,7 +1479,7 @@ namespace MediaTekDocuments.view
                 }
                 else
                 {
-                    MessageBox.Show("numéro introuvable");
+                    MessageBox.Show(MSG_NUMERO_INTROUVABLE);
                     RemplirRevuesListeComplete();
                 }
             }
@@ -1777,7 +1792,7 @@ namespace MediaTekDocuments.view
 
             if (!int.TryParse(txbRevuesSaisieDelai.Text.Trim(), out int delai))
             {
-                MessageBox.Show("Le délai de mise à disposition doit être un nombre entier.", "Saisie incorrecte",
+                MessageBox.Show("Le délai de mise à disposition doit être un nombre entier.", MSG_SAISIE_INCORRECTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
             }
@@ -1806,7 +1821,7 @@ namespace MediaTekDocuments.view
             if (txbRevuesSaisieTitre.Text.Trim().Equals("") ||
                 txbRevuesSaisiePeriodicite.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Les champs Titre et Périodicité sont obligatoires.", "Saisie incomplète",
+                MessageBox.Show("Les champs Titre et Périodicité sont obligatoires.", MSG_SAISIE_INCOMPLETE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1816,14 +1831,14 @@ namespace MediaTekDocuments.view
 
             if (controller.AjouterRevue(revue))
             {
-                MessageBox.Show("Revue ajoutée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Revue ajoutée avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesRevues = controller.GetAllRevues();
                 RemplirRevuesListeComplete();
                 VideRevuesSaisie();
             }
             else
             {
-                MessageBox.Show("Erreur lors de l'ajout de la revue.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erreur lors de l'ajout de la revue.", MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1834,7 +1849,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvRevuesListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner une revue à modifier.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner une revue à modifier.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1844,14 +1859,14 @@ namespace MediaTekDocuments.view
 
             if (controller.ModifierRevue(revue))
             {
-                MessageBox.Show("Revue modifiée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Revue modifiée avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesRevues = controller.GetAllRevues();
                 RemplirRevuesListeComplete();
                 VideRevuesSaisie();
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification de la revue.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erreur lors de la modification de la revue.", MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1870,7 +1885,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvRevuesListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner une revue à supprimer.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner une revue à supprimer.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -1880,7 +1895,7 @@ namespace MediaTekDocuments.view
 
             DialogResult confirm = MessageBox.Show(
                 "Confirmer la suppression de cette revue ?",
-                "Confirmation",
+                MSG_CONFIRMATION,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
@@ -1888,7 +1903,7 @@ namespace MediaTekDocuments.view
             {
                 if (controller.SupprimerRevue(id))
                 {
-                    MessageBox.Show("Revue supprimée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Revue supprimée avec succès.", MSG_SUCCES, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     lesRevues = controller.GetAllRevues();
                     RemplirRevuesListeComplete();
                     VideRevuesSaisie();
@@ -1897,7 +1912,7 @@ namespace MediaTekDocuments.view
                 {
                     MessageBox.Show(
                         "Suppression impossible : la revue possède des exemplaires ou des abonnements.",
-                        "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MSG_ERREUR, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1961,7 +1976,7 @@ namespace MediaTekDocuments.view
                 }
                 else
                 {
-                    MessageBox.Show("numéro introuvable");
+                    MessageBox.Show(MSG_NUMERO_INTROUVABLE);
                 }
             }
         }
@@ -2091,7 +2106,7 @@ namespace MediaTekDocuments.view
                     }
                     else
                     {
-                        MessageBox.Show("numéro de publication déjà existant", "Erreur");
+                        MessageBox.Show("numéro de publication déjà existant", MSG_ERREUR);
                     }
                 }
                 catch
@@ -2141,7 +2156,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvReceptionExemplairesListe.CurrentCell == null || cbxParutionsEtats.SelectedItem == null)
             {
-                MessageBox.Show("Veuillez sélectionner un exemplaire et un état.", "Sélection manquante",
+                MessageBox.Show("Veuillez sélectionner un exemplaire et un état.", MSG_SELECTION_MANQUANTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2153,7 +2168,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification de l'état.", "Erreur",
+                MessageBox.Show("Erreur lors de la modification de l'état.", MSG_ERREUR,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -2165,13 +2180,13 @@ namespace MediaTekDocuments.view
         {
             if (dgvReceptionExemplairesListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner un exemplaire.", "Sélection manquante",
+                MessageBox.Show("Veuillez sélectionner un exemplaire.", MSG_SELECTION_MANQUANTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             Exemplaire ex = (Exemplaire)bdgExemplairesListe.List[bdgExemplairesListe.Position];
             if (MessageBox.Show("Confirmer la suppression de l'exemplaire n°" + ex.Numero + " ?",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                MSG_CONFIRMATION, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (controller.SupprimerExemplaire(ex.Id, ex.Numero))
                 {
@@ -2179,7 +2194,7 @@ namespace MediaTekDocuments.view
                 }
                 else
                 {
-                    MessageBox.Show("Erreur lors de la suppression.", "Erreur",
+                    MessageBox.Show(MSG_ERREUR_SUPPRESSION, MSG_ERREUR,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -2282,7 +2297,7 @@ namespace MediaTekDocuments.view
             string num = txbCommandesLivresNumero.Text.Trim();
             if (num.Equals(""))
             {
-                MessageBox.Show("Veuillez saisir un numéro de livre.", "Recherche",
+                MessageBox.Show("Veuillez saisir un numéro de livre.", MSG_RECHERCHE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2298,7 +2313,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Numéro introuvable.", "Recherche",
+                MessageBox.Show("Numéro introuvable.", MSG_RECHERCHE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 ViderCommandesLivresZones();
             }
@@ -2382,13 +2397,13 @@ namespace MediaTekDocuments.view
             if (!double.TryParse(montantStrLivres, System.Globalization.NumberStyles.Any,
                 System.Globalization.CultureInfo.InvariantCulture, out double montant) || montant <= 0)
             {
-                MessageBox.Show("Le montant doit être un nombre supérieur à 0.", "Saisie incorrecte",
+                MessageBox.Show("Le montant doit être un nombre supérieur à 0.", MSG_SAISIE_INCORRECTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!int.TryParse(txbCommandesLivresNbExemplaires.Text.Trim(), out int nbExemplaires) || nbExemplaires <= 0)
             {
-                MessageBox.Show("Le nombre d'exemplaires doit être un entier supérieur à 0.", "Saisie incorrecte",
+                MessageBox.Show("Le nombre d'exemplaires doit être un entier supérieur à 0.", MSG_SAISIE_INCORRECTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2405,7 +2420,7 @@ namespace MediaTekDocuments.view
 
             if (controller.AjouterCommandeDocument(commande))
             {
-                MessageBox.Show("Commande ajoutée avec succès.", "Succès",
+                MessageBox.Show("Commande ajoutée avec succès.", MSG_SUCCES,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesCommandesLivres = controller.GetCommandesLivreDvd(livreCommandeEnCours.Id);
                 RemplirCommandesLivresListe(lesCommandesLivres);
@@ -2414,7 +2429,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Erreur lors de l'ajout de la commande.", "Erreur",
+                MessageBox.Show("Erreur lors de l'ajout de la commande.", MSG_ERREUR,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -2429,13 +2444,13 @@ namespace MediaTekDocuments.view
         {
             if (dgvCommandesLivresListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner une commande.", "Aucune sélection",
+                MessageBox.Show(MSG_SELECTION_COMMANDE, MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (cbxCommandesLivresSuivi.SelectedItem == null)
             {
-                MessageBox.Show("Veuillez sélectionner une étape de suivi.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner une étape de suivi.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2450,7 +2465,7 @@ namespace MediaTekDocuments.view
                 {
                     MessageBox.Show(
                         "Impossible : une commande livrée ou réglée ne peut pas revenir à une étape précédente.",
-                        "Règle métier", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -2459,20 +2474,20 @@ namespace MediaTekDocuments.view
             {
                 MessageBox.Show(
                     "Impossible : une commande ne peut être réglée que si elle est livrée.",
-                    "Règle métier", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (controller.ModifierEtapeSuivi(commande.Id, nouvelleEtape.Id))
             {
-                MessageBox.Show("Étape de suivi modifiée avec succès.", "Succès",
+                MessageBox.Show("Étape de suivi modifiée avec succès.", MSG_SUCCES,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesCommandesLivres = controller.GetCommandesLivreDvd(livreCommandeEnCours.Id);
                 RemplirCommandesLivresListe(lesCommandesLivres);
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification.", "Erreur",
+                MessageBox.Show("Erreur lors de la modification.", MSG_ERREUR,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -2485,7 +2500,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvCommandesLivresListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner une commande.", "Aucune sélection",
+                MessageBox.Show(MSG_SELECTION_COMMANDE, MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2496,26 +2511,26 @@ namespace MediaTekDocuments.view
             {
                 MessageBox.Show(
                     "Suppression impossible : seules les commandes « en cours » ou « relancées » peuvent être supprimées.",
-                    "Règle métier", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DialogResult confirm = MessageBox.Show(
                 "Confirmer la suppression de cette commande ?",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                MSG_CONFIRMATION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirm == DialogResult.Yes)
             {
                 if (controller.SupprimerCommandeDocument(commande.Id))
                 {
-                    MessageBox.Show("Commande supprimée avec succès.", "Succès",
+                    MessageBox.Show("Commande supprimée avec succès.", MSG_SUCCES,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     lesCommandesLivres = controller.GetCommandesLivreDvd(livreCommandeEnCours.Id);
                     RemplirCommandesLivresListe(lesCommandesLivres);
                 }
                 else
                 {
-                    MessageBox.Show("Erreur lors de la suppression.", "Erreur",
+                    MessageBox.Show(MSG_ERREUR_SUPPRESSION, MSG_ERREUR,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -2576,7 +2591,7 @@ namespace MediaTekDocuments.view
             string num = txbCommandesDvdNumero.Text.Trim();
             if (num.Equals(""))
             {
-                MessageBox.Show("Veuillez saisir un numéro de DVD.", "Recherche",
+                MessageBox.Show("Veuillez saisir un numéro de DVD.", MSG_RECHERCHE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2592,7 +2607,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Numéro introuvable.", "Recherche",
+                MessageBox.Show("Numéro introuvable.", MSG_RECHERCHE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 ViderCommandesDvdZones();
             }
@@ -2661,13 +2676,13 @@ namespace MediaTekDocuments.view
             if (!double.TryParse(montantStrDvd, System.Globalization.NumberStyles.Any,
                 System.Globalization.CultureInfo.InvariantCulture, out double montant) || montant <= 0)
             {
-                MessageBox.Show("Le montant doit être un nombre supérieur à 0.", "Saisie incorrecte",
+                MessageBox.Show("Le montant doit être un nombre supérieur à 0.", MSG_SAISIE_INCORRECTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!int.TryParse(txbCommandesDvdNbExemplaires.Text.Trim(), out int nbExemplaires) || nbExemplaires <= 0)
             {
-                MessageBox.Show("Le nombre d'exemplaires doit être un entier supérieur à 0.", "Saisie incorrecte",
+                MessageBox.Show("Le nombre d'exemplaires doit être un entier supérieur à 0.", MSG_SAISIE_INCORRECTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2684,7 +2699,7 @@ namespace MediaTekDocuments.view
 
             if (controller.AjouterCommandeDocument(commande))
             {
-                MessageBox.Show("Commande ajoutée avec succès.", "Succès",
+                MessageBox.Show("Commande ajoutée avec succès.", MSG_SUCCES,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesCommandesDvd = controller.GetCommandesLivreDvd(dvdCommandeEnCours.Id);
                 RemplirCommandesDvdListe(lesCommandesDvd);
@@ -2693,7 +2708,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Erreur lors de l'ajout de la commande.", "Erreur",
+                MessageBox.Show("Erreur lors de l'ajout de la commande.", MSG_ERREUR,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -2706,13 +2721,13 @@ namespace MediaTekDocuments.view
         {
             if (dgvCommandesDvdListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner une commande.", "Aucune sélection",
+                MessageBox.Show(MSG_SELECTION_COMMANDE, MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (cbxCommandesDvdSuivi.SelectedItem == null)
             {
-                MessageBox.Show("Veuillez sélectionner une étape de suivi.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner une étape de suivi.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2726,7 +2741,7 @@ namespace MediaTekDocuments.view
                 {
                     MessageBox.Show(
                         "Impossible : une commande livrée ou réglée ne peut pas revenir à une étape précédente.",
-                        "Règle métier", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -2734,20 +2749,20 @@ namespace MediaTekDocuments.view
             {
                 MessageBox.Show(
                     "Impossible : une commande ne peut être réglée que si elle est livrée.",
-                    "Règle métier", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (controller.ModifierEtapeSuivi(commande.Id, nouvelleEtape.Id))
             {
-                MessageBox.Show("Étape de suivi modifiée avec succès.", "Succès",
+                MessageBox.Show("Étape de suivi modifiée avec succès.", MSG_SUCCES,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesCommandesDvd = controller.GetCommandesLivreDvd(dvdCommandeEnCours.Id);
                 RemplirCommandesDvdListe(lesCommandesDvd);
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification.", "Erreur",
+                MessageBox.Show("Erreur lors de la modification.", MSG_ERREUR,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -2760,7 +2775,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvCommandesDvdListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner une commande.", "Aucune sélection",
+                MessageBox.Show(MSG_SELECTION_COMMANDE, MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2771,26 +2786,26 @@ namespace MediaTekDocuments.view
             {
                 MessageBox.Show(
                     "Suppression impossible : seules les commandes « en cours » ou « relancées » peuvent être supprimées.",
-                    "Règle métier", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DialogResult confirm = MessageBox.Show(
                 "Confirmer la suppression de cette commande ?",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                MSG_CONFIRMATION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirm == DialogResult.Yes)
             {
                 if (controller.SupprimerCommandeDocument(commande.Id))
                 {
-                    MessageBox.Show("Commande supprimée avec succès.", "Succès",
+                    MessageBox.Show("Commande supprimée avec succès.", MSG_SUCCES,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     lesCommandesDvd = controller.GetCommandesLivreDvd(dvdCommandeEnCours.Id);
                     RemplirCommandesDvdListe(lesCommandesDvd);
                 }
                 else
                 {
-                    MessageBox.Show("Erreur lors de la suppression.", "Erreur",
+                    MessageBox.Show(MSG_ERREUR_SUPPRESSION, MSG_ERREUR,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -2847,7 +2862,7 @@ namespace MediaTekDocuments.view
             string num = txbCommandesRevuesNumero.Text.Trim();
             if (num.Equals(""))
             {
-                MessageBox.Show("Veuillez saisir un numéro de revue.", "Recherche",
+                MessageBox.Show("Veuillez saisir un numéro de revue.", MSG_RECHERCHE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2862,7 +2877,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Numéro introuvable.", "Recherche",
+                MessageBox.Show("Numéro introuvable.", MSG_RECHERCHE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 ViderCommandesRevuesZones();
             }
@@ -2911,14 +2926,14 @@ namespace MediaTekDocuments.view
             if (!double.TryParse(montantStr, System.Globalization.NumberStyles.Any,
                 System.Globalization.CultureInfo.InvariantCulture, out double montant) || montant <= 0)
             {
-                MessageBox.Show("Le montant doit être un nombre supérieur à 0.", "Saisie incorrecte",
+                MessageBox.Show("Le montant doit être un nombre supérieur à 0.", MSG_SAISIE_INCORRECTE,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (dtpCommandesRevuesDateFin.Value.Date <= dtpCommandesRevuesDate.Value.Date)
             {
                 MessageBox.Show("La date de fin d'abonnement doit être postérieure à la date de commande.",
-                    "Saisie incorrecte", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MSG_SAISIE_INCORRECTE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -2932,7 +2947,7 @@ namespace MediaTekDocuments.view
 
             if (controller.AjouterAbonnement(abonnement))
             {
-                MessageBox.Show("Abonnement ajouté avec succès.", "Succès",
+                MessageBox.Show("Abonnement ajouté avec succès.", MSG_SUCCES,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lesAbonnements = controller.GetAbonnementsRevue(revueCommandeEnCours.Id);
                 RemplirCommandesRevuesListe(lesAbonnements);
@@ -2940,7 +2955,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Erreur lors de l'ajout de l'abonnement.", "Erreur",
+                MessageBox.Show("Erreur lors de l'ajout de l'abonnement.", MSG_ERREUR,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -2955,7 +2970,7 @@ namespace MediaTekDocuments.view
         {
             if (dgvCommandesRevuesListe.CurrentCell == null)
             {
-                MessageBox.Show("Veuillez sélectionner un abonnement.", "Aucune sélection",
+                MessageBox.Show("Veuillez sélectionner un abonnement.", MSG_AUCUNE_SELECTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -2974,26 +2989,26 @@ namespace MediaTekDocuments.view
             {
                 MessageBox.Show(
                     "Suppression impossible : des exemplaires ont été reçus pendant la période de cet abonnement.",
-                    "Règle métier", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MSG_REGLE_METIER, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DialogResult confirm = MessageBox.Show(
                 "Confirmer la suppression de cet abonnement ?",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                MSG_CONFIRMATION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirm == DialogResult.Yes)
             {
                 if (controller.SupprimerAbonnement(abonnement.Id))
                 {
-                    MessageBox.Show("Abonnement supprimé avec succès.", "Succès",
+                    MessageBox.Show("Abonnement supprimé avec succès.", MSG_SUCCES,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     lesAbonnements = controller.GetAbonnementsRevue(revueCommandeEnCours.Id);
                     RemplirCommandesRevuesListe(lesAbonnements);
                 }
                 else
                 {
-                    MessageBox.Show("Erreur lors de la suppression.", "Erreur",
+                    MessageBox.Show(MSG_ERREUR_SUPPRESSION, MSG_ERREUR,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
