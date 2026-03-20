@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 
 namespace MediaTekDocuments.manager
 {
     /// <summary>
-    /// Classe indépendante d'accès à une api rest avec éventuellement une "basic authorization"
+    /// Classe singleton responsable des échanges HTTP avec l'API REST.
+    /// Gère l'authentification HTTP Basic et expose la méthode <see cref="RecupDistant"/>
+    /// pour envoyer des requêtes GET, POST, PUT et DELETE.
     /// </summary>
     class ApiRest
     {
@@ -39,11 +41,11 @@ namespace MediaTekDocuments.manager
         }
 
         /// <summary>
-        /// Crée une instance unique de la classe
+        /// Retourne l'instance unique de la classe (singleton). La crée si elle n'existe pas encore.
         /// </summary>
-        /// <param name="uriApi">adresse de l'api</param>
-        /// <param name="authenticationString">chaîne d'authentificatio (login:pwd)</param>
-        /// <returns></returns>
+        /// <param name="uriApi">URL de base de l'API REST.</param>
+        /// <param name="authenticationString">Chaîne d'authentification HTTP Basic au format "login:pwd".</param>
+        /// <returns>L'instance unique de ApiRest configurée pour l'URL et les credentials fournis.</returns>
         public static ApiRest GetInstance(String uriApi, String authenticationString)
         {
             if(instance == null)
@@ -54,12 +56,15 @@ namespace MediaTekDocuments.manager
         }
 
         /// <summary>
-        /// Envoi une demande à l'API et récupère la réponse
+        /// Envoie une requête HTTP à l'API REST et retourne la réponse désérialisée en JObject.
         /// </summary>
-        /// <param name="methode">verbe http (GET, POST, PUT, DELETE)</param>
-        /// <param name="message">message à envoyer dans l'URL</param>
-        /// <param name="parametres">contenu de variables à mettre dans body</param>
-        /// <returns>liste d'objets (select) ou liste vide (ok) ou null si erreur</returns>
+        /// <param name="methode">Verbe HTTP : "GET", "POST", "PUT" ou "DELETE".</param>
+        /// <param name="message">Chemin de l'endpoint à appeler (ajouté à la BaseAddress).</param>
+        /// <param name="parametres">Corps de la requête au format "champs=..." (null pour GET/DELETE).</param>
+        /// <returns>
+        /// Un JObject contenant la réponse de l'API avec les propriétés "code", "message" et "result".
+        /// Retourne un JObject vide si le verbe HTTP est inconnu.
+        /// </returns>
         public JObject RecupDistant(string methode, string message, String parametres)
         {
             // transformation des paramètres pour les mettre dans le body
