@@ -37,6 +37,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategorieTests.cs" />
+    <Compile Include="CommandeDocumentTests.cs" />
+    <Compile Include="DocumentTests.cs" />
+    <Compile Include="ExemplaireTests.cs" />
     <Compile Include="UtilitairesAbonnementTests.cs" />
   </ItemGroup>
   <ItemGroup>
