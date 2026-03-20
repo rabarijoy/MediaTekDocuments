@@ -12,7 +12,8 @@ using System.Linq;
 namespace MediaTekDocuments.dal
 {
     /// <summary>
-    /// Classe d'accès aux données
+    /// Couche d'accès aux données (DAL) — singleton qui centralise tous les appels
+    /// vers l'API REST en sérialisant/désérialisant le JSON et en journalisant les erreurs.
     /// </summary>
     public class Access
     {
@@ -146,10 +147,11 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
-        /// Retourne les exemplaires d'une revue
+        /// Retourne les exemplaires d'une revue (méthode conservée pour compatibilité ascendante).
+        /// Préférer <see cref="GetExemplairesDocument"/> qui fonctionne pour tous les types de documents.
         /// </summary>
-        /// <param name="idDocument">id de la revue concernée</param>
-        /// <returns>Liste d'objets Exemplaire</returns>
+        /// <param name="idDocument">Identifiant de la revue concernée.</param>
+        /// <returns>Liste d'objets Exemplaire associés à la revue.</returns>
         public List<Exemplaire> GetExemplairesRevue(string idDocument)
         {
             String jsonIdDocument = convertToJson("id", idDocument);
@@ -158,10 +160,10 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
-        /// ecriture d'un exemplaire en base de données
+        /// Insère un exemplaire de revue en base de données via l'API REST.
         /// </summary>
-        /// <param name="exemplaire">exemplaire à insérer</param>
-        /// <returns>true si l'insertion a pu se faire (retour != null)</returns>
+        /// <param name="exemplaire">L'exemplaire à insérer.</param>
+        /// <returns>True si l'insertion a réussi (code retour API == 200).</returns>
         public bool CreerExemplaire(Exemplaire exemplaire)
         {
             String jsonExemplaire = JsonConvert.SerializeObject(exemplaire, new CustomDateTimeConverter());
@@ -364,10 +366,10 @@ namespace MediaTekDocuments.dal
         // =====================================================================
 
         /// <summary>
-        /// Retourne les commandes d'un livre ou DVD triées par date décroissante
+        /// Retourne les commandes d'un livre ou DVD, triées par date décroissante.
         /// </summary>
-        /// <param name="idLivreDvd">identifiant du livre ou DVD</param>
-        /// <returns>Liste d'objets CommandeDocument</returns>
+        /// <param name="idLivreDvd">Identifiant du livre ou DVD concerné.</param>
+        /// <returns>Liste d'objets CommandeDocument associés au document.</returns>
         public List<CommandeDocument> GetCommandesLivreDvd(string idLivreDvd)
         {
             string jsonFiltre = convertToJson("idLivreDvd", idLivreDvd);
@@ -375,9 +377,9 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
-        /// Retourne toutes les étapes de suivi
+        /// Retourne toutes les étapes de suivi disponibles (En cours, Relancée, Livrée, Réglée).
         /// </summary>
-        /// <returns>Liste d'objets Suivi</returns>
+        /// <returns>Liste d'objets Suivi.</returns>
         public List<Suivi> GetAllSuivi()
         {
             return TraitementRecup<Suivi>(GET, "suivi", null);
