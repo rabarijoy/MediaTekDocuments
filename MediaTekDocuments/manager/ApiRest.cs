@@ -25,18 +25,30 @@ namespace MediaTekDocuments.manager
         private HttpResponseMessage httpResponse;
 
         /// <summary>
-        /// Constructeur privé pour préparer la connexion (éventuellement sécurisée)
+        /// Constructeur privé pour préparer la connexion (éventuellement sécurisée).
+        /// Envoie les credentials à la fois via l'en-tête HTTP Basic Authorization standard
+        /// et via les en-têtes personnalisés X-Auth-User / X-Auth-Pass, pour assurer la
+        /// compatibilité avec les hébergeurs qui perdent les informations Authorization (ex. AwardSpace).
         /// </summary>
         /// <param name="uriApi">adresse de l'api</param>
-        /// <param name="authenticationString">chaîne d'authentification</param>
+        /// <param name="authenticationString">chaîne d'authentification au format "login:password"</param>
         private ApiRest(String uriApi, String authenticationString="")
         {
             httpClient = new HttpClient() { BaseAddress = new Uri(uriApi) };
-            // prise en compte dans l'url de l'authentificaiton (basic authorization), si elle n'est pas vide
             if (!String.IsNullOrEmpty(authenticationString))
             {
+                // En-tête Authorization Basic standard
                 String base64EncodedAuthenticationString = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authenticationString));
                 httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + base64EncodedAuthenticationString);
+
+                // En-têtes personnalisés X-Auth-User / X-Auth-Pass (fallback pour hébergeurs
+                // qui bloquent ou perdent l'en-tête Authorization)
+                string[] parts = authenticationString.Split(new char[]{':'}, 2);
+                if (parts.Length == 2)
+                {
+                    httpClient.DefaultRequestHeaders.Add("X-Auth-User", parts[0]);
+                    httpClient.DefaultRequestHeaders.Add("X-Auth-Pass", parts[1]);
+                }
             }
         }
 
