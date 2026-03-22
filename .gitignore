@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Exception : conserver les fichiers installeur générés par MediaTekSetup
+!MediaTekSetup/Release/*.msi
+!MediaTekSetup/Release/setup.exe
+
 # User-specific files
 *.rsuser
 *.suo
