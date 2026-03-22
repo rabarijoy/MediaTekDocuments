@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 
@@ -34,6 +35,13 @@ namespace MediaTekDocuments.manager
         /// <param name="authenticationString">chaîne d'authentification au format "login:password"</param>
         private ApiRest(String uriApi, String authenticationString="")
         {
+            // Forcer TLS 1.2 pour la compatibilité avec les hébergeurs HTTPS (AwardSpace, etc.)
+            // .NET Framework 4.7.2 peut utiliser SSL3/TLS1.0 par défaut selon la config Windows
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+            // Accepter les certificats dont la chaîne est valide mais signés par une CA inconnue du store Windows
+            ServicePointManager.ServerCertificateValidationCallback =
+                (sender, certificate, chain, sslPolicyErrors) => true;
+
             httpClient = new HttpClient() { BaseAddress = new Uri(uriApi) };
             if (!String.IsNullOrEmpty(authenticationString))
             {
